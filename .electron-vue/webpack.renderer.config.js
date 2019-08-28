@@ -50,12 +50,16 @@ let rendererConfig = {
           {
             loader: 'vue-loader'
           },
+          // {
+          //   loader: 'vue-markdown-loader/lib/markdown-compiler',
+          //   options: { 
+          //     raw: true,
+          //     preventExtract: true
+          //   }
+          // }
           {
-            loader: 'vue-markdown-loader/lib/markdown-compiler',
-            options: { 
-              raw: true,
-              preventExtract: true
-            }
+            loader: require.resolve('../src/renderer/extensions/vue-markdown-loader'),
+            options: { sourceDir: './' }
           }
         ]
       },

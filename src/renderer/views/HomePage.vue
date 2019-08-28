@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 18:46:22
  * @LastEditors: utaware
- * @LastEditTime: 2019-08-28 11:58:44
+ * @LastEditTime: 2019-08-28 18:32:42
  -->
 
 <template>
@@ -13,6 +13,8 @@
 
     {{ path }}
 
+    <md></md>
+
   </div>
 
 </template>
@@ -20,10 +22,14 @@
 <script>
 // open
 import { openDirectoryDialog } from '@/utils/postMessage.js'
+// md
+import md from '../mark/1.md'
 
 export default {
   name: 'HomePage',
-  components: {},
+  components: {
+    md
+  },
   mixins: [],
   watch: {},
   props: {},
@@ -53,6 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/css/vuepress.css';
 .el-icon-picture {
   font-size: 48px
 }
