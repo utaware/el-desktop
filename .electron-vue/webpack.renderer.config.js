@@ -12,6 +12,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
+// const markdownRender = require('markdown-it')();
+
 /**
  * List of node_modules to include in webpack bundle
  *
@@ -41,6 +43,21 @@ let rendererConfig = {
             formatter: require('eslint-friendly-formatter')
           }
         }
+      },
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'vue-loader'
+          },
+          {
+            loader: 'vue-markdown-loader/lib/markdown-compiler',
+            options: { 
+              raw: true,
+              preventExtract: true
+            }
+          }
+        ]
       },
       {
         test: /\.scss$/,

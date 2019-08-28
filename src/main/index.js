@@ -4,11 +4,22 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-08-14 18:34:09
+ * @LastEditTime: 2019-08-27 15:13:52
  */
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain } from 'electron'
+
+ipcMain.on('open-directory-dialog', function (event, p) {
+  // 选择文件夹或者文件
+  dialog.showOpenDialog({ properties: [p] }, function (files) {
+    // 如果有选中
+    if (files) {
+      // 发送选择的对象给子进程
+      event.sender.send('selectedItem', files[0])
+    }
+  })
+})
 
 /**
  * Set `__static` path to static files in production
@@ -25,7 +36,7 @@ const winURL = process.env.NODE_ENV === 'development'
 
 function createWindow () {
   /**
-   * Initial window options
+   * Initial window options https://electronjs.org/docs/tutorial/security
    */
   mainWindow = new BrowserWindow({
     height: 563,
