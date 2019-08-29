@@ -17,6 +17,8 @@ const hoistScriptStylePlugin = require('./lib/hoist')
 const convertRouterLinkPlugin = require('./lib/link')
 const snippetPlugin = require('./lib/snippet')
 
+const options = require('./options')
+
 const {
   slugify: _slugify,
   parseHeaders,
@@ -37,14 +39,12 @@ module.exports = (markdown = {}) => {
     lineNumbers,
     beforeInstantiate,
     afterInstantiate
-  } = markdown
+  } = Object.assign(markdown, options.markdown)
 
   const resolver = getMarkdownItResolver()
 
   // allow user config slugify
   const slugify = markdown.slugify || _slugify
-
-  console.log('slugify:', _slugify)
 
   // using chainedAPI
   const config = new Config()

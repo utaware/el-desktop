@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-08-27 15:13:52
+ * @LastEditTime: 2019-08-29 18:28:03
  */
 'use strict'
 
@@ -20,6 +20,11 @@ ipcMain.on('open-directory-dialog', function (event, p) {
     }
   })
 })
+
+// 忽略安全警告
+if (process.env.NODE_ENV === 'development') {
+  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
+}
 
 /**
  * Set `__static` path to static files in production
@@ -41,7 +46,11 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
-    width: 1000
+    width: 1000,
+    // 无边框
+    // titleBarStyle: 'customButtonsOnHover',
+    // transparent: true,
+    frame: false
   })
 
   mainWindow.loadURL(winURL)
@@ -51,15 +60,23 @@ function createWindow () {
   })
 }
 
+// Electron 会在初始化后并准备
+// 创建浏览器窗口时，调用这个函数。
+// 部分 API 在 ready 事件触发后才能使用。
 app.on('ready', createWindow)
 
+// 当全部窗口关闭时退出。
 app.on('window-all-closed', () => {
+  // 在 macOS 上，除非用户用 Cmd + Q 确定地退出，
+  // 否则绝大部分应用及其菜单栏会保持激活。
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
 app.on('activate', () => {
+  // 在macOS上，当单击dock图标并且没有其他窗口打开时，
+  // 通常在应用程序中重新创建一个窗口。
   if (mainWindow === null) {
     createWindow()
   }

@@ -107,8 +107,8 @@ module.exports = function (src) {
 
   const res = (
     `<template>\n`
-      + `<ContentSlotsDistributor :slot-key="$parent.slotKey">${html}</ContentSlotsDistributor>\n`
-      // + `${html}\n`
+      // + `<ContentSlotsDistributor :slot-key="$parent.slotKey">${html}</ContentSlotsDistributor>\n`
+      + `<div class="markdown-vue">${html}</div>\n`
     + `</template>\n`
     + (hoistedTags || []).join('\n')
     + `\n${dataBlockString}\n`
