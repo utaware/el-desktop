@@ -11,12 +11,15 @@ const getObjectType = (x) => _toString.call(x).slice(8, -1)
 const isOfType = (type) => (x) => typeof x === type // eslint-disable-line valid-typeof
 const isObjectOfType = (type) => (x) => getObjectType(x) === type
 
+const isUndefined = isOfType('undefined')
+const isNull = (x) => x === null
+
 exports.isFunction = isOfType('function')
 exports.isString = isOfType('string')
 exports.isBoolean = isOfType('boolean')
 exports.isPlainObject = isObjectOfType('Object')
-exports.isUndefined = isOfType('undefined')
-exports.isNull = (x) => x === null
+exports.isUndefined = isUndefined
+exports.isNull = isNull
 exports.isNullOrUndefined = (x) => isUndefined(x) || isNull(x)
 
 const toRawType = (value) => _toString.call(value).slice(8, -1)

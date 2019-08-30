@@ -43,8 +43,8 @@ module.exports = md => {
       return '<br>'
     }).join('')
 
-    const highlightLinesWrapperCode
-      = `<div class="highlight-lines">${highlightLinesCode}</div>`
+    const highlightLinesWrapperCode =
+      `<div class="highlight-lines">${highlightLinesCode}</div>`
 
     return highlightLinesWrapperCode + code
   }

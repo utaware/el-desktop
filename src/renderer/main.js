@@ -12,6 +12,11 @@ import './assets/css/reset.css'
 // 附加的css
 import './assets/css/index.css'
 
+// 指令注册
+import directives from '@/directives/install'
+
+Vue.use(directives)
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
 Vue.http = Vue.prototype.$http = axios

@@ -1,4 +1,4 @@
-module.exports = function tryChain (resolvers) {
+module.exports = function tryChain (resolvers, arg) {
   let response
 
   for (let resolver of resolvers) {

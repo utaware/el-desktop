@@ -16,9 +16,11 @@ module.exports = function (str) {
     // Replace special characters
     .replace(rSpecial, '-')
     // Remove continous separators
-    .replace(/\-{2,}/g, '-')
+    // .replace(/\-{2,}/g, '-')
+    .replace(/-{2,}/g, '-')
     // Remove prefixing and trailing separtors
-    .replace(/^\-+|\-+$/g, '')
+    // .replace(/^\-+|\-+$/g, '')
+    .replace(/^-+|-+$/g, '')
     // ensure it doesn't start with a number (#121)
     .replace(/^(\d)/, '_$1')
     // lowercase

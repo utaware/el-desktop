@@ -7,8 +7,8 @@ module.exports = function normalizeConfig (pluginsConfig) {
   if (!valid) {
     if (pluginsConfig !== undefined) {
       logger.warn(
-        `[${chalk.gray('config')}] `
-        + `Invalid value for "plugin" field : ${warnMsg}`
+        `[${chalk.gray('config')}] ` +
+        `Invalid value for "plugin" field : ${warnMsg}`
       )
     }
     pluginsConfig = []

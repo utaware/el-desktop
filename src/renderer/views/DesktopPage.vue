@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 18:46:22
  * @LastEditors: utaware
- * @LastEditTime: 2019-08-29 18:31:48
+ * @LastEditTime: 2019-08-30 15:17:58
  -->
 
 <template>
@@ -25,7 +25,9 @@
       </li>
 
     </ul>
-    
+
+    <img :src="srcPath" alt="">
+
   </div>
 
 </template>
@@ -44,7 +46,8 @@ export default {
   props: {},
   data () {
     return {
-      iconList
+      iconList,
+      srcPath: ''
     }
   },
   computed: {},
@@ -56,11 +59,13 @@ export default {
           type: 'openFile',
           call: this.handleCallback
         })
+      } else {
+        this.$router.push('/docs')
       }
     },
     // 回调处理
-    async handleCallback (emitter, path) {
-      console.log(path)
+    async handleCallback (emitter, selectPath) {
+      console.log(emitter, selectPath)
     }
   },
   filters: {},

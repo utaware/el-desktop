@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-08-29 18:28:03
+ * @LastEditTime: 2019-08-30 18:35:23
  */
 'use strict'
 
@@ -26,6 +26,8 @@ if (process.env.NODE_ENV === 'development') {
   process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
 }
 
+console.log(process.versions)
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -44,13 +46,16 @@ function createWindow () {
    * Initial window options https://electronjs.org/docs/tutorial/security
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 800,
     useContentSize: true,
     width: 1000,
     // 无边框
     // titleBarStyle: 'customButtonsOnHover',
     // transparent: true,
-    frame: false
+    frame: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   mainWindow.loadURL(winURL)

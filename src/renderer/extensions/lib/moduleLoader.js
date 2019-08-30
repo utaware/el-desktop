@@ -36,7 +36,7 @@ const resolve = semver.satisfies(process.version, '>=10.0.0')
   ? require.resolve
   : resolveFallback
 
-exports.resolveModule = function (request, context) {
+const resolveModule = function (request, context) {
   let resolvedPath
 
   if (env.isTest) {
@@ -49,6 +49,8 @@ exports.resolveModule = function (request, context) {
 
   return resolvedPath
 }
+
+exports.resolveModule = resolveModule
 
 exports.loadModule = function (request, context, force = false) {
   const resolvedPath = resolveModule(request, context)

@@ -9,4 +9,3 @@ module.exports = compose(
   removeNonCodeWrappedHTML,
   parseHeaders
 )
-

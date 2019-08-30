@@ -22,7 +22,6 @@ const SCOPE_PACKAGE_RE = /^@(.*)\/(.*)/
  */
 
 class CommonModule {
-
   constructor (entry, name, shortcut, fromDep) {
     this.entry = entry
     this.shortcut = shortcut
@@ -36,7 +35,6 @@ class CommonModule {
  */
 
 class ModuleResolver {
-
   constructor (type, org, allowedTypes, load, cwd) {
     this.type = type
     this.org = org
@@ -192,7 +190,7 @@ class ModuleResolver {
    * Normalize any request.
    */
 
- normalizeRequest (req) {
+  normalizeRequest (req) {
     if (isString(req)) {
       return this.normalizeName(req)
     }
@@ -218,7 +216,7 @@ class ModuleResolver {
  * Parse info of scope package.
  */
 
-exports.resolveScopePackage = function (name) {
+const resolveScopePackage = function (name) {
   if (SCOPE_PACKAGE_RE.test(name)) {
     return {
       org: RegExp.$1,
@@ -230,6 +228,8 @@ exports.resolveScopePackage = function (name) {
     name: ''
   }
 }
+
+exports.resolveScopePackage = resolveScopePackage
 
 exports.CommonModule = CommonModule
 

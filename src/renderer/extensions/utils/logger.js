@@ -1,7 +1,6 @@
 const chalk = require('chalk')
 
 class Logger {
-
   constructor (options) {
     this.options = Object.assign({ logLevel: 4 }, options)
   }

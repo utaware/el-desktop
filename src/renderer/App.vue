@@ -55,7 +55,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 2rem;
+    height: 1rem;
     cursor: pointer;
     background: transparent;
     z-index: 999;

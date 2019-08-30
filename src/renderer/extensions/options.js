@@ -6,6 +6,6 @@ module.exports = {
     // markdown-it-toc 的选项
     toc: { includeLevel: [1, 2] },
     // 给每个代码块启用行号
-    lineNumbers : true
+    lineNumbers: true
   }
 }

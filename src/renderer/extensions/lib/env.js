@@ -1,5 +1,4 @@
 class ENV {
-
   constructor () {
     this.isDebug = false
     this.isTest = process.env.NODE_ENV === 'test' || false

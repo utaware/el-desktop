@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-08-29 16:06:19
+ * @LastEditTime: 2019-08-30 15:17:41
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -17,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'home-page',
       component: require('@/views/DesktopPage.vue').default
+    },
+    {
+      path: '/docs',
+      name: 'docs-page',
+      component: require('@/views/DocsTreePage.vue').default
     },
     {
       path: '*',

@@ -1,7 +1,12 @@
 /* 全局css重置 */
 
 .application-view {
-  padding: 0 2rem 1rem;
+  padding: 1rem 2rem 1rem;
+}
+
+/* 光标设置 */
+body {
+  cursor: url('/static/cursor/default.cur'), auto;
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  

@@ -51,62 +51,62 @@ module.exports = (markdown = {}) => {
 
   config
     .options
-      .html(true)
-      .highlight(highlight)
-      .end()
+    .html(true)
+    .highlight(highlight)
+    .end()
 
     .plugin(PLUGINS.COMPONENT)
-      .use(componentPlugin)
-      .end()
+    .use(componentPlugin)
+    .end()
 
     .plugin(PLUGINS.HIGHLIGHT_LINES)
-      .use(highlightLinesPlugin)
-      .end()
+    .use(highlightLinesPlugin)
+    .end()
 
     .plugin(PLUGINS.PRE_WRAPPER)
-      .use(preWrapperPlugin)
-      .end()
+    .use(preWrapperPlugin)
+    .end()
 
     .plugin(PLUGINS.SNIPPET)
-      .use(snippetPlugin)
-      .end()
+    .use(snippetPlugin)
+    .end()
 
     .plugin(PLUGINS.CONVERT_ROUTER_LINK)
-      .use(convertRouterLinkPlugin, [Object.assign({
-        target: '_blank',
-        rel: 'noopener noreferrer'
-      }, externalLinks)])
-      .end()
+    .use(convertRouterLinkPlugin, [Object.assign({
+      target: '_blank',
+      rel: 'noopener noreferrer'
+    }, externalLinks)])
+    .end()
 
     .plugin(PLUGINS.HOIST_SCRIPT_STYLE)
-      .use(hoistScriptStylePlugin)
-      .end()
+    .use(hoistScriptStylePlugin)
+    .end()
 
     .plugin(PLUGINS.EMOJI)
-      .use(emojiPlugin)
-      .end()
+    .use(emojiPlugin)
+    .end()
 
     .plugin(PLUGINS.ANCHOR)
-      .use(anchorPlugin, [Object.assign({
-        slugify,
-        permalink: true,
-        permalinkBefore: true,
-        permalinkSymbol: '#'
-      }, anchor)])
-      .end()
+    .use(anchorPlugin, [Object.assign({
+      slugify,
+      permalink: true,
+      permalinkBefore: true,
+      permalinkSymbol: '#'
+    }, anchor)])
+    .end()
 
     .plugin(PLUGINS.TOC)
-      .use(tocPlugin, [Object.assign({
-        slugify,
-        includeLevel: [2, 3],
-        format: parseHeaders
-      }, toc)])
-      .end()
+    .use(tocPlugin, [Object.assign({
+      slugify,
+      includeLevel: [2, 3],
+      format: parseHeaders
+    }, toc)])
+    .end()
 
   if (lineNumbers) {
     config
       .plugin(PLUGINS.LINE_NUMBERS)
-        .use(lineNumbersPlugin)
+      .use(lineNumbersPlugin)
   }
 
   beforeInstantiate && beforeInstantiate(config)
