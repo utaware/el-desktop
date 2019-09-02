@@ -48,7 +48,6 @@
 
 <style lang="scss" scoped>
 #app {
-  background: url('/static/images/default-bg.jpg') no-repeat center center;
   // 隐藏任务栏和外框 -- 拖拽支持
   .drag-app {
     position: fixed;

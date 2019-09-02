@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 18:46:22
  * @LastEditors: utaware
- * @LastEditTime: 2019-08-30 15:17:58
+ * @LastEditTime: 2019-09-02 16:44:39
  -->
 
 <template>
@@ -26,15 +26,11 @@
 
     </ul>
 
-    <img :src="srcPath" alt="">
-
   </div>
 
 </template>
 
 <script>
-// open
-import { openDirectoryDialog } from '@/utils/postMessage.js'
 // iconList
 import iconList from './data/desktopIcon.js'
 
@@ -54,14 +50,7 @@ export default {
   methods: {
     // 图标点击
     handlerClick (name) {
-      if (name === 'Pictures') {
-        openDirectoryDialog({
-          type: 'openFile',
-          call: this.handleCallback
-        })
-      } else {
-        this.$router.push('/docs')
-      }
+      this.$router.push('/docs')
     },
     // 回调处理
     async handleCallback (emitter, selectPath) {
@@ -77,6 +66,8 @@ export default {
 <style lang="scss" scoped>
 // 桌面页
 .desktop-page {
+  height: 100vh;
+  background: url('/static/images/default-bg.jpg') no-repeat center center;
   // 图标列表
   .icon-list {
     margin-top: 3rem;

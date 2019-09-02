@@ -4,29 +4,23 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-08-30 18:35:23
+ * @LastEditTime: 2019-09-02 16:10:38
  */
 'use strict'
 
-import { app, BrowserWindow, dialog, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 
-ipcMain.on('open-directory-dialog', function (event, p) {
-  // 选择文件夹或者文件
-  dialog.showOpenDialog({ properties: [p] }, function (files) {
-    // 如果有选中
-    if (files) {
-      // 发送选择的对象给子进程
-      event.sender.send('selectedItem', files[0])
-    }
-  })
-})
+// 绑定一系列的通信事件
+import { bindEvent } from './ipcMainHandle.js'
+
+bindEvent()
 
 // 忽略安全警告
 if (process.env.NODE_ENV === 'development') {
   process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
 }
 
-console.log(process.versions)
+// console.log(process.versions)
 
 /**
  * Set `__static` path to static files in production
