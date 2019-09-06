@@ -2,11 +2,13 @@
  * Module dependencies.
  */
 
+//  引入markdown-it插件
 const Config = require('markdown-it-chain')
 const emojiPlugin = require('markdown-it-emoji')
 const anchorPlugin = require('markdown-it-anchor')
 const tocPlugin = require('markdown-it-table-of-contents')
 
+// 引入markdown-it规则处理js
 const highlight = require('./lib/highlight')
 const { PLUGINS, REQUIRED_PLUGINS } = require('./lib/constant')
 const highlightLinesPlugin = require('./lib/highlightLines')
@@ -16,7 +18,7 @@ const componentPlugin = require('./lib/component')
 const hoistScriptStylePlugin = require('./lib/hoist')
 const convertRouterLinkPlugin = require('./lib/link')
 const snippetPlugin = require('./lib/snippet')
-
+// 配置
 const options = require('./options')
 
 const {
