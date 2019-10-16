@@ -4,16 +4,16 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-09-02 16:10:38
+ * @LastEditTime: 2019-10-16 11:20:21
  */
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+const { app, BrowserWindow } = require('electron')
 
 // 绑定一系列的通信事件
-import { bindEvent } from './ipcMainHandle.js'
+const events = require('./bus/ipcMainHandle.js')
 
-bindEvent()
+events()
 
 // 忽略安全警告
 if (process.env.NODE_ENV === 'development') {
@@ -90,7 +90,7 @@ app.on('activate', () => {
  */
 
 /*
-import { autoUpdater } from 'electron-updater'
+const { autoUpdater } = require('electron-updater')
 
 autoUpdater.on('update-downloaded', () => {
   autoUpdater.quitAndInstall()

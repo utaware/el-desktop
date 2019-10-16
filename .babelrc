@@ -7,7 +7,8 @@
           "targets": { "node": 7 }
         }],
         "stage-0"
-      ]
+      ],
+      "sourceType": "unambiguous"
     },
     "renderer": {
       "presets": [
@@ -25,6 +26,6 @@
         "stage-0"
       ]
     }
-  },
-  "plugins": ["transform-runtime"]
+  }
+  // "plugins": ["transform-runtime"]
 }

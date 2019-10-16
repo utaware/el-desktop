@@ -1,41 +1,24 @@
 import { ipcRenderer } from 'electron'
-
+// 主要的进程通信函数
 export function ipcEventsHandler (options) {
-  const { send, args, on, callback } = options
+  const { send, callback, ...args } = options
+  const on = send + 'Callback'
   ipcRenderer.send(send, {...args, on})
   ipcRenderer.on(on, callback)
 }
-
-/**
- * @description 选择单个文件夹
- * @author utaware
- * @date 2019-08-27
- * @export
- * @param {*} call 回调函数
- */
-
-export function openSingleDirectoryDialog (callback) {
+// 打开对话框 显示用于选择多个文件和目录的对话框的示例:
+export function showOpenDialog ({ callback, properties }) {
   ipcEventsHandler({
-    send: 'openDirectoryDialog',
-    args: { properties: ['openDirectory'] },
-    on: 'selectedDirectory',
+    send: 'showOpenDialog',
+    properties,
     callback
   })
 }
-
-/**
- * @description 选择单个文件
- * @author utaware
- * @date 2019-09-02
- * @export
- * @param {*} call 回调函数
- */
-
-export function openSingleFileDialog (callback) {
+// 读取文件夹相关信息
+export function readFileFolderPath ({ path, callback }) {
   ipcEventsHandler({
-    send: 'openFileDialog',
-    args: { properties: ['openFile'] },
-    on: 'selectedFile',
+    send: 'readFileFolderPath',
+    dirPath: path,
     callback
   })
 }

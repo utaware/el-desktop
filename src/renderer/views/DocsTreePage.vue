@@ -33,7 +33,7 @@
         class="dirs-tree"
         lazy
         :data="originData"
-        :load="loadNode"
+        :load="loadFileFolderNode"
         @node-click="nodeClickHanle">
       </el-tree>
 
@@ -53,23 +53,18 @@
 
 <script>
 // node
-import fs from 'fs-extra'
 import path from 'path'
-import { promisify } from 'util'
 // utils
-import { openSingleDirectoryDialog } from '../utils/ipcRendererHandle'
+import {
+  showOpenDialog,
+  readFileFolderPath
+} from '../utils/ipcRendererHandle'
 
 export default {
   name: 'ns-docs-tree-page',
   components: {},
   mixins: [],
-  watch: {
-    // 当源目录发生变动对应去读取目录结构
-    async dirOrigin (nv) {
-      console.log(nv)
-      this.originData = await this.getMarkTreeData(nv)
-    }
-  },
+  watch: {},
   props: {},
   data () {
     return {
@@ -78,17 +73,17 @@ export default {
       // 原始数据
       originData: [],
       // 右侧展示的文本内容
-      content: ''
+      content: '',
+      // 获取到的相关文件信息
+      fileFloder: [],
+      // 树结构回调函数
+      treeLoadResolve: null
     }
   },
   computed: {
     // docs目录开始原始路径
     originDocsPath () {
       return this.dirOrigin || path.resolve(__dirname, '../docs')
-    },
-    // promise化fs.readdir
-    readdirAsync () {
-      return promisify(fs.readdir)
     }
   },
   methods: {
@@ -98,30 +93,26 @@ export default {
       this.readFileContent(path)
     },
     // 加载节点
-    async loadNode (node, resolve) {
-      const { data: { path, isFile } } = node
+    loadFileFolderNode (node, resolve) {
+      let { data: { path, isFile } } = node
       if (isFile) {
-        return resolve([])
-      }
-      const result = await this.getMarkTreeData(path)
-      resolve(result)
-    },
-    // 树结构查询
-    async getMarkTreeData (path = this.originDocsPath) {
-      const originList = await this.readdirAsync(path, {
-        withFileTypes: true
-      })
-      return originList.map(v => {
-        const { name } = v
-        return {
-          label: name,
-          isDirectory: v.isDirectory(),
-          isFile: v.isFile(),
-          isLeaf: v.isDirectory(),
-          path: `${path}\\${name}`,
-          children: []
+        resolve([])
+      } else {
+        if (!path) {
+          path = this.originDocsPath
         }
-      })
+        this.treeLoadResolve = resolve
+        readFileFolderPath({ path, callback: this.readFileFolderPathCallback })
+      }
+    },
+    // 回调获取文件夹节点数据
+    readFileFolderPathCallback (event, files) {
+      const { treeLoadResolve } = this
+      if (!treeLoadResolve) {
+        return false
+      }
+      treeLoadResolve(files)
+      this.treeLoadResolve = null
     },
     // 读取md文件路径解析
     readFileContent (targetPath) {
@@ -130,21 +121,16 @@ export default {
       const filename = path.join(base, __dirname)
       const md = path.relative(filename, targetPath).split(path.sep).join('/')
       console.log(md)
-      // ../../docs/Electron/Guides/使用Pepper Flash插件.md
-      // if (md) {
-      //   return
-      // }
-      // import(md).then(module => {
-      //   console.log(module)
-      // }).catch(err => {
-      //   console.log(err)
-      // })
     },
     // 选择目录路径
     selectDirPath ($event) {
       // 打开选择目录弹窗
       $event.target.blur()
-      openSingleDirectoryDialog(this.callbackDirPath)
+      const { callbackDirPath } = this
+      showOpenDialog({
+        properties: ['openDirectory'],
+        callback: callbackDirPath
+      })
     },
     // 通信回调
     callbackDirPath (event, path) {
