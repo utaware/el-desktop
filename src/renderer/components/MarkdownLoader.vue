@@ -18,7 +18,12 @@ export default {
   name: 'ns-markdown-loader',
   components: {},
   mixins: [],
-  watch: {},
+  watch: {
+    // 当路径变化的时候重载文档
+    path (nv) {
+      this.parseMarkdownFile(nv)
+    }
+  },
   props: {
     // 路径
     path: {
@@ -36,11 +41,7 @@ export default {
   methods: {
     // 解析动态的md文件路径转化为页面
     parseMarkdownFile (path) {
-      import(path).then(module => {
-        console.log(module)
-      }).catch(err => {
-        console.log(err)
-      })
+
     }
   },
   filters: {},
