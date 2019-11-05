@@ -14,7 +14,7 @@
       <!-- 展示框 -->
       <el-input
         class="select-docs-input"
-        :value="fileFolderPath"
+        :value="fileFolderPath || storeFolderPath"
         :readonly="true"
         :disabled="true">
 
@@ -35,14 +35,15 @@
         :props="treeProps"
         empty-text="暂未选择文件目录"
         lazy
-        accordion
-        :load="loadTreeNodes">
+        :accordion="accordion"
+        :load="loadTreeNodes"
+        @node-click="treeNodesClick">
       </el-tree>
 
       <!-- 选择的文本内容 -->
       <div class="mark-content">
 
-        
+        <MarkdownLoader :path="markFilePath"></MarkdownLoader>
 
       </div>
 
@@ -57,11 +58,17 @@
 import {
   showOpenDialog,
   readFileFolderPath
-} from '../utils/ipcRendererHandle'
+} from '@/utils/ipcRendererHandle'
+// vuex
+import { mapMutations, mapState } from 'vuex'
+// components
+import MarkdownLoader from '@/components/MarkdownLoader.vue'
 
 export default {
   name: 'ns-docs-tree-page',
-  components: {},
+  components: {
+    MarkdownLoader
+  },
   mixins: [],
   watch: {
     // 当选择文件的路径发生变化 -> 重载数据
@@ -87,19 +94,24 @@ export default {
       treeProps: {
         label: 'name',
         isLeaf: 'isFile'
-      }
+      },
+      // 是否开启手风琴效果
+      accordion: false
     }
   },
-  computed: {},
+  computed: {
+    // vuex
+    ...mapState('DocsTree', {
+      storeFolderPath: 'folderPath'
+    })
+  },
   methods: {
+    // vuex
+    ...mapMutations('DocsTree', ['commitFolderPath']),
     // 加载子节点树
     loadTreeNodes (node, resolve) {
-      const { data: { path, isFile } } = node
+      const { data: { path = this.storeFolderPath } } = node
       if (!path) {
-        return false
-      }
-      if (isFile) {
-        this.markFilePath = path
         resolve([])
       } else {
         readFileFolderPath({
@@ -110,6 +122,14 @@ export default {
         })
       }
     },
+    // 节点被单击触发的事件
+    treeNodesClick (data, node) {
+      const { path, isDirectory } = data
+      if (isDirectory) {
+        return false
+      }
+      this.markFilePath = path
+    },
     // 选择目录路径
     selectDocsPath () {
       // 打开选择目录弹窗
@@ -117,6 +137,7 @@ export default {
         properties: ['openDirectory'],
         callback: (event, path) => {
           this.fileFolderPath = path
+          this.commitFolderPath(path)
         }
       })
     }

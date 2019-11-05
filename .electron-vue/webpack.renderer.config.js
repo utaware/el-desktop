@@ -45,19 +45,6 @@ let rendererConfig = {
         }
       },
       {
-        test: /\.md$/,
-        use: [
-          {
-            loader: 'vue-loader'
-          },
-          {
-            //   loader: 'vue-markdown-loader/lib/markdown-compiler',
-            loader: require.resolve('../src/renderer/extensions/vue-markdown-loader'),
-            options: { sourceDir: './' }
-          }
-        ]
-      },
-      {
         test: /\.scss$/,
         use: ['vue-style-loader', 'css-loader', 'sass-loader']
       },

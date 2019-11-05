@@ -4,6 +4,8 @@ const { promisify } = require('util')
 
 const fs = require('fs-extra')
 
+const { parseMarkdownFile } = require('../mark/markdown2vue')
+
 const readdirPromise = promisify(fs.readdir)
 const readFilePromise = promisify(fs.readFile)
 
@@ -26,8 +28,6 @@ module.exports = {
         }
       })
 
-      console.log(result)
-
       event.sender.send(on, result)
 
     }).catch(err => {
@@ -44,9 +44,13 @@ module.exports = {
 
     const { filePath, on } = args
 
-    readFilePromise(filePath).then(content => {
+    readFilePromise(filePath).then(data => {
 
-      event.sender.send(on, content.toString())
+      const content = data.toString()
+
+      const result = parseMarkdownFile(content)
+
+      event.sender.send(on, result)
 
     }).catch(error => {
 

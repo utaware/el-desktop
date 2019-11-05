@@ -7,8 +7,6 @@ import store from './store'
 // extend
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
-// 重置css样式
-import './assets/css/reset.css'
 // 附加的css
 import './assets/css/index.css'
 
