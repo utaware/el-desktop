@@ -4,7 +4,7 @@ const { promisify } = require('util')
 
 const fs = require('fs-extra')
 
-const { parseMarkdownFile } = require('../mark/markdown2vue')
+const { parseMarkdownFile } = require('../markdown/markdown2vue')
 
 const readdirPromise = promisify(fs.readdir)
 const readFilePromise = promisify(fs.readFile)

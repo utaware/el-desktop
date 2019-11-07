@@ -9,6 +9,11 @@ const tocPlugin = require('markdown-it-table-of-contents')
 const highlightCode = require('./highlight')
 const componentPlugin = require('./component')
 const preWrapperPlugin = require('./preWrapper')
+const highlightLinesPlugin = require('./highlightLines')
+const lineNumbersPlugin = require('./lineNumbers')
+const snippetPlugin = require('./snippet')
+const convertRouterLinkPlugin = require('./link')
+// const hoistScriptStylePlugin = require('./hoist')
 // config
 const slugify = require('./slugify')
 const parseHeaders = require('./parseHeaders')
@@ -16,7 +21,18 @@ const pluginOptions = require('./options')
 const { anchor, toc } = pluginOptions
 // 常量字符串
 const { PLUGINS } = require('./constant')
-const { EMOJI, ANCHOR, TOC, COMPONENT, PRE_WRAPPER } = PLUGINS
+const {
+  EMOJI,
+  ANCHOR,
+  TOC,
+  COMPONENT,
+  PRE_WRAPPER,
+  HIGHLIGHT_LINES,
+  LINE_NUMBERS,
+  SNIPPET,
+  CONVERT_ROUTER_LINK
+  // HOIST_SCRIPT_STYLE,
+} = PLUGINS
 
 config
   .options
@@ -30,10 +46,29 @@ config
   .plugin(COMPONENT)
   .use(componentPlugin)
   .end()
+  // 代码块高亮行
+  .plugin(HIGHLIGHT_LINES)
+  .use(highlightLinesPlugin)
+  .end()
   // 代码块高亮--额外添加包装标签
   .plugin(PRE_WRAPPER)
   .use(preWrapperPlugin)
   .end()
+  // 代码段
+  .plugin(SNIPPET)
+  .use(snippetPlugin)
+  .end()
+  // 链接样式修改
+  .plugin(CONVERT_ROUTER_LINK)
+  .use(convertRouterLinkPlugin, [Object.assign({
+    target: '_blank',
+    rel: 'noopener noreferrer'
+  })])
+  .end()
+  // style,script标签分裂
+  // .plugin(HOIST_SCRIPT_STYLE)
+  // .use(hoistScriptStylePlugin)
+  // .end()
   // emoji表情 http://npm.taobao.org/package/markdown-it-emoji
   .plugin(EMOJI)
   .use(emojiPlugin)
@@ -54,6 +89,10 @@ config
     includeLevel: [2, 3],
     format: parseHeaders
   }, toc)])
+  .end()
+  // lineNumbersPlugin
+  .plugin(LINE_NUMBERS)
+  .use(lineNumbersPlugin)
   .end()
 
 const md = config.toMd()
