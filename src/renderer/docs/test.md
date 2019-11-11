@@ -38,4 +38,6 @@ function fn () {
 }
 ```
 
+<HelloWorld>vue 组件测试</HelloWorld>
+
 [百度一下](http://www.baidu.com)

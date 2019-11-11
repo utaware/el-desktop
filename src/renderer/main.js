@@ -12,8 +12,14 @@ import './assets/css/index.css'
 
 // 指令注册
 import directives from '@/directives/install'
+// 组件注册
+import globalComponents from '@/components/global'
 
 Vue.use(directives)
+// 注册global下的全局组件
+for (const name in globalComponents) {
+  Vue.component(name, globalComponents[name])
+}
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 

@@ -1,0 +1,10 @@
+// 全局组件注册
+const files = require.context('.', false, /\.vue$/)
+const modules = {}
+
+files.keys().forEach(key => {
+  if (key === './index.js') return
+  modules[key.replace(/(\.\/|\.vue)/g, '')] = files(key).default
+})
+
+export default modules

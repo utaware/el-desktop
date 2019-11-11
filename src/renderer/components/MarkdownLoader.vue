@@ -9,7 +9,7 @@
 
   <div class="wrapper-markdown-loader" ref="mark">
 
-    <div v-html="content"></div>
+    <!-- 容器 -->
 
   </div>
 
@@ -18,6 +18,8 @@
 <script>
 // utils
 import { readFileContent } from '@/utils/ipcRendererHandle'
+// Vue
+import Vue from 'vue'
 
 export default {
   name: 'ns-markdown-loader',
@@ -41,7 +43,7 @@ export default {
   },
   data () {
     return {
-      content: ''
+      component: null
     }
   },
   computed: {},
@@ -50,21 +52,37 @@ export default {
     parseMarkdownFile (path) {
       readFileContent({
         path,
-        callback: (event, content) => {
-          this.content = content
+        callback: (event, fileContent) => {
+          this.createContentNodes(fileContent)
         }
       })
+    },
+    // 生成并插入html结构
+    createContentNodes (content) {
+      const htmlContent = `<main>\n${content}\n</main>`
+      const Component = Vue.extend({ template: htmlContent })
+      this.component = new Component().$mount()
+      this.$refs.mark.appendChild(this.component.$el)
+    },
+    // 移除html结构
+    removeContentNodes () {
+      this.$refs.mark.removeChild(this.component.$el)
+      this.component.$destroy()
+      this.component = null
     }
   },
   filters: {},
   created () {},
-  mounted () {}
+  mounted () {},
+  beforeDestroy () {
+    this.removeContentNodes()
+  }
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../assets/css/vuepress.css";
+<style lang="stylus">
+@import './styles/index.styl';
 .wrapper-markdown-loader {
-  padding: 1rem;
+  padding: 1rem 2rem;
 }
 </style>
