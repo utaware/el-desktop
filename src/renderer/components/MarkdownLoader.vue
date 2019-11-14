@@ -59,6 +59,11 @@ export default {
     },
     // 生成并插入html结构
     createContentNodes (content) {
+      // 如果已经存在节点先移除
+      if (this.component) {
+        this.removeContentNodes()
+      }
+      // 再生成节点
       const htmlContent = `<main>\n${content}\n</main>`
       const Component = Vue.extend({ template: htmlContent })
       this.component = new Component().$mount()

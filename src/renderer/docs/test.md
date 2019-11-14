@@ -29,7 +29,7 @@ function fn () {
 ```
 
 ```vue
-<HelloWorld>vue 组件测试</HelloWorld>
+<Commander>vue 组件测试</Commander>
 ```
 
 ```css
@@ -38,6 +38,6 @@ function fn () {
 }
 ```
 
-<HelloWorld>vue 组件测试</HelloWorld>
+<Commander>vue 组件测试</Commander>
 
 [百度一下](http://www.baidu.com)

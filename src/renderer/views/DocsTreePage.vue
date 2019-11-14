@@ -54,7 +54,7 @@
 </template>
 
 <script>
-// utils
+// ipc
 import {
   showOpenDialog,
   readFileFolderPath

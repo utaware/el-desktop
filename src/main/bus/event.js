@@ -1,8 +1,10 @@
 // 事件统一处理
-const openDialog = require('../lib/dialog')
-const handleFiles = require('../lib/files')
+const dialog = require('../lib/dialog')
+const files = require('../lib/files')
+const command = require('../lib/command')
 
 module.exports = {
-  ...openDialog,
-  ...handleFiles
+  ...dialog,
+  ...files,
+  ...command
 }

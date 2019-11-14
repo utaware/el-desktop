@@ -35,3 +35,13 @@ export function readFileContent ({ path, callback }) {
     callback
   })
 }
+
+// 执行命令
+export function executeCommand ({ command, options, callback }) {
+  ipcEventsHandler({
+    send: 'executeCommand',
+    command,
+    options,
+    callback
+  })
+}
