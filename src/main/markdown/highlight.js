@@ -3,13 +3,11 @@
 // 相比于highlightjs，prismjs高亮的代码更准确、更加的细粒度。
 // 所以，更推荐使用prismjs做代码高亮。
 const prism = require('prismjs')
-const loadLanguages = require('prismjs/components/index')
+// const loadLanguages = require('prismjs/components/index')
+const prismjsComponentsLanguages = require('prismjs/components').languages
 
 const escapeHtml = require('escape-html')
 const chalk = require('chalk')
-
-// required to make embedded highlighting work...
-// loadLanguages(['markup', 'css', 'javascript'])
 
 // 包裹由prism处理(语言匹配高亮)后的字符串
 function wrap (code, lang) {
@@ -41,10 +39,18 @@ module.exports = (str, lang) => {
   if (abbreviateMap[lang]) {
     lang = abbreviateMap[lang]
   }
+  // 递归加载依赖语言
+  const loadLanguages = (loadLang) => {
+    const preLang = prismjsComponentsLanguages[loadLang].require
+    if (preLang) {
+      loadLanguages(preLang)
+    }
+    require('prismjs/components/prism-' + loadLang)
+  }
 
   if (!prism.languages[lang]) {
     try {
-      loadLanguages([lang])
+      loadLanguages(lang)
     } catch (e) {
       chalk.yellow(`[vuepress] Syntax highlight for language "${lang}" is not supported.`)
     }

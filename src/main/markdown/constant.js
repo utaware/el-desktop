@@ -9,5 +9,6 @@ exports.PLUGINS = {
   ANCHOR: 'anchor',
   EMOJI: 'emoji',
   TOC: 'toc',
-  LINE_NUMBERS: 'line-numbers'
+  LINE_NUMBERS: 'line-numbers',
+  CONTAINER: 'container'
 }

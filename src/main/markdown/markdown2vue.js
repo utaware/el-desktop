@@ -5,6 +5,7 @@ const config = new Config()
 const emojiPlugin = require('markdown-it-emoji')
 const anchorPlugin = require('markdown-it-anchor')
 const tocPlugin = require('markdown-it-table-of-contents')
+const containerPlugin = require('markdown-it-container')
 // other plugin
 const highlightCode = require('./highlight')
 const componentPlugin = require('./component')
@@ -30,10 +31,11 @@ const {
   HIGHLIGHT_LINES,
   LINE_NUMBERS,
   SNIPPET,
-  CONVERT_ROUTER_LINK
+  CONVERT_ROUTER_LINK,
+  CONTAINER
   // HOIST_SCRIPT_STYLE,
 } = PLUGINS
-
+// https://www.xiaoyulive.top/favorite/docs/Plugins_Markdown_It.html#%E6%A0%87%E7%AD%BE%E5%9E%8B%E6%8F%92%E4%BB%B6
 config
   .options
   // 基本设置
@@ -54,16 +56,34 @@ config
   .plugin(PRE_WRAPPER)
   .use(preWrapperPlugin)
   .end()
+  // containerPlugin
+  .plugin(CONTAINER)
+  .use(containerPlugin, ['spoiler', {
+    validate: function (params) {
+      return params.trim().match(/^spoiler\s+(.*)$/)
+    },
+    render: function (tokens, idx) {
+      var m = tokens[idx].info.trim().match(/^spoiler\s+(.*)$/)
+      if (tokens[idx].nesting === 1) {
+        // opening tag
+        return '<details><summary>' + m[1] + '</summary>\n'
+      } else {
+        // closing tag
+        return '</details>\n'
+      }
+    }
+  }])
+  .end()
   // 代码段
   .plugin(SNIPPET)
   .use(snippetPlugin)
   .end()
   // 链接样式修改
   .plugin(CONVERT_ROUTER_LINK)
-  .use(convertRouterLinkPlugin, [Object.assign({
+  .use(convertRouterLinkPlugin, [{
     target: '_blank',
     rel: 'noopener noreferrer'
-  })])
+  }])
   .end()
   // style,script标签分裂
   // .plugin(HOIST_SCRIPT_STYLE)
