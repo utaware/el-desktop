@@ -2,21 +2,13 @@
 
 [View source](https://github.com/markdown-it/markdown-it/blob/master/lib/index.js#L118)
 
-::: spoiler 说明
+::: CARD 标题tip tip
 
 提供了一些内置的方法
 
 . => 类方法
 \# => 实例方法
 
-:::
-
-::: spoiler
-*here be dragons*
-:::
-
-::: spoiler click me
-*content*
 :::
 
 **说明**

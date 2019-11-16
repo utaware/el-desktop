@@ -58,18 +58,17 @@ config
   .end()
   // containerPlugin
   .plugin(CONTAINER)
-  .use(containerPlugin, ['spoiler', {
+  .use(containerPlugin, ['CARD', {
     validate: function (params) {
-      return params.trim().match(/^spoiler\s+(.*)$/)
+      return params.trim().match(/^CARD\s+(.*)$/)
     },
     render: function (tokens, idx) {
-      var m = tokens[idx].info.trim().match(/^spoiler\s+(.*)$/)
+      var m = tokens[idx].info.trim().match(/^CARD\s+(.*)$/)
       if (tokens[idx].nesting === 1) {
-        // opening tag
-        return '<details><summary>' + m[1] + '</summary>\n'
+        const contentProps = m[1]
+        return `<MarkdownCard contentProps="${contentProps}">\n`
       } else {
-        // closing tag
-        return '</details>\n'
+        return '</MarkdownCard>\n'
       }
     }
   }])
