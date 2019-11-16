@@ -7,9 +7,12 @@
 
 <template>
 
-  <div class="wrapper-markdown-loader" ref="mark">
+  <div class="wrapper-markdown-loader">
 
     <!-- 容器 -->
+    <div class="content" ref="mark"></div>
+
+    <el-backtop target=".content" :bottom="100"></el-backtop>
 
   </div>
 

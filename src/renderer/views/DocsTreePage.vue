@@ -161,8 +161,6 @@ export default {
   // 中间部分 树 + 内容
   .docs-body {
     display: flex;
-    height: 50rem;
-    justify-content: stretch;
     border-radius: 0.5rem;
     // 文件目录树
     .dirs-tree {
@@ -172,6 +170,7 @@ export default {
     // markdown 内容
     .mark-content {
       flex: 1;
+      height: 100%;
     }
   }
 }

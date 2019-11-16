@@ -7,9 +7,9 @@
 
 <template>
 
-  <div class="wrapper-markdown-card">
+  <div class="wrapper-markdown-card" :class="cardOptions.description">
 
-    <div class="color-bar" :class="cardOptions.description"></div>
+    <div class="color-bar"></div>
 
     <el-card class="box-card">
 
@@ -17,7 +17,7 @@
       
         <span class="header-title">{{ cardOptions.title }}</span>
 
-        <span class="header-desc" :class="cardOptions.description">{{ cardOptions.description }}</span>
+        <span class="header-desc">{{ cardOptions.description }}</span>
       
       </div>
       
@@ -73,6 +73,16 @@ export default {
   // card
   .box-card {
     flex: 1;
+    // 左侧标题
+    .header-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    // 右侧描述
+    .header-desc {
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+    }
     // deep
     /deep/ .el-card__header {
       padding: 1rem;
@@ -86,26 +96,36 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-  // 左侧标题
-  .header-title {
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  // 右侧描述
-  .header-desc {
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    background-color: #f3f5f7;  
-  }
-  // 提示类名
-  .tip {
+}
+
+// 背景色主题
+.tip {
+  .color-bar, .header-desc {
     background-color: #42b983;
   }
-  .warning {
+}
+.warning {
+  .color-bar, .header-desc {
     background-color: darken(#ffe564, 35%);  
   }
-  .danger {
+  .box-card {
+    color: darken(#ffe564, 70%);
+    background-color: rgba(255,229,100,.3);
+  }
+  .header-title {
+    color: darken(#ffe564, 50%);
+  }
+}
+.danger {
+  .color-bar, .header-desc {
     background-color: darken(red, 20%);
+  }
+  .box-card {
+    color: darken(red, 70%);
+    background-color: #ffe6e6;
+  }
+  .header-title {
+    color: darken(red, 40%);  
   }
 }
 </style>

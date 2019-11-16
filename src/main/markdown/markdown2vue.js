@@ -36,6 +36,7 @@ const {
   // HOIST_SCRIPT_STYLE,
 } = PLUGINS
 // https://www.xiaoyulive.top/favorite/docs/Plugins_Markdown_It.html#%E6%A0%87%E7%AD%BE%E5%9E%8B%E6%8F%92%E4%BB%B6
+// https://www.jianshu.com/p/a95c04a68d14
 config
   .options
   // 基本设置

@@ -2,7 +2,7 @@
 
 [View source](https://github.com/markdown-it/markdown-it/blob/master/lib/index.js#L118)
 
-::: CARD 标题tip tip
+::: CARD 标题 tip
 
 提供了一些内置的方法
 
