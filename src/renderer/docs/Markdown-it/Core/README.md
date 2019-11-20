@@ -119,26 +119,39 @@ class MarkdownIt {
 }
 ```
 
+- render
+  - inline
+  - block
+  - core
+  - renderer
+- url
+  - validateLink
+  - normalizeLink
+  - normalizeLinkText
+- util
+  - utils
+  - helpers
+
 **prototype**
 
 ```js
 MarkdownIt.prototype = {
-  // assign合并options选项
+  // 合并 options
   set: '设置解析器选项',
-  // 供内部调用, 加载模式
+  // 禁用 ParserInline、ParserBlock、ParserCore 的某些规则并且获取特定的 options
   configure: '所有选项和编译设置的批量加载',
-  // 规则的启用和禁用
+  // 启用和禁用 ParserInline、ParserBlock、ParserCore 的某些规则
   enable: '启用 list 或 rules',
   disable: '用于禁用指定的规则',
-  // 这只是一个语法糖，和调用 plugin(md, params) 等效
+  // 注入插件: 这只是一个语法糖，和调用 plugin(md, params) 等效
   use: '将指定的插件加载到当前的解析器实例中',
-  // 如果你没有编写自定义渲染器（例如，生成 AST）的打算，不建议直接调用此方法
+  // 编译的入口: 如果你没有编写自定义渲染器（例如，生成 AST）的打算，不建议直接调用此方法
   parse: '解析输入字符串并返回块(类型)的 token 列表',
-  // env 可用于注入附加的元数据
+  // MarkdownIt 编译的出口，吐出 HTML 字符串
   render: '将 markdown 字符串转换为 HTML',
-  // 但是会忽略所有块规则
+  // 仅仅编译类型为 inline 的 token 会忽略所有块规则 
   parseInline: '类似于 MarkdownIt.parse',
-  // 但对于单个段落的内容，(渲染的)结果不会被 <p> 标签包裹。
+  // 接收 parseInline 输出的 tokens，最终生成 HTML 字符串，不会被 p 标签包裹
   renderInline: '类似于 MarkdownIt.render'
 }
 ```

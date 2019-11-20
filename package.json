@@ -69,6 +69,7 @@
     "markdown-it-container": "^2.0.0",
     "markdown-it-emoji": "^1.4.0",
     "markdown-it-table-of-contents": "^0.4.4",
+    "mermaid": "^8.4.2",
     "prismjs": "^1.17.1",
     "semver": "^6.3.0",
     "toml": "^3.0.0",
