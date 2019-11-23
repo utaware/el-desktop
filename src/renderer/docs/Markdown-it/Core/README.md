@@ -1,6 +1,20 @@
 # entry
 
-[docs](https://markdown-it.docschina.org/api/MarkdownIt.html)
+> 中文文档
+
+[zhon](https://markdown-it.docschina.org/api/MarkdownIt.html)
+
+> markdown-it如何被调用
+
+```js
+// 引入markdown-it模块
+var md = require('markdown-it')();
+// 输入md字符串, 输出html字符串
+var result = md.render('# markdown-it rulezz!');
+```
+
+1. 加载markdown-it模块
+2. 调用markdown-it的render方法
 
 ```json
 {
@@ -11,147 +25,134 @@
 }
 ```
 
-## modules
+> 模块内容由package.json中main入口, 指向index.js
 
 ```js
-// 模块
-var utils        = require('./common/utils');
-var helpers      = require('./helpers');
-var Renderer     = require('./renderer');
-var ParserCore   = require('./parser_core');
-var ParserBlock  = require('./parser_block');
-var ParserInline = require('./parser_inline');
-var LinkifyIt    = require('linkify-it');
-var mdurl        = require('mdurl');
-var punycode     = require('punycode');
+// index.js
+module.exports = require('./lib/');
 ```
 
-## config
+> index.js又指向lib下的index.js
+
+## Main
+
+* render 渲染器函数
+* parse 解析器函数
+* core 调度器
+  * core.State 初始化状态
+  * core.process 规则调度加工
 
 ```js
-// 相关设置 
-var config = {
-  'default': require('./presets/default'),
-  zero: require('./presets/zero'),
-  commonmark: require('./presets/commonmark')
+// core-rules
+var _rules = [
+  // 处理换行和字符串结束标志符
+  [ 'normalize',      require('./rules_core/normalize')      ],
+  // 交给block规则处理
+  [ 'block',          require('./rules_core/block')          ],
+  // 交给inline规则处理
+  [ 'inline',         require('./rules_core/inline')         ],
+  // 将 URL-like 的字符串转化成超链接
+  [ 'linkify',        require('./rules_core/linkify')        ],
+  // 就是替换一些印刷字体
+  [ 'replacements',   require('./rules_core/replacements')   ],
+  // 处理一些不同国家语言的引号问题
+  [ 'smartquotes',    require('./rules_core/smartquotes')    ]
+];
+
+for (i = 0, l = rules.length; i < l; i++) {
+  // rule => state
+  rules[i](state);
+}
+```
+
+> core => block
+
+```js
+// block规则被调用
+state.md.block.parse(state.src, state.md, state.env, state.tokens);
+// parse
+ParserBlock.prototype.parse = function (src, md, env, outTokens) {
+  var state;
+
+  if (!src) { return; }
+
+  state = new this.State(src, md, env, outTokens);
+
+  this.tokenize(state, state.line, state.lineMax);
 };
-```
-
-## methods
-
-### validateLink
-
-> 用以validateLink对url校验是否合法, 预防xss
-
-```js
-//  用以validateLink对url校验是否合法, 预防xss
-var BAD_PROTO_RE = /^(vbscript|javascript|file|data):/;
-var GOOD_DATA_RE = /^data:image\/(gif|png|jpeg|webp);/;
-
-function validateLink(url) {
-  // url should be normalized at this point, and existing entities are decoded
-  var str = url.trim().toLowerCase();
-
-  return BAD_PROTO_RE.test(str) ? (GOOD_DATA_RE.test(str) ? true : false) : true;
-}
-```
-
-### normalizeLink & normalizeLinkText
-
-> 调用mdurl模块序列化转码url
-> 两个方法不同之处只是在调用punycode使用的编码转化不同
-> normalizeLink(toASCII) normalizeLinkText(toUnicode)
-> Punycode => 编码转换 mdurl => url解析
-
-```js
-function normalizeLink(url) {
-  var parsed = mdurl.parse(url, true);
-
-  if (parsed.hostname) {
-    // Encode hostnames in urls like:
-    // `http://host/`, `https://host/`, `mailto:user@host`, `//host/`
-    //
-    // We don't encode unknown schemas, because it's likely that we encode
-    // something we shouldn't (e.g. `skype:name` treated as `skype:host`)
-    //
-    if (!parsed.protocol || RECODE_HOSTNAME_FOR.indexOf(parsed.protocol) >= 0) {
-      try {
-        parsed.hostname = punycode.toASCII(parsed.hostname);
-      } catch (er) { /**/ }
-    }
+// State
+ParserBlock.prototype.State = require('./rules_block/state_block');
+// tokenize
+ParserBlock.prototype.tokenize = function (state, startLine, endLine) {
+  for (i = 0; i < len; i++) {
+    // rules => state, line, endLine, slient
+    ok = rules[i](state, line, endLine, false);
+    if (ok) { break; }
   }
-
-  return mdurl.encode(mdurl.format(parsed));
 }
 ```
 
-## MarkdownIt
-
-> Main parser/renderer class 最后被模块化导出的实例
-
 ```js
-class MarkdownIt {
+// First 2 params - rule name & source. Secondary array - list of rules,
+// which can be terminated by this one.
+var _rules = [
+  [ 'table',      require('./rules_block/table'),      [ 'paragraph', 'reference' ] ],
+  [ 'code',       require('./rules_block/code') ],
+  [ 'fence',      require('./rules_block/fence'),      [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+  [ 'blockquote', require('./rules_block/blockquote'), [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+  [ 'hr',         require('./rules_block/hr'),         [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+  [ 'list',       require('./rules_block/list'),       [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'reference',  require('./rules_block/reference') ],
+  [ 'heading',    require('./rules_block/heading'),    [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'lheading',   require('./rules_block/lheading') ],
+  [ 'html_block', require('./rules_block/html_block'), [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'paragraph',  require('./rules_block/paragraph') ]
+];
 
-  // 当编写插件时，你可能用它来添加新规则。
-  this.inline = new ParserInline();
-  this.block = new ParserBlock();
-  // 顶层规则执行器。粘合块/内联的解析器，并进行中间(过程)的转换。
-  this.core = new ParserCore();
-  // 将 markdown 字符串转换为 HTML。它对你来说肯定是最有魔力的：
-  this.renderer = new Renderer();
-  // linkify-it 的实例，用于 linkify 规则。
-  this.linkify = new LinkifyIt();
-  // 链接校验函数。CommonMark 模式允许链接过多。默认情况下，我们禁用 javascript:，vbscript:，file: schemas，以及几乎所有的 data:...schemas，除了一些嵌入式图像类型。
-  this.validateLink = validateLink;
-  // 用于将链接 URL 编码为机器可读(machine-readable)格式的函数，包括 url 编码、punycode 等。 unicode
-  this.normalizeLink = normalizeLink;
-  // 用于将链接 URL 解码为人类可读格式(human-readable)的函数。 ASCII
-  this.normalizeLinkText = normalizeLinkText;
-  // 各种实用的函数，用于编写插件。
-  this.utils = utils;
-  // 链接组件解析函数，对编写插件大有裨益。
-  this.helpers = utils.assign({}, helpers);
-  this.options = {};
-  // 所有选项和编译设置的批量加载。这是个内部方法，你可能并不需要它
-  this.configure(presetName);
-  if (options) { this.set(options); }
-
+for (i = 0; i < len; i++) {
+  ok = rules[i](state, line, endLine, false);
+  if (ok) { break; }
 }
 ```
 
-- render
-  - inline
-  - block
-  - core
-  - renderer
-- url
-  - validateLink
-  - normalizeLink
-  - normalizeLinkText
-- util
-  - utils
-  - helpers
-
-**prototype**
+> 块内规则, 解析到符合的规则便return true, 跳出block解析, 内部存在的
 
 ```js
-MarkdownIt.prototype = {
-  // 合并 options
-  set: '设置解析器选项',
-  // 禁用 ParserInline、ParserBlock、ParserCore 的某些规则并且获取特定的 options
-  configure: '所有选项和编译设置的批量加载',
-  // 启用和禁用 ParserInline、ParserBlock、ParserCore 的某些规则
-  enable: '启用 list 或 rules',
-  disable: '用于禁用指定的规则',
-  // 注入插件: 这只是一个语法糖，和调用 plugin(md, params) 等效
-  use: '将指定的插件加载到当前的解析器实例中',
-  // 编译的入口: 如果你没有编写自定义渲染器（例如，生成 AST）的打算，不建议直接调用此方法
-  parse: '解析输入字符串并返回块(类型)的 token 列表',
-  // MarkdownIt 编译的出口，吐出 HTML 字符串
-  render: '将 markdown 字符串转换为 HTML',
-  // 仅仅编译类型为 inline 的 token 会忽略所有块规则 
-  parseInline: '类似于 MarkdownIt.parse',
-  // 接收 parseInline 输出的 tokens，最终生成 HTML 字符串，不会被 p 标签包裹
-  renderInline: '类似于 MarkdownIt.render'
+// parserCore - inline
+state.md.inline.parse(tok.content, state.md, state.env, tok.children);
+// parserInline - parse
+var state = new this.State(str, md, env, outTokens);
+this.tokenize(state);
+rules = this.ruler2.getRules('');
+len = rules.length;
+
+for (i = 0; i < len; i++) {
+  rules[i](state);
 }
+// 这部分和block略有不同，含有2个rulers
+// tokenize执行第一个rulers
+// tokenize执行完毕后再执行第二个rules
+```
+
+```js
+var _rules = [
+  [ 'text',            require('./rules_inline/text') ],
+  [ 'newline',         require('./rules_inline/newline') ],
+  [ 'escape',          require('./rules_inline/escape') ],
+  [ 'backticks',       require('./rules_inline/backticks') ],
+  [ 'strikethrough',   require('./rules_inline/strikethrough').tokenize ],
+  [ 'emphasis',        require('./rules_inline/emphasis').tokenize ],
+  [ 'link',            require('./rules_inline/link') ],
+  [ 'image',           require('./rules_inline/image') ],
+  [ 'autolink',        require('./rules_inline/autolink') ],
+  [ 'html_inline',     require('./rules_inline/html_inline') ],
+  [ 'entity',          require('./rules_inline/entity') ]
+];
+
+var _rules2 = [
+  [ 'balance_pairs',   require('./rules_inline/balance_pairs') ],
+  [ 'strikethrough',   require('./rules_inline/strikethrough').postProcess ],
+  [ 'emphasis',        require('./rules_inline/emphasis').postProcess ],
+  [ 'text_collapse',   require('./rules_inline/text_collapse') ]
+];
 ```

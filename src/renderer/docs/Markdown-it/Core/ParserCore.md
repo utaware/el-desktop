@@ -3,7 +3,7 @@
 编译的核心管理者，掌握着不同类型的 token 生成的流程。它内部管理了 ParserBlock、ParserInline、linkify、replacements 等 rule 函数。也就是说，用户传入一个字符串，经历了这些 rule 函数处理之后，得到了一个由许多 token 组成的 tokens 数组，最后再交由 renderer 处理之后，吐出 HTML 字符串。
 
 ```js
-// main
+// index
 md.render('# markdown-it rulezz!')
 // render
 MarkdownIt.prototype.render = function (src, env) {
@@ -102,29 +102,6 @@ module.exports = StateCore;
 
 `src` 用来放用户输入的字符串，tokens 存放编译出来的 token。`inlineMode` 表示 parse 的时候是否编译成 type 为 inline 的 token。`md` 就是当前 MarkdownIt 的实例。
 
-### normalize
-
-```js
-// 换行
-var NEWLINES_RE  = /\r\n?|\n/g;
-// 字符串结束标志
-var NULL_RE      = /\0/g;
-
-module.exports = function inline(state) {
-  var str;
-
-  // Normalize newlines
-  str = state.src.replace(NEWLINES_RE, '\n');
-
-  // Replace NULL characters
-  str = str.replace(NULL_RE, '\uFFFD');
-
-  state.src = str;
-};
-```
-
-替换换行和字符串结束标志符
-
 ### block
 
 ```js
@@ -207,54 +184,4 @@ md.render(src)
 }
 
 // 最后传给 md.renderer.render 之后，就能生成加粗的文字了。
-```
-
-### linkify
-
-这个 rule 的作用就是将 URL-like 的字符串转化成超链接。rule 是否执行，是取决于你实例化 md 传入的 options.linkify。内部检测 URL-like 的字符串用的库是 linkify-it。
-
-### replacements
-
-```js
-module.exports = function replace(state) {
-  var blkIdx;
-
-  if (!state.md.options.typographer) { return; }
-
-  for (blkIdx = state.tokens.length - 1; blkIdx >= 0; blkIdx--) {
-
-    if (state.tokens[blkIdx].type !== 'inline') { continue; }
-
-    if (SCOPED_ABBR_TEST_RE.test(state.tokens[blkIdx].content)) {
-      replace_scoped(state.tokens[blkIdx].children);
-    }
-
-    if (RARE_RE.test(state.tokens[blkIdx].content)) {
-      replace_rare(state.tokens[blkIdx].children);
-    }
-
-  }
-};
-```
-
-初始化 md 的时候传入的 options.typographer 为 true 的时候，开启该 rule。这个 rule 的作用，就是替换一些印刷字体，比如类似于下面的：
-
-```js
-// (c) (C) → ©
-// (tm) (TM) → ™
-// (r) (R) → ®
-// +- → ±
-// (p) (P) -> §
-```
-
-### smartquotes
-
-初始化 md 的时候传入的 options.typographer 为 true 的时候，开启该 rule。rule 的作用就是为了处理一些不同国家语言的引号问题。官网给出的解释如下
-
-```js
-// Double + single quotes replacement pairs, when typographer enabled,
-// and smartquotes on. Could be either a String or an Array.
-//
-// For example, you can use '«»„“' for Russian, '„“‚‘' for German,
-// and ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'] for French (including nbsp).
 ```

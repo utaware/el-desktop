@@ -223,6 +223,31 @@ Ruler.prototype.enable = function (list, ignoreInvalid) {
 
 开启 list 列出的 rule，不影响其他 rule。
 
+### disable
+
+```js
+Ruler.prototype.disable = function (list, ignoreInvalid) {
+  if (!Array.isArray(list)) { list = [ list ]; }
+
+  var result = [];
+
+  // Search by name and disable
+  list.forEach(function (name) {
+    var idx = this.__find__(name);
+
+    if (idx < 0) {
+      if (ignoreInvalid) { return; }
+      throw new Error('Rules manager: invalid rule name ' + name);
+    }
+    this.__rules__[idx].enabled = false;
+    result.push(name);
+  }, this);
+
+  this.__cache__ = null;
+  return result;
+};
+```
+
 ### enableOnly
 
 ```js
