@@ -7,21 +7,21 @@ const anchorPlugin = require('markdown-it-anchor')
 const tocPlugin = require('markdown-it-table-of-contents')
 const containerPlugin = require('markdown-it-container')
 // other plugin
-const highlightCode = require('./highlight')
-const componentPlugin = require('./component')
-const preWrapperPlugin = require('./preWrapper')
-const highlightLinesPlugin = require('./highlightLines')
-const lineNumbersPlugin = require('./lineNumbers')
-const snippetPlugin = require('./snippet')
-const convertRouterLinkPlugin = require('./link')
-// const hoistScriptStylePlugin = require('./hoist')
+const highlightCode = require('./plugins/highlight')
+const componentPlugin = require('./plugins/component')
+const preWrapperPlugin = require('./plugins/preWrapper')
+const highlightLinesPlugin = require('./plugins/highlightLines')
+const lineNumbersPlugin = require('./plugins/lineNumbers')
+const snippetPlugin = require('./plugins/snippet')
+const convertRouterLinkPlugin = require('./plugins/link')
+// const hoistScriptStylePlugin = require('./plugins/hoist')
 // config
-const slugify = require('./slugify')
-const parseHeaders = require('./parseHeaders')
-const pluginOptions = require('./options')
+const slugify = require('./utils/slugify')
+const parseHeaders = require('./utils/parseHeaders')
+const pluginOptions = require('./lib/options')
 const { anchor, toc } = pluginOptions
 // 常量字符串
-const { PLUGINS } = require('./constant')
+const { PLUGINS } = require('./lib/constant')
 const {
   EMOJI,
   ANCHOR,
@@ -116,13 +116,5 @@ config
   .end()
 
 const md = config.toMd()
-
-module.exports = {
-
-  parseMarkdownFile (content) {
-
-    return md.render(content)
-
-  }
-
-}
+// parseMarkdownFile
+module.exports = md

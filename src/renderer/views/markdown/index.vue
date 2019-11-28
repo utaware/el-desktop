@@ -1,0 +1,93 @@
+/**
+ * @filename: DocsTreePage.vue
+ * @desc: vue components file
+ * @author: utaware
+ * @createTime: 2019/08/30 15:15:12 星期五
+ */
+
+<template>
+
+  <div class="wrapper-docs-tree-page">
+    <!-- 头部菜单栏 -->
+    <MenuHead></MenuHead>
+
+    <!-- 中间树和内容 -->
+    <div class="docs-body">
+
+      <!-- 文档树 -->
+      <DocsTree v-show="layoutShow.tree" @selectFileChange="selectFileChange"></DocsTree>
+
+      <!-- 选择的文本内容 -->
+      <MarkdownLoader class="mark-content" v-show="layoutShow.mark" :path="markFilePath"></MarkdownLoader>
+
+    </div>
+
+  </div>
+
+</template>
+
+<script>
+// components
+import MarkdownLoader from '@/components/MarkdownLoader.vue'
+import DocsTree from './package/DocsTree.vue'
+import MenuHead from './package/MenuHead.vue'
+// vuex
+import { mapState } from 'vuex'
+
+export default {
+  name: 'ns-docs-tree-page',
+  components: {
+    MarkdownLoader,
+    DocsTree,
+    MenuHead
+  },
+  mixins: [],
+  watch: {},
+  props: {},
+  data () {
+    return {
+      // 选择的md文件路径
+      markFilePath: '',
+      // 布局模态框
+      dialogVisible: false
+    }
+  },
+  computed: {
+    // vuex
+    ...mapState('Markview', ['layoutShow'])
+  },
+  methods: {
+    // 文档树选择文件变动
+    selectFileChange (path) {
+      this.markFilePath = path
+    },
+    // 修改布局展示
+    changeLayoutDialogShow (show) {
+      this.dialogVisible = show
+    },
+    // 目录树是否展示
+    changeDocsTreeShow (show) {
+      this.docsTreeShow = show
+    }
+  },
+  filters: {},
+  created () {},
+  mounted () {}
+}
+</script>
+
+<style lang="scss" scoped>
+.wrapper-docs-tree-page {
+  // 中间部分 树 + 内容
+  min-width: 800px;
+  .docs-body {
+    display: flex;
+    border-radius: 0.5rem;
+    // markdown 内容
+    .mark-content {
+      flex: 1;
+      height: 100%;
+    }
+  }
+}
+</style>

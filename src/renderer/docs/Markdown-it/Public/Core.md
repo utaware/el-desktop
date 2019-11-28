@@ -1,15 +1,9 @@
+[[toc]]
+
 # Core
 
 [源代码](https://github.com/markdown-it/markdown-it/blob/master/lib/parser_core.js#L7)
 
-* Description
-  * 顶层规则执行器。粘合块/内联的解析器，并进行中间(过程)的转换。
-* Constructor
-  * new Core
-* Class methods
-  * process
-* Instance properties
-  * ruler
 ## Core.new
 
 [源代码](https://github.com/markdown-it/markdown-it/blob/master/lib/parser_core.js#L26)
@@ -28,7 +22,7 @@ Core.process(state)
 ```
 执行核心的链式规则。
 
-# Core.ruler
+## Core.ruler
 
 [源代码](https://github.com/markdown-it/markdown-it/blob/master/lib/parser_core.js#L32)
 

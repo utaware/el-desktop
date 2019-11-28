@@ -1,13 +1,7 @@
 // 文件操作相关
+const { readFolderDirectory } = require('../utils/fs')
 
-const { promisify } = require('util')
-
-const fs = require('fs-extra')
-
-const { parseMarkdownFile } = require('../markdown/markdown2vue')
-
-const readdirPromise = promisify(fs.readdir)
-const readFilePromise = promisify(fs.readFile)
+const { successHandler, errorHandler } = require('../utils/handler')
 
 module.exports = {
   // 文件夹路径结构读取
@@ -15,9 +9,9 @@ module.exports = {
 
     const { dirPath, on } = args
 
-    readdirPromise(dirPath, { withFileTypes: true }).then(files => {
+    readFolderDirectory(dirPath, { withFileTypes: true }).then(files => {
 
-      const result = files.map(v => {
+      const data = files.map(v => {
         const { name } = v
         return {
           name,
@@ -28,33 +22,11 @@ module.exports = {
         }
       })
 
-      event.sender.send(on, result)
-
-    }).catch(err => {
-
-      console.log(err)
-
-      event.sender.send(on, [])
-
-    })
-
-  },
-  // 读取文件内容
-  readFileContent (event, args) {
-
-    const { filePath, on } = args
-
-    readFilePromise(filePath).then(data => {
-
-      const content = data.toString()
-
-      const result = parseMarkdownFile(content)
-
-      event.sender.send(on, result)
+      successHandler(event, on, { data })
 
     }).catch(error => {
 
-      event.sender.send(on, error)
+      errorHandler(event, on, { error })
 
     })
 

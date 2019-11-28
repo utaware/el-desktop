@@ -2,19 +2,29 @@
 
 const { dialog } = require('electron')
 
+const { successHandler, errorHandler } = require('../utils/handler')
+
 module.exports = {
-  // 打开选择文件夹或者文件弹框
+  // 显示用于打开和保存文件、警报等的本机系统对话框。
   showOpenDialog (event, args) {
 
-    const { properties, on } = args
+    const { options, on } = args
     // 打开弹框
-    dialog.showOpenDialog({ properties }, function (files) {
+    dialog.showOpenDialog(options).then(result => {
 
-      if (files) {
+      const { canceled, filePaths } = result
 
-        event.sender.send(on, files[0])
+      const copyPaths = [].concat(filePaths)
 
-      }
+      const { properties: { multiSelections = false } } = options
+
+      const selected = canceled ? null : multiSelections ? copyPaths : copyPaths.shift()
+
+      successHandler(event, on, { data: selected })
+
+    }).catch(error => {
+
+      errorHandler(event, on, { error })
 
     })
 

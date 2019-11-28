@@ -2,15 +2,6 @@
 
 [View source](https://github.com/markdown-it/markdown-it/blob/master/lib/index.js#L118)
 
-::: CARD 标题 tip
-
-提供了一些内置的方法
-
-. => 类方法
-\# => 实例方法
-
-:::
-
 **说明**
 
 主要的解析器/渲染器类。

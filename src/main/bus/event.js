@@ -1,10 +1,14 @@
 // 事件统一处理
-const dialog = require('../lib/dialog')
-const files = require('../lib/files')
-const command = require('../lib/command')
+let messageHandlers = {}
 
-module.exports = {
-  ...dialog,
-  ...files,
-  ...command
-}
+const files = require.context('../lib', false, /\.js$/)
+
+files.keys().reduce((prev, next) => {
+
+  const fileModule = files(next)
+
+  return Object.assign(prev, fileModule)
+
+}, messageHandlers)
+
+module.exports = messageHandlers

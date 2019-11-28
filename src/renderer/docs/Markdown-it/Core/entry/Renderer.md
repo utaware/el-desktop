@@ -3,6 +3,7 @@
 在所有 Parser 编译生成完 tokens 的时候，就传给 Renderer.render 方法了。我们来看下 Renderer 的定义。它位于 `lib/renderer.js`。
 
 ```js
+// `code`
 default_rules.code_inline = function (tokens, idx, options, env, slf) {
   var token = tokens[idx];
 
@@ -11,7 +12,7 @@ default_rules.code_inline = function (tokens, idx, options, env, slf) {
           '</code>';
 };
 
-
+// 
 default_rules.code_block = function (tokens, idx, options, env, slf) {
   var token = tokens[idx];
 

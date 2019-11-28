@@ -22,6 +22,10 @@
 <script>
   export default {
     name: 'el-desktop',
+    provide: {
+      successCode: 1,
+      errorCode: 0
+    },
     data () {
       return {
         // 绑定样式

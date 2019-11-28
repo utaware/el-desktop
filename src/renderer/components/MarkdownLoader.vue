@@ -10,9 +10,13 @@
   <div class="wrapper-markdown-loader">
 
     <!-- 容器 -->
-    <div class="content" ref="mark"></div>
+    <div class="markdown-content custom" ref="mark"></div>
 
-    <el-backtop target=".content" :bottom="100"></el-backtop>
+    <el-backtop target=".el-scrollbar__wrap">
+
+      <div class="backtop"> UP </div>
+
+    </el-backtop>
 
   </div>
 
@@ -20,7 +24,7 @@
 
 <script>
 // utils
-import { readFileContent } from '@/utils/ipcRendererHandle'
+import { markdownRender } from '@/utils/ipcRendererHandle'
 // Vue
 import Vue from 'vue'
 
@@ -28,6 +32,7 @@ export default {
   name: 'ns-markdown-loader',
   components: {},
   mixins: [],
+  inject: ['successCode'],
   watch: {
     // 当路径变化的时候重载文档
     path (nv) {
@@ -53,10 +58,13 @@ export default {
   methods: {
     // 解析动态的md文件路径转化为页面
     parseMarkdownFile (path) {
-      readFileContent({
+      markdownRender({
         path,
-        callback: (event, fileContent) => {
-          this.createContentNodes(fileContent)
+        callback: (event, res) => {
+          const { code, data } = res
+          if (code === this.successCode) {
+            this.createContentNodes(data)
+          }
         }
       })
     },
@@ -74,6 +82,9 @@ export default {
     },
     // 移除html结构
     removeContentNodes () {
+      if (!this.component) {
+        return false
+      }
       this.$refs.mark.removeChild(this.component.$el)
       this.component.$destroy()
       this.component = null
@@ -90,7 +101,22 @@ export default {
 
 <style lang="stylus">
 @import './styles/index.styl';
+  // 解析器
 .wrapper-markdown-loader {
-  padding: 1rem 2rem;
+  padding: 0 4rem;
+  // markdown解析内容
+  .markdown-content {
+    // position: relative;
+  }
+  // 返回顶部
+  .backtop {
+    height: 100%;
+    width: 100%;
+    background-color: #f2f5f6;
+    box-shadow: 0 0 6px rgba(0,0,0, .12);
+    text-align: center;
+    line-height: 40px;
+    color: #1989fa;
+  }
 }
 </style>

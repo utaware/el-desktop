@@ -39,7 +39,7 @@ export default {
     // 传递的参数
     contentProps: {
       type: String,
-      default: '标题 tip'
+      default: 'tip 标题'
     }
   },
   data () {
@@ -49,7 +49,7 @@ export default {
     // 传递的字符串信息截取转换成对象形式
     cardOptions () {
       const options = this.contentProps.split(' ')
-      const [ title, description ] = options
+      const [ description, title ] = options
       return { title, description }
     }
   },

@@ -34,6 +34,13 @@ module.exports = require('./lib/');
 
 > index.js又指向lib下的index.js
 
+```ts
+class MarkdownIt {}
+class Token {}
+class Rulers {}
+class State {}
+```
+
 ## Main
 
 * render 渲染器函数
@@ -65,7 +72,7 @@ for (i = 0, l = rules.length; i < l; i++) {
 }
 ```
 
-> core => block
+> core => block(多行解析) => inline(单行解析)
 
 ```js
 // block规则被调用
@@ -90,6 +97,7 @@ ParserBlock.prototype.tokenize = function (state, startLine, endLine) {
     if (ok) { break; }
   }
 }
+// block 规则很定
 ```
 
 ```js
@@ -123,6 +131,12 @@ state.md.inline.parse(tok.content, state.md, state.env, tok.children);
 // parserInline - parse
 var state = new this.State(str, md, env, outTokens);
 this.tokenize(state);
+// rule1
+for (i = 0; i < len; i++) {
+  ok = rules[i](state, false);
+  if (ok) { break; }
+}
+// rule2
 rules = this.ruler2.getRules('');
 len = rules.length;
 
@@ -156,3 +170,7 @@ var _rules2 = [
   [ 'text_collapse',   require('./rules_inline/text_collapse') ]
 ];
 ```
+
+> block => inline => linkify => replacements => smartquotes
+> core调度解析完毕, parse => render
+> render调用对应规则解析替换生成html字符串

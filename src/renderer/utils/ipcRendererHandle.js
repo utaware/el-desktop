@@ -10,10 +10,10 @@ export function ipcEventsHandler (options) {
 }
 
 // 打开对话框 显示用于选择多个文件和目录的对话框的示例:
-export function showOpenDialog ({ callback, properties }) {
+export function showOpenDialog ({ callback, options }) {
   ipcEventsHandler({
     send: 'showOpenDialog',
-    properties,
+    options,
     callback
   })
 }
@@ -28,9 +28,9 @@ export function readFileFolderPath ({ path, callback }) {
 }
 
 // 读取文件夹信息
-export function readFileContent ({ path, callback }) {
+export function markdownRender ({ path, callback }) {
   ipcEventsHandler({
-    send: 'readFileContent',
+    send: 'markdownRender',
     filePath: path,
     callback
   })
