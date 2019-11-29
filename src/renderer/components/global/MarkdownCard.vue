@@ -37,9 +37,9 @@ export default {
   watch: {},
   props: {
     // 传递的参数
-    contentProps: {
+    params: {
       type: String,
-      default: 'tip 标题'
+      default: 'card tip 标题'
     }
   },
   data () {
@@ -48,8 +48,8 @@ export default {
   computed: {
     // 传递的字符串信息截取转换成对象形式
     cardOptions () {
-      const options = this.contentProps.split(' ')
-      const [ description, title ] = options
+      const options = this.params.split(' ')
+      const [ , description, title ] = options
       return { title, description }
     }
   },

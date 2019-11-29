@@ -5,7 +5,7 @@ const config = new Config()
 const emojiPlugin = require('markdown-it-emoji')
 const anchorPlugin = require('markdown-it-anchor')
 const tocPlugin = require('markdown-it-table-of-contents')
-const containerPlugin = require('markdown-it-container')
+// const containerPlugin = require('markdown-it-container')
 // other plugin
 const highlightCode = require('./plugins/highlight')
 const componentPlugin = require('./plugins/component')
@@ -15,6 +15,8 @@ const lineNumbersPlugin = require('./plugins/lineNumbers')
 const snippetPlugin = require('./plugins/snippet')
 const convertRouterLinkPlugin = require('./plugins/link')
 // const hoistScriptStylePlugin = require('./plugins/hoist')
+// customize plugin
+const containerPlugin = require('./customize/container')
 // config
 const slugify = require('./utils/slugify')
 const parseHeaders = require('./utils/parseHeaders')
@@ -32,7 +34,8 @@ const {
   LINE_NUMBERS,
   SNIPPET,
   CONVERT_ROUTER_LINK,
-  CONTAINER
+  CONTAINER_CARD,
+  CONTAINER_MERMAID
   // HOIST_SCRIPT_STYLE,
 } = PLUGINS
 // https://www.xiaoyulive.top/favorite/docs/Plugins_Markdown_It.html#%E6%A0%87%E7%AD%BE%E5%9E%8B%E6%8F%92%E4%BB%B6
@@ -58,18 +61,39 @@ config
   .use(preWrapperPlugin)
   .end()
   // containerPlugin
-  .plugin(CONTAINER)
-  .use(containerPlugin, ['CARD', {
-    validate: function (params) {
-      return params.trim().match(/^CARD\s+(.*)$/)
-    },
+  .plugin(CONTAINER_CARD)
+  .use(containerPlugin, [{
+    name: 'card',
+    render: function (tokens, idx, _options, env, slf) {
+      const nesting = tokens[idx].nesting
+      switch (nesting) {
+        case 1:
+          const params = tokens[idx].info
+          return `<MarkdownCard params="${params}">`
+        case -1:
+          return `</MarkdownCard>`
+        default:
+          return ''
+      }
+    }
+  }])
+  .end()
+  .plugin(CONTAINER_MERMAID)
+  .use(containerPlugin, [{
+    name: 'mermaid',
+    staticRender: true,
     render: function (tokens, idx) {
-      var m = tokens[idx].info.trim().match(/^CARD\s+(.*)$/)
-      if (tokens[idx].nesting === 1) {
-        const contentProps = m[1]
-        return `<MarkdownCard contentProps="${contentProps}">\n`
-      } else {
-        return '</MarkdownCard>\n'
+      const nesting = tokens[idx].nesting
+      // add a class to the opening tag
+      switch (nesting) {
+        case 1:
+          const { content } = tokens[idx + 1]
+          const params = tokens[idx].info
+          return `<MarkdownMermaid text="${content}" params="${params}">`
+        case -1:
+          return `</MarkdownMermaid>`
+        default:
+          return ''
       }
     }
   }])

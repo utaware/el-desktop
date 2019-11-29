@@ -7,7 +7,11 @@
 
 <template>
 
-  <div class="mermaid" ref="mermaid" v-html="renderContent"></div>
+  <div class="ns-markdown-mermaid" ref="mermaid">
+
+    <div class="mermaid" v-html="renderContent"></div>
+
+  </div>
 
 </template>
 
@@ -21,14 +25,15 @@ export default {
   mixins: [],
   watch: {},
   props: {
-    // 传递文本
-    graphDefinition: {
+    // 接受的文本内容
+    text: {
       type: String,
-      default: `graph LR
-    A[Hard edge] -->|Link text| B(Round edge)
-    B --> C{Decision}
-    C -->|One| D[Result one]
-    C -->|Two| E[Result two]`
+      defalt: ''
+    },
+    // 参数列表
+    params: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -40,8 +45,8 @@ export default {
   methods: {
     // 渲染
     renderMermaid () {
-      const { graphDefinition } = this
-      mermaid.render('graphDiv', graphDefinition, (html) => {
+      const { text } = this
+      mermaid.render('graphDiv', text, (html) => {
         this.renderContent = html
       })
     }
@@ -49,13 +54,17 @@ export default {
   filters: {},
   created () {},
   mounted () {
-    mermaid.initialize({ startOnLoad: false })
+    // https://github.com/mermaid-js/mermaid/blob/master/src/mermaidAPI.js 配置列表
+    mermaid.initialize({
+      theme: 'forest', // default(紫色), forest(绿色), dark(蓝紫) or neutral(灰色)
+      startOnLoad: false
+    })
     this.renderMermaid()
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.mermaid {
+.ns-markdown-mermaid {
 }
 </style>

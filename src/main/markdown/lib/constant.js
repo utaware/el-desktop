@@ -10,5 +10,6 @@ exports.PLUGINS = {
   EMOJI: 'emoji',
   TOC: 'toc',
   LINE_NUMBERS: 'line-numbers',
-  CONTAINER: 'container'
+  CONTAINER_CARD: 'container-card',
+  CONTAINER_MERMAID: 'container-mermaid'
 }

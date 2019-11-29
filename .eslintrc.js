@@ -15,7 +15,7 @@ module.exports = {
   plugins: [
     'html'
   ],
-  'rules': {
+  rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
@@ -23,6 +23,10 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // 空行
-    'padded-blocks': ['off', 'always']
+    'padded-blocks': ['off', 'always'],
+    // 下划线命名忽略
+    'camelcase': ['off'],
+    // 行尾禁止空行
+    'no-trailing-spaces': ['error', { skipBlankLines: true } ]
   }
 }
