@@ -10,7 +10,7 @@
   <div class="wrapper-markdown-loader">
 
     <!-- 容器 -->
-    <div class="markdown-content custom" ref="mark"></div>
+    <div class="markdown-content custom" ref="mark" v-loading="loading"></div>
 
     <el-backtop target=".el-scrollbar__wrap">
 
@@ -24,7 +24,7 @@
 
 <script>
 // utils
-import { markdownRender } from '@/utils/ipcRendererHandle'
+import { markdownRenderWithMd } from '@/utils/ipcRendererHandle'
 // Vue
 import Vue from 'vue'
 
@@ -51,17 +51,20 @@ export default {
   },
   data () {
     return {
-      component: null
+      component: null,
+      loading: false
     }
   },
   computed: {},
   methods: {
     // 解析动态的md文件路径转化为页面
     parseMarkdownFile (path) {
-      markdownRender({
+      this.loading = true
+      markdownRenderWithMd({
         path,
         callback: (event, res) => {
           const { code, data } = res
+          this.loading = false
           if (code === this.successCode) {
             this.createContentNodes(data)
           }
@@ -76,7 +79,14 @@ export default {
       }
       // 再生成节点
       const htmlContent = `<main>\n${content}\n</main>`
-      const Component = Vue.extend({ template: htmlContent })
+      const Component = Vue.extend({
+        template: htmlContent,
+        methods: {
+          getRootComponentsValue: (name) => {
+            return this[name]
+          }
+        }
+      })
       this.component = new Component().$mount()
       this.$refs.mark.appendChild(this.component.$el)
     },

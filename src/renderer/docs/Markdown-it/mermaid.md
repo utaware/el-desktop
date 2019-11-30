@@ -7,7 +7,7 @@ C->> B: Response
 B->> A: Forward response
 :::
 
-::: mermaid default
+::: mermaid
 graph TD;
     A-->B;
     A-->C;

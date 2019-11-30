@@ -35,7 +35,8 @@ const {
   SNIPPET,
   CONVERT_ROUTER_LINK,
   CONTAINER_CARD,
-  CONTAINER_MERMAID
+  CONTAINER_MERMAID,
+  CONTAINER_CODE
   // HOIST_SCRIPT_STYLE,
 } = PLUGINS
 // https://www.xiaoyulive.top/favorite/docs/Plugins_Markdown_It.html#%E6%A0%87%E7%AD%BE%E5%9E%8B%E6%8F%92%E4%BB%B6
@@ -62,41 +63,13 @@ config
   .end()
   // containerPlugin
   .plugin(CONTAINER_CARD)
-  .use(containerPlugin, [{
-    name: 'card',
-    render: function (tokens, idx, _options, env, slf) {
-      const nesting = tokens[idx].nesting
-      switch (nesting) {
-        case 1:
-          const params = tokens[idx].info
-          return `<MarkdownCard params="${params}">`
-        case -1:
-          return `</MarkdownCard>`
-        default:
-          return ''
-      }
-    }
-  }])
+  .use(containerPlugin, [{name: 'card'}])
   .end()
   .plugin(CONTAINER_MERMAID)
-  .use(containerPlugin, [{
-    name: 'mermaid',
-    staticRender: true,
-    render: function (tokens, idx) {
-      const nesting = tokens[idx].nesting
-      // add a class to the opening tag
-      switch (nesting) {
-        case 1:
-          const { content } = tokens[idx + 1]
-          const params = tokens[idx].info
-          return `<MarkdownMermaid text="${content}" params="${params}">`
-        case -1:
-          return `</MarkdownMermaid>`
-        default:
-          return ''
-      }
-    }
-  }])
+  .use(containerPlugin, [{name: 'mermaid', staticRender: true}])
+  .end()
+  .plugin(CONTAINER_CODE)
+  .use(containerPlugin, [{name: 'code', staticRender: true}])
   .end()
   // 代码段
   .plugin(SNIPPET)

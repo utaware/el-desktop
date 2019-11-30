@@ -27,11 +27,28 @@ export function readFileFolderPath ({ path, callback }) {
   })
 }
 
-// 读取文件夹信息
-export function markdownRender ({ path, callback }) {
+// 读取md文件渲染成html字符串
+export function markdownRenderWithMd ({ path, callback }) {
   ipcEventsHandler({
-    send: 'markdownRender',
+    send: 'markdownRenderWithMd',
     filePath: path,
+    callback
+  })
+}
+
+// 读取code文件渲染成fence代码块
+export function markdownRenderWithCode (options) {
+  const {
+    currentFilePath, // 当前md文档路径
+    codeRelativePath, // 引用的代码相对路径
+    params = [], // 其他参数
+    callback
+  } = options
+  ipcEventsHandler({
+    send: 'markdownRenderWithCode',
+    currentFilePath,
+    codeRelativePath,
+    params,
     callback
   })
 }

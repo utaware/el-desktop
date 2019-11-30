@@ -1,5 +1,5 @@
 /**
- * @filename: MarkdownMermaid.vue
+ * @filename: Mermaid.vue
  * @desc: vue components file
  * @author: utaware
  * @createTime: 2019/11/18 18:28:19 星期一
@@ -7,7 +7,7 @@
 
 <template>
 
-  <div class="ns-markdown-mermaid" ref="mermaid">
+  <div class="wrapper-mermaid" ref="mermaid">
 
     <div class="mermaid" v-html="renderContent"></div>
 
@@ -20,20 +20,20 @@
 import mermaid from 'mermaid'
 
 export default {
-  name: 'ns-markdown-mermaid',
+  name: 'ns-mermaid',
   components: {},
   mixins: [],
   watch: {},
   props: {
     // 接受的文本内容
-    text: {
+    content: {
       type: String,
       defalt: ''
     },
     // 参数列表
     params: {
-      type: String,
-      default: ''
+      type: Array,
+      default: () => []
     }
   },
   data () {
@@ -45,8 +45,8 @@ export default {
   methods: {
     // 渲染
     renderMermaid () {
-      const { text } = this
-      mermaid.render('graphDiv', text, (html) => {
+      const { content } = this
+      mermaid.render('graphDiv', content, (html) => {
         this.renderContent = html
       })
     }
@@ -65,6 +65,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ns-markdown-mermaid {
+.wrapper-mermaid {
 }
 </style>

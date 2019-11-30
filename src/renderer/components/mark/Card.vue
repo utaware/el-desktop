@@ -7,7 +7,7 @@
 
 <template>
 
-  <div class="wrapper-markdown-card" :class="cardOptions.description">
+  <div class="wrapper-card" :class="cardOptions.description">
 
     <div class="color-bar"></div>
 
@@ -31,15 +31,15 @@
 
 <script>
 export default {
-  name: 'ns-markdown-card',
+  name: 'ns-card',
   components: {},
   mixins: [],
   watch: {},
   props: {
     // 传递的参数
     params: {
-      type: String,
-      default: 'card tip 标题'
+      type: Array,
+      default: () => ['tip', '标题']
     }
   },
   data () {
@@ -48,9 +48,8 @@ export default {
   computed: {
     // 传递的字符串信息截取转换成对象形式
     cardOptions () {
-      const options = this.params.split(' ')
-      const [ , description, title ] = options
-      return { title, description }
+      const [ description, title ] = this.params
+      return { description, title }
     }
   },
   methods: {},
@@ -61,7 +60,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.wrapper-markdown-card {
+.wrapper-card {
   margin-bottom: 1rem;
   display: flex;
   // 左侧

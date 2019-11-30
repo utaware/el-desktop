@@ -13,7 +13,9 @@ export default {
       folder: true,
       // 控制右侧mark文档展示
       mark: true
-    }
+    },
+    // 选择的md文件路径
+    markdownFilePath: ''
   },
 
   mutations: {
@@ -23,6 +25,9 @@ export default {
     },
     commitLayoutShow (state, name) {
       state.layoutShow[name] = !state.layoutShow[name]
+    },
+    commitMarkdownFilePath (state, path) {
+      state.markdownFilePath = path
     }
 
   }

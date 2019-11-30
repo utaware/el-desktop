@@ -1,18 +1,19 @@
 // Process block-level custom containers
 //
-module.exports = function container_plugin (md, options = {}) {
+module.exports = function containerPlugin (md, options = {}) {
 
   const {
-    min_markers = 3,
-    marker_str = ':',
+    minMarkers = 3,
+    markerStr = ':',
     name,
+    componentsName = 'MarkdownComponents',
     staticRender = false,
     validate = validateDefault,
     render = renderDefault
   } = options
   
-  let marker_char = marker_str.charCodeAt(0)
-  let marker_len = marker_str.length
+  let markerChar = markerStr.charCodeAt(0)
+  let markerLen = markerStr.length
 
   function validateDefault (params) {
     const nameReg = new RegExp(name, 'i')
@@ -21,38 +22,49 @@ module.exports = function container_plugin (md, options = {}) {
 
   function renderDefault (tokens, idx, _options, env, slf) {
     // 默认渲染函数
-    return slf.renderToken(tokens, idx, _options, env, slf)
+    const nesting = tokens[idx].nesting
+    // add a class to the opening tag
+    switch (nesting) {
+      case 1:
+        const { content } = staticRender ? tokens[idx + 1] : ''
+        const params = tokens[idx].info
+        return `<${componentsName} content="${content}" params="${params}">`
+      case -1:
+        return `</${componentsName}>`
+      default:
+        return ''
+    }
   }
 
   function container (state, startLine, endLine, silent) {
     let pos
     let nextLine
-    let marker_count
+    let markerCount
     let markup
     let params
     let token
-    let old_parent
-    let old_line_max
-    let auto_closed = false
+    let oldParent
+    let oldLineMax
+    let autoClosed = false
     let start = state.bMarks[startLine] + state.tShift[startLine]
     let max = state.eMarks[startLine]
 
     // Check out the first character quickly,
     // this should filter out most of non-containers
     //
-    if (marker_char !== state.src.charCodeAt(start)) { return false }
+    if (markerChar !== state.src.charCodeAt(start)) { return false }
 
     // Check out the rest of the marker string
     //
     for (pos = start + 1; pos <= max; pos++) {
-      if (marker_str[(pos - start) % marker_len] !== state.src[pos]) {
+      if (markerStr[(pos - start) % markerLen] !== state.src[pos]) {
         break
       }
     }
 
-    marker_count = Math.floor((pos - start) / marker_len)
-    if (marker_count < min_markers) { return false }
-    pos -= (pos - start) % marker_len
+    markerCount = Math.floor((pos - start) / markerLen)
+    if (markerCount < minMarkers) { return false }
+    pos -= (pos - start) % markerLen
 
     markup = state.src.slice(start, pos)
     params = state.src.slice(pos, max).trim()
@@ -84,7 +96,7 @@ module.exports = function container_plugin (md, options = {}) {
         break
       }
 
-      if (marker_char !== state.src.charCodeAt(start)) { continue }
+      if (markerChar !== state.src.charCodeAt(start)) { continue }
 
       if (state.sCount[nextLine] - state.blkIndent >= 4) {
         // closing fence should be indented less than 4 spaces
@@ -92,27 +104,27 @@ module.exports = function container_plugin (md, options = {}) {
       }
 
       for (pos = start + 1; pos <= max; pos++) {
-        if (marker_str[(pos - start) % marker_len] !== state.src[pos]) {
+        if (markerStr[(pos - start) % markerLen] !== state.src[pos]) {
           break
         }
       }
 
       // closing code fence must be at least as long as the opening one
-      if (Math.floor((pos - start) / marker_len) < marker_count) { continue }
+      if (Math.floor((pos - start) / markerLen) < markerCount) { continue }
 
       // make sure tail has spaces only
-      pos -= (pos - start) % marker_len
+      pos -= (pos - start) % markerLen
       pos = state.skipSpaces(pos)
 
       if (pos < max) { continue }
 
       // found!
-      auto_closed = true
+      autoClosed = true
       break
     }
 
-    old_parent = state.parentType
-    old_line_max = state.lineMax
+    oldParent = state.parentType
+    oldLineMax = state.lineMax
     state.parentType = 'container'
 
     // this will prevent lazy continuations from ever going past our end marker
@@ -138,9 +150,9 @@ module.exports = function container_plugin (md, options = {}) {
     token.block = true
     token.map = [ nextLine, nextLine + 1 ]
 
-    state.parentType = old_parent
-    state.lineMax = old_line_max
-    state.line = nextLine + (auto_closed ? 1 : 0)
+    state.parentType = oldParent
+    state.lineMax = oldLineMax
+    state.line = nextLine + (autoClosed ? 1 : 0)
 
     return true
   }

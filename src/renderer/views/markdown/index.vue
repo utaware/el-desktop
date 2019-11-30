@@ -32,7 +32,7 @@ import MarkdownLoader from '@/components/MarkdownLoader.vue'
 import DocsTree from './package/DocsTree.vue'
 import MenuHead from './package/MenuHead.vue'
 // vuex
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'ns-docs-tree-page',
@@ -57,9 +57,12 @@ export default {
     ...mapState('Markview', ['layoutShow'])
   },
   methods: {
+    // vuex
+    ...mapMutations('Markview', ['commitMarkdownFilePath']),
     // 文档树选择文件变动
     selectFileChange (path) {
       this.markFilePath = path
+      this.commitMarkdownFilePath(path)
     },
     // 修改布局展示
     changeLayoutDialogShow (show) {

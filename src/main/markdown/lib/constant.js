@@ -11,5 +11,6 @@ exports.PLUGINS = {
   TOC: 'toc',
   LINE_NUMBERS: 'line-numbers',
   CONTAINER_CARD: 'container-card',
-  CONTAINER_MERMAID: 'container-mermaid'
+  CONTAINER_MERMAID: 'container-mermaid',
+  CONTAINER_CODE: 'container-code'
 }
