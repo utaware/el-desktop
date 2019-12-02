@@ -11,15 +11,13 @@
 
     <div class="markdown-content custom" ref="markCode"></div>
 
-
-
   </div>
 
 </template>
 
 <script>
 // utils
-import { markdownRenderWithCode } from '@/utils/ipcRendererHandle'
+import { ipcEventsHandler } from '@/message/ipcRendererHandle'
 // vuex
 import Vue from 'vue'
 
@@ -53,7 +51,8 @@ export default {
     // 解析动态的md文件路径转化为页面
     parseMarkdownCode () {
       const { currentFilePath, content, params } = this
-      markdownRenderWithCode({
+      ipcEventsHandler({
+        send: 'markdownRenderWithCode',
         currentFilePath,
         codeRelativePath: content,
         params,

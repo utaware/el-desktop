@@ -37,7 +37,7 @@
 
 <script>
 // ipc
-import { showOpenDialog } from '@/utils/ipcRendererHandle'
+import { showOpenDialog } from '@/message/ipcRendererHandle'
 // vuex
 import { mapState, mapMutations } from 'vuex'
 

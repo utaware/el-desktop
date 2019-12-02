@@ -37,7 +37,7 @@
 
 <script>
 // ipc
-import { showOpenDialog } from '@/utils/ipcRendererHandle'
+import { ipcEventsHandler } from '@/message/ipcRendererHandle'
 // vuex
 import { mapState, mapMutations } from 'vuex'
 // components
@@ -69,7 +69,8 @@ export default {
     // 选择目录路径
     selectDocsPath () {
       // 打开选择目录弹窗
-      showOpenDialog({
+      ipcEventsHandler({
+        send: 'showOpenDialog',
         options: {
           properties: ['openDirectory']
         },

@@ -1,11 +1,11 @@
 // node
 const path = require('path')
 // markdown-it 加载配置后的实例
-const markdownIt = require('../markdown')
+const markdownIt = require('../../module/mark')
 // fs
-const { readFileContent } = require('../utils/fs')
+const { readFileContent } = require('../fs')
 // handle
-const { successHandler, errorHandler } = require('../utils/handler')
+const { successHandler, errorHandler } = require('../handler')
 
 module.exports = {
 
@@ -13,8 +13,6 @@ module.exports = {
   markdownRenderWithMd (event, args) {
 
     const { filePath, on } = args
-
-    console.log('filePath', filePath)
 
     readFileContent(filePath).then(buffer => {
 

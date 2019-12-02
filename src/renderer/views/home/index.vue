@@ -4,23 +4,23 @@
  * @Author: utaware
  * @Date: 2019-08-14 18:46:22
  * @LastEditors: utaware
- * @LastEditTime: 2019-09-02 16:44:39
+ * @LastEditTime: 2019-12-02 16:50:25
  -->
 
 <template>
 
-  <div class="desktop-page">
+  <div class="desktop-page" :style="styles">
 
     <ul class="icon-list">
       
       <li class="icon-item"
         v-for="(item, index) of iconList"
         :key="index"
-        @click="handlerClick(item.name)">
+        @click="handlerClick(item.to)">
 
         <img class="icon-image" :src="item.src" :alt="item.name">
 
-        <p class="icon-text">{{ item.name }}</p>
+        <p class="icon-text">{{ item.text }}</p>
       
       </li>
 
@@ -32,7 +32,7 @@
 
 <script>
 // iconList
-import iconList from './data/desktopIcon.js'
+import iconList from './data/icon'
 
 export default {
   name: 'ns-desktop-page',
@@ -43,18 +43,15 @@ export default {
   data () {
     return {
       iconList,
-      srcPath: ''
+      // 样式
+      styles: {}
     }
   },
   computed: {},
   methods: {
     // 图标点击
-    handlerClick (name) {
-      this.$router.push('/docs')
-    },
-    // 回调处理
-    async handleCallback (emitter, selectPath) {
-      console.log(emitter, selectPath)
+    handlerClick (route) {
+      this.$router.push(route)
     }
   },
   filters: {},
@@ -70,9 +67,10 @@ export default {
   background: url('/static/images/default-bg.jpg') no-repeat center center;
   // 图标列表
   .icon-list {
-    margin-top: 3rem;
+    margin-top: 0;
     display: flex;
     flex-wrap: wrap;
+    list-style: none;
     .icon-item {
       padding: 1rem;
       min-width: 160px;

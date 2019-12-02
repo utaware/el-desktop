@@ -29,7 +29,17 @@ export default {
   methods: {
     // 返回上一页面
     handlerClick () {
-      this.$router.go(-1)
+      const route = this.$route
+      const currentPath = route.path
+      const { matched } = route
+      const len = matched.length
+      const previousPath = matched[len - 1].path
+      const isSamePath = currentPath === previousPath
+      if (isSamePath) {
+        this.$router.push('/home')
+      } else {
+        this.$router.go(-1)
+      }
     }
   },
   filters: {},

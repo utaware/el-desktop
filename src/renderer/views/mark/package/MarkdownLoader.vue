@@ -24,7 +24,7 @@
 
 <script>
 // utils
-import { markdownRenderWithMd } from '@/utils/ipcRendererHandle'
+import { ipcEventsHandler } from '@/message/ipcRendererHandle'
 // Vue
 import Vue from 'vue'
 
@@ -60,9 +60,10 @@ export default {
     // 解析动态的md文件路径转化为页面
     parseMarkdownFile (path) {
       this.loading = true
-      markdownRenderWithMd({
-        path,
-        callback: (event, res) => {
+      ipcEventsHandler({
+        send: 'markdownRenderWithMd',
+        filePath: path,
+        callback: (res) => {
           const { code, data } = res
           this.loading = false
           if (code === this.successCode) {
@@ -110,7 +111,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import './styles/index.styl';
+@import '../styles/index.styl';
   // 解析器
 .wrapper-markdown-loader {
   padding: 0 4rem;

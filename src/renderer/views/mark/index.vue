@@ -28,7 +28,7 @@
 
 <script>
 // components
-import MarkdownLoader from '@/components/MarkdownLoader.vue'
+import MarkdownLoader from './package/MarkdownLoader.vue'
 import DocsTree from './package/DocsTree.vue'
 import MenuHead from './package/MenuHead.vue'
 // vuex
@@ -83,6 +83,7 @@ export default {
 .wrapper-docs-tree-page {
   // 中间部分 树 + 内容
   min-width: 800px;
+  padding: 1rem;
   .docs-body {
     display: flex;
     border-radius: 0.5rem;

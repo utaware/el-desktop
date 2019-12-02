@@ -14,3 +14,5 @@ console.log(1234)
 ::: code
 ./test.js
 :::
+
+[百度](http://www.baidu.com)

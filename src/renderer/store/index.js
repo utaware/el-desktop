@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import { createPersistedState, createSharedMutations } from 'vuex-electron'
-import { createPersistedState } from 'vuex-electron'
+// import { createPersistedState } from 'vuex-electron'
+import createPersistedState from 'vuex-persistedstate'
 
 import modules from './modules'
+
+// console.log(electron.remote.app.getPath('userData'))
 
 Vue.use(Vuex)
 

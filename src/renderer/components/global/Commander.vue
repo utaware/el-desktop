@@ -36,7 +36,7 @@
 
 <script>
 // ipc
-import { executeCommand } from '@/utils/ipcRendererHandle'
+import { ipcEventsHandler } from '@/message/ipcRendererHandle'
 
 export default {
   name: 'ns-comander',
@@ -65,7 +65,8 @@ export default {
     // 执行
     handleClick () {
       const { execCommand } = this
-      executeCommand({
+      ipcEventsHandler({
+        send: 'executeCommand',
         command: execCommand,
         options: { encoding: 'binary' },
         callback: (event, result) => {

@@ -2,7 +2,7 @@
 
 const { dialog } = require('electron')
 
-const { successHandler, errorHandler } = require('../utils/handler')
+const { successHandler, errorHandler } = require('../handler')
 
 module.exports = {
   // 显示用于打开和保存文件、警报等的本机系统对话框。

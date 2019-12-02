@@ -9,17 +9,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 // 附加的css
 import './assets/css/index.css'
-
 // 指令注册
 import directives from '@/directives/install'
 // 组件注册
-import globalComponents from '@/components/global'
+import globalComponents from '@/components/install'
 
 Vue.use(directives)
 // 注册global下的全局组件
-for (const name in globalComponents) {
-  Vue.component(name, globalComponents[name])
-}
+Vue.use(globalComponents)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 

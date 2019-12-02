@@ -4,16 +4,16 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-11-27 10:59:56
+ * @LastEditTime: 2019-12-02 16:27:20
  */
 'use strict'
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
-// 绑定一系列的通信事件
-const events = require('./bus/ipcMainHandle.js')
-
-events()
+// remote模块相关的信息交互
+require('./module')(app)
+// gui相关的原生ipc信息交互
+require('./message')(ipcMain)
 
 // 忽略安全警告
 if (process.env.NODE_ENV === 'development') {
