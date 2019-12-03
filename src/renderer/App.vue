@@ -46,7 +46,8 @@
         noresize: false,
         tag: 'div'
       }
-    }
+    },
+    created () {}
   }
 </script>
 

@@ -24,6 +24,11 @@ export default new Router({
       component: require('@/views/mark/index.vue').default
     },
     {
+      path: '/video',
+      name: 'video-page',
+      component: require('@/views/video/index.vue').default
+    },
+    {
       path: '*',
       redirect: '/home'
     }

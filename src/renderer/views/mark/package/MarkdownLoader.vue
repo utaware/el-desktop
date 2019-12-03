@@ -38,8 +38,11 @@ export default {
   watch: {
     // 当路径变化的时候重载文档
     markdownFilePath: {
-      handler (nv) {
-        this.parseMarkdownFile(nv)
+      handler (newPath) {
+        if (!newPath) {
+          return false
+        }
+        this.parseMarkdownFile(newPath)
       },
       immediate: true,
       deep: true
@@ -71,11 +74,7 @@ export default {
           if (code === this.successCode) {
             this.createContentNodes(data)
           } else {
-            this.$message({
-              showClose: true,
-              message,
-              type: 'warning'
-            })
+            this.$error({ message })
           }
         }
       })

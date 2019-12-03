@@ -7,7 +7,7 @@
 
 <template>
 
-  <div class="wrapper-docs-tree-page">
+  <div class="docs-page">
     <!-- 头部菜单栏 -->
     <MenuHead></MenuHead>
 
@@ -35,7 +35,7 @@ import MenuHead from './package/MenuHead.vue'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'ns-docs-tree-page',
+  name: 'ns-docs-page',
   components: {
     MarkdownLoader,
     DocsTree,
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrapper-docs-tree-page {
+.docs-page {
   // 中间部分 树 + 内容
   min-width: 800px;
   padding: 1rem;

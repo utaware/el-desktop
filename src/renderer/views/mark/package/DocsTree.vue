@@ -54,16 +54,18 @@ export default {
   inject: ['successCode'],
   watch: {
     // 当选择文件的路径发生变化 -> 重载数据
-    folderPath (path) {
+    folderPath (dirPath) {
       const { successCode, filterMarkFile } = this
       ipcEventsHandler({
-        path,
+        dirPath,
         send: 'readFileFolderPath',
         callback: (res) => {
-          const { data, code } = res
-          const folderInfo = code === successCode ? data : []
-          const markOrDirList = filterMarkFile(folderInfo)
-          this.treeData = markOrDirList
+          const { data, code, message } = res
+          if (code === successCode) {
+            this.treeData = filterMarkFile(data)
+          } else {
+            this.$error({ message })
+          }
         }
       })
     },
@@ -108,10 +110,18 @@ export default {
           dirPath: path,
           send: 'readFileFolderPath',
           callback: (res) => {
-            const { data, code } = res
-            const folderInfo = code === successCode ? data : []
-            const markOrDirList = filterMarkFile(folderInfo)
-            resolve(markOrDirList)
+            const { data, code, message } = res
+            if (code === successCode) {
+              const markOrDirList = filterMarkFile(data)
+              resolve(markOrDirList)
+            } else {
+              this.$message({
+                type: 'danger',
+                showClose: true,
+                message
+              })
+              resolve([])
+            }
           }
         })
       }

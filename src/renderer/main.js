@@ -25,6 +25,11 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 
+Vue.prototype.$error = function (options = {}) {
+  const { message = '出错了x_x', type = 'error', showClose = true } = options
+  this.$message({ message, type, showClose })
+}
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },

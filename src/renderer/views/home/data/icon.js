@@ -20,7 +20,7 @@ const iconList = [
   {
     src: 'Pictures.png',
     text: '图片',
-    to: '/image'
+    to: '/video'
   }
 ]
 

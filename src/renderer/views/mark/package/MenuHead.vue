@@ -69,15 +69,21 @@ export default {
     // 选择目录路径
     selectDocsPath () {
       // 打开选择目录弹窗
+      const { successCode } = this
       ipcEventsHandler({
         send: 'showOpenDialog',
         options: {
           properties: ['openDirectory']
         },
-        callback: (event, res) => {
-          const { data, code } = res
-          if (code === this.successCode && data) {
-            this.commitFolderPath(data)
+        callback: (res) => {
+          const { data, code, message } = res
+          console.log('menuHead', res)
+          if (code === successCode) {
+            if (data) {
+              this.commitFolderPath(data)
+            }
+          } else {
+            this.$error({ message })
           }
         }
       })
