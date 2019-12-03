@@ -27,6 +27,8 @@
 import { ipcEventsHandler } from '@/message/ipcRendererHandle'
 // Vue
 import Vue from 'vue'
+// vuex
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   name: 'ns-markdown-loader',
@@ -35,39 +37,45 @@ export default {
   inject: ['successCode'],
   watch: {
     // 当路径变化的时候重载文档
-    path (nv) {
-      this.parseMarkdownFile(nv)
+    markdownFilePath: {
+      handler (nv) {
+        this.parseMarkdownFile(nv)
+      },
+      immediate: true,
+      deep: true
     }
   },
-  props: {
-    // 路径
-    path: {
-      type: String,
-      default: 'README.md',
-      validate: (fileName) => {
-        return fileName.endsWith('.md')
-      }
-    }
-  },
+  props: {},
   data () {
     return {
       component: null,
       loading: false
     }
   },
-  computed: {},
+  computed: {
+    // vuex
+    ...mapState('Markview', ['markdownFilePath'])
+  },
   methods: {
+    // vuex
+    ...mapMutations('Markview', ['commitMarkdownFilePath']),
     // 解析动态的md文件路径转化为页面
-    parseMarkdownFile (path) {
+    parseMarkdownFile (filePath) {
       this.loading = true
       ipcEventsHandler({
         send: 'markdownRenderWithMd',
-        filePath: path,
+        filePath,
         callback: (res) => {
-          const { code, data } = res
+          const { code, data, message } = res
           this.loading = false
           if (code === this.successCode) {
             this.createContentNodes(data)
+          } else {
+            this.$message({
+              showClose: true,
+              message,
+              type: 'warning'
+            })
           }
         }
       })
@@ -85,6 +93,16 @@ export default {
         methods: {
           getRootComponentsValue: (name) => {
             return this[name]
+          },
+          handlerLinkClick: ($event) => {
+            $event.preventDefault()
+            const { href } = $event.target
+            const { isexternal, linkfile } = $event.target.dataset
+            if (isexternal === 'true') {
+              this.$electron.shell.openExternal(href)
+            } else {
+              this.commitMarkdownFilePath(linkfile)
+            }
           }
         }
       })

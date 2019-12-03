@@ -1,4 +1,6 @@
 // 文件操作相关
+const path = require('path')
+
 const { readFolderDirectory } = require('../fs')
 
 const { successHandler, errorHandler } = require('../handler')
@@ -17,7 +19,8 @@ module.exports = {
           name,
           isDirectory: v.isDirectory(),
           isFile: v.isFile(),
-          path: `${dirPath}\\${name}`,
+          path: `${dirPath}${path.sep}${name}`,
+          dirPath,
           children: []
         }
       })

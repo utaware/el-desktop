@@ -44,7 +44,12 @@ export default {
   computed: {
     // 当前组件文档引用的路径
     currentFilePath () {
-      return this.$root.getRootComponentsValue('path')
+      return this.$root.getRootComponentsValue('markdownFilePath')
+    },
+    // 解析语言
+    language () {
+      const [ language = 'js' ] = this.params
+      return language
     }
   },
   methods: {
@@ -56,7 +61,7 @@ export default {
         currentFilePath,
         codeRelativePath: content,
         params,
-        callback: (event, res) => {
+        callback: (res) => {
           const { code, message, data } = res
           if (code) {
             const { text, html } = data

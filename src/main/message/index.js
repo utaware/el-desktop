@@ -14,8 +14,7 @@ files.keys().reduce((prev, next) => {
 
 module.exports = (ipcMain) => {
 
-  Object.entries(messageHandlers).forEach(v => {
-    const [ name, hanlder ] = v
+  Object.entries(messageHandlers).forEach(([name, hanlder]) => {
     ipcMain.on(name, hanlder)
   })
 

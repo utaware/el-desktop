@@ -15,10 +15,10 @@
     <div class="docs-body">
 
       <!-- 文档树 -->
-      <DocsTree v-show="layoutShow.tree" @selectFileChange="selectFileChange"></DocsTree>
+      <DocsTree v-show="layoutShow.tree"></DocsTree>
 
       <!-- 选择的文本内容 -->
-      <MarkdownLoader class="mark-content" v-show="layoutShow.mark" :path="markFilePath"></MarkdownLoader>
+      <MarkdownLoader class="mark-content" v-show="layoutShow.mark"></MarkdownLoader>
 
     </div>
 
@@ -32,7 +32,7 @@ import MarkdownLoader from './package/MarkdownLoader.vue'
 import DocsTree from './package/DocsTree.vue'
 import MenuHead from './package/MenuHead.vue'
 // vuex
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'ns-docs-tree-page',
@@ -45,34 +45,13 @@ export default {
   watch: {},
   props: {},
   data () {
-    return {
-      // 选择的md文件路径
-      markFilePath: '',
-      // 布局模态框
-      dialogVisible: false
-    }
+    return {}
   },
   computed: {
     // vuex
     ...mapState('Markview', ['layoutShow'])
   },
-  methods: {
-    // vuex
-    ...mapMutations('Markview', ['commitMarkdownFilePath']),
-    // 文档树选择文件变动
-    selectFileChange (path) {
-      this.markFilePath = path
-      this.commitMarkdownFilePath(path)
-    },
-    // 修改布局展示
-    changeLayoutDialogShow (show) {
-      this.dialogVisible = show
-    },
-    // 目录树是否展示
-    changeDocsTreeShow (show) {
-      this.docsTreeShow = show
-    }
-  },
+  methods: {},
   filters: {},
   created () {},
   mounted () {}

@@ -45,7 +45,7 @@
 // ipc
 import { ipcEventsHandler } from '@/message/ipcRendererHandle'
 // vuex
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'nsdocs-tree',
@@ -95,6 +95,8 @@ export default {
     ...mapState('Markview', ['folderPath'])
   },
   methods: {
+    // vuex
+    ...mapMutations('Markview', ['commitMarkdownFilePath']),
     // 加载子节点树
     loadTreeNodes (node, resolve) {
       const { successCode, folderPath, filterMarkFile } = this
@@ -120,7 +122,7 @@ export default {
       if (isDirectory) {
         return false
       }
-      this.$emit('selectFileChange', path)
+      this.commitMarkdownFilePath(path)
     },
     // 节点筛选
     filterMarkFile (list) {

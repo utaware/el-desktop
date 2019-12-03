@@ -1,25 +1,6 @@
-const mermaid = require('mermaid')
+const linkify = require('linkify-it')()
 
-const mermaidAPI = mermaid.mermaidAPI
-
-Mermaid.initialize({
-  startOnLoad: false,
-  securityLevel: 'true',
-    theme: "default",
-    flowchart:{
-      htmlLabels: false,
-      useMaxWidth: true,
-    }
-})
-
-const src = `
-sequenceDiagram
-A->> B: Query
-B->> C: Forward query
-Note right of C: Thinking...
-C->> B: Response
-B->> A: Forward response`
-
-mermaidAPI.render('div', src, (html) => {
-  console.log(html)
-})
+console.log(linkify.test('Site github.com!'))
+console.log(linkify.test('www.baodu.com'))
+console.log(linkify.test('http://www.baodu.com'))
+console.log(linkify.test('./test.md'))

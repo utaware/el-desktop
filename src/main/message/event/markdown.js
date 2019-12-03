@@ -18,11 +18,13 @@ module.exports = {
 
       const mdContent = buffer.toString()
 
-      const htmlContent = markdownIt.render(mdContent)
+      const htmlContent = markdownIt.render(mdContent, { filePath })
 
       successHandler(event, on, { data: htmlContent })
 
     }).catch(error => {
+
+      console.log('errror', error)
 
       errorHandler(event, on, error)
 
@@ -51,8 +53,8 @@ module.exports = {
       const markup = '```'
 
       const mdContent = `${markup} ${language} ${params}\n${fileContent}\n${markup}`
-      
-      const htmlContent = markdownIt.render(mdContent)
+
+      const htmlContent = markdownIt.render(mdContent, { filePath })
 
       successHandler(event, on, {
         data: {
