@@ -3,14 +3,14 @@ const baseUrl = '/static/icon/'
 
 const iconList = [
   {
-    src: 'Customize.png',
-    text: '设置',
-    to: '/config'
-  },
-  {
     src: 'Editor.png',
     text: '文档',
     to: '/docs'
+  },
+  {
+    src: 'Customize.png',
+    text: '设置',
+    to: '/tool'
   },
   {
     src: 'Music.png',

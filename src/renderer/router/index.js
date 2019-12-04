@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-02 16:38:46
+ * @LastEditTime: 2019-12-04 16:55:20
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -17,16 +17,6 @@ export default new Router({
       path: '/home',
       name: 'home-page',
       component: require('@/views/home/index.vue').default
-    },
-    {
-      path: '/docs',
-      name: 'docs-page',
-      component: require('@/views/mark/index.vue').default
-    },
-    {
-      path: '/video',
-      name: 'video-page',
-      component: require('@/views/video/index.vue').default
     },
     {
       path: '*',

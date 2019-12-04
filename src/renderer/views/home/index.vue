@@ -4,13 +4,13 @@
  * @Author: utaware
  * @Date: 2019-08-14 18:46:22
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-02 16:50:25
+ * @LastEditTime: 2019-12-04 18:26:37
  -->
 
 <template>
-
+  <!-- 桌面 -->
   <div class="desktop-page" :style="styles">
-
+    <!-- 菜单列表 -->
     <ul class="icon-list">
       
       <li class="icon-item"
@@ -25,6 +25,8 @@
       </li>
 
     </ul>
+    <!-- 外框测试 -->
+    <DragOuterContainer></DragOuterContainer>
 
   </div>
 
@@ -33,10 +35,14 @@
 <script>
 // iconList
 import iconList from './data/icon'
+// components
+import DragOuterContainer from '@/components/common/drag-outer-container/main.vue'
 
 export default {
   name: 'ns-desktop-page',
-  components: {},
+  components: {
+    DragOuterContainer
+  },
   mixins: [],
   watch: {},
   props: {},
@@ -63,6 +69,7 @@ export default {
 <style lang="scss" scoped>
 // 桌面页
 .desktop-page {
+  position: relative;
   height: 100vh;
   background: url('/static/images/default-bg.jpg') no-repeat center center;
   // 图标列表
