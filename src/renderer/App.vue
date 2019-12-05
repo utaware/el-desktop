@@ -20,35 +20,44 @@
 </template>
 
 <script>
-  export default {
-    name: 'el-desktop',
-    provide: {
-      successCode: 1,
-      errorCode: 0
-    },
-    data () {
-      return {
-        // 绑定样式
-        styles: {
-          height: '100vh'
-        },
-        // 包裹class
-        wrapClass: {
-          overLimit: true
-        },
-        // 默认为{}, 实际只有数组和字符串进行处理
-        wrapStyles: [
-          { overflowX: 'hidden' }
-        ],
-        viewClass: {},
-        viewStyle: {},
-        // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
-        noresize: false,
-        tag: 'div'
+export default {
+  name: 'el-desktop',
+  provide: {
+    successCode: 1,
+    errorCode: 0
+  },
+  data () {
+    return {
+      // 绑定样式
+      styles: {
+        height: '100vh'
+      },
+      // 包裹class
+      wrapClass: {
+        overLimit: true
+      },
+      // 默认为{}, 实际只有数组和字符串进行处理
+      wrapStyles: [
+        { overflowX: 'hidden' }
+      ],
+      viewClass: {},
+      viewStyle: {},
+      // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
+      noresize: false,
+      tag: 'div'
+    }
+  },
+  methods: {},
+  created () {
+    const log = window.console.log
+    window.console.$log = function (params) {
+      for (const key in params) {
+        log(`${key}:`, params[key])
       }
-    },
-    created () {}
+    }
+    window._vue = this
   }
+}
 </script>
 
 <style lang="scss" scoped>

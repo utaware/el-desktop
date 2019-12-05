@@ -9,7 +9,9 @@
   <!-- 外框 -->
   <div class="drag-outer-container" :style="defaultStyles">
     <!-- 工具栏 -->
-    <div class="tool-menu"></div>
+    <div class="tool-menu">
+
+    </div>
     <!-- 内框 -->
     <div class="inner-content">
       <!-- 插槽内容 -->
@@ -55,11 +57,11 @@ export default {
   padding: 1rem;
   left: 50%;
   top: 50%;
-  background-color: #353535;
+  border-radius: 0.4rem;
+  box-shadow: 0 0 10px 1px rgba(0,0,0,.6);
   // 工具栏
-  &.outer {
-    padding-top: 2rem; 
-    background: gray;
+  .tool-menu {
+    height: 2rem;
   }
 }
 </style>

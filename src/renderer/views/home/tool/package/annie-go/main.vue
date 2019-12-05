@@ -17,7 +17,6 @@
 
 <script>
 
-
 export default {
   name: 'ns-annie-go',
   components: {},
