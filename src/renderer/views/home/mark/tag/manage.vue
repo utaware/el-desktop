@@ -1,86 +1,19 @@
-/**
- * @filename: ManageTags.vue
- * @desc: vue components file
- * @author: utaware
- * @createTime: 2019/12/05 16:24:04 星期四
- */
 
 <template>
   <!-- 标签页 -->
   <div class="wrapper-manage-tags">
 
     <el-tabs type="border-card">
-
-      <el-tab-pane label="类别">用户管理</el-tab-pane>
+      <!-- 类别 -->
+      <el-tab-pane label="类别">
+        
+        <TagCategory></TagCategory>
       
+      </el-tab-pane>
+      <!-- 标签 -->
       <el-tab-pane label="标签">配置管理</el-tab-pane>
     
     </el-tabs>
-    <!-- 头部设置 -->
-    <div class="control-pannel">
-
-      <el-button-group>
-        <!-- 新增标签 -->
-        <el-button @click="handleAddTagsType" icon="el-icon-plus" title="添加分类"></el-button>
-        <!-- 清空所有 -->
-        <el-button @clik="handleResetTagsList" icon="el-icon-close" title="恢复标签"></el-button>
-
-      </el-button-group>
-      <!-- 标签筛选 -->
-      <el-select v-model="selectTagType" placeholder="请选择">
-        <!-- 全选 -->
-        <el-option label="全部类型" value="all"></el-option>
-        <!-- 可选分类 -->
-        <el-option v-for="item in canSelectTagOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
-      
-      </el-select>
-
-    </div>
-    <!-- 分割线 -->
-    <hr class="divider-horizontal"/>
-    <!-- 标签分类总览 -->
-    <ul class="tag-view-list">
-      <!-- 单个标签类别容器 -->
-      <li class="classify-container" v-for="(item, title) of allTagList" :key="title">
-        <!-- 标题和删除按钮容器 -->
-        <div class="head-title">
-          
-          <h2>{{ title }}</h2>
-
-          <el-button-group>
-
-            <el-button class="handle-button" size="mini" type="warning" @click="handleDeleteTagsType(title)" icon="el-icon-edit-outline"></el-button>
-
-            <el-button class="handle-button" size="mini" type="warning" @click="handleDeleteTagsType(title)" icon="el-icon-delete"></el-button>
-
-          </el-button-group>
-
-        </div>
-        <!-- 分割线 -->
-        <hr class="divider-horizontal"/>
-        <!-- 所属分类下标签容器 -->
-        <div class="list">
-          <!-- 单个标签 -->
-          <el-tag class="tag" v-for="(tag, n) of item" :key="n">{{ tag.label }}</el-tag>
-
-        </div>
-
-      </li>
-
-    </ul>
-    <!-- 确认删除模态框 -->
-    <el-dialog
-      :title="dialogTitle"
-      :visible.sync="dialog.show">
-
-      <span slot="footer" class="dialog-footer">
-
-        <el-button @click="handleDialogShowToggle">取 消</el-button>
-        <el-button type="primary" @click="handleDialogShowToggle">确 定</el-button>
-      
-      </span>
-    
-    </el-dialog>
 
   </div>
 
@@ -89,10 +22,14 @@
 <script>
 // electron
 import { remote } from 'electron'
+// components
+import TagCategory from './category.vue'
 
 export default {
   name: 'ns-manage-tags',
-  components: {},
+  components: {
+    TagCategory
+  },
   mixins: [],
   watch: {},
   props: {},

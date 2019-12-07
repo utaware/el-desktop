@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-02 16:27:20
+ * @LastEditTime: 2019-12-06 10:58:03
  */
 'use strict'
 
@@ -14,6 +14,8 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 require('./module')(app)
 // gui相关的原生ipc信息交互
 require('./message')(ipcMain)
+// store相关内容存储
+require('./store')(app)
 
 // 忽略安全警告
 if (process.env.NODE_ENV === 'development') {

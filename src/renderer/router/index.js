@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-05 16:41:25
+ * @LastEditTime: 2019-12-07 11:24:22
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -26,7 +26,12 @@ export default new Router({
         {
           path: 'tag',
           name: 'manage-tags',
-          component: require('@/views/home/mark/package/ManageTags.vue').default
+          component: require('@/views/home/mark/tag/manage.vue').default
+        },
+        {
+          path: 'view',
+          name: 'mark-view',
+          component: require('@/views/home/mark/view/index.vue').default
         }
       ]
     },

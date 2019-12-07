@@ -19,9 +19,6 @@
       :hide-timeout="8000"
       :collapse="isCollapse">
       
-      <!-- 展示标题 -->
-      <h3 class="title" :class="{ collapse: isCollapse }">Markdown</h3>
-
       <!-- 折叠按钮 -->
       <el-menu-item index="collapse">
         
@@ -59,10 +56,10 @@ export default {
       isCollapse: true,
       // 菜单栏配置
       menuPannel: [
-        { iconClass: 'location', text: '文章', name: 'article' },
+        { iconClass: 'star-off', text: '主题', name: 'theme' },
         { iconClass: 'menu', text: '菜单', name: 'menu' },
         { iconClass: 'price-tag', text: '标签', name: 'tag' },
-        { iconClass: 'document', text: '主题', name: 'theme' },
+        { iconClass: 'document', text: '文档', name: 'view' },
         { iconClass: 'setting', text: '配置', name: 'config' }
       ],
       // 菜单栏背景色 hex
@@ -87,7 +84,6 @@ export default {
       if (key === 'collapse') {
         this.isCollapse = !this.isCollapse
       } else {
-        console.log(`/docs/${key}`)
         this.$router.push(`/docs/${key}`)
       }
     }
@@ -102,17 +98,14 @@ export default {
 // 左侧菜单栏样式
 .wrapper-slide-menu {
   // element菜单
+  height: 100%;
   .el-menu {
-    height: 100vh;
+    // position: fixed;
+    // left: 0;
+    // top: 0;
+    // height: 100%;
     &:not(.el-menu--collapse) {
       width: 12rem;
-    }
-    // 标题
-    .title {
-      text-align: center;
-      &.collapse {
-        visibility: hidden;
-      }
     }
     // 右间距
     [class^="el-icon"] {

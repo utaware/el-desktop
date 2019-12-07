@@ -40,10 +40,7 @@ export default {
     }
   },
   filters: {},
-  created () {
-    // Gridea
-    console.log(this.$route)
-  },
+  created () {},
   mounted () {}
 }
 </script>
@@ -52,5 +49,11 @@ export default {
 .docs-page {
   // 文档页面
   display: flex;
+  position: relative;
+  align-items: stretch;
+  // 右侧视图宽度
+  .menu-detail {
+    flex: 1;
+  }
 }
 </style>

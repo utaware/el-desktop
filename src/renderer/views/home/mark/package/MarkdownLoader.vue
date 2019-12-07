@@ -12,7 +12,7 @@
     <!-- 容器 -->
     <div class="markdown-content custom" ref="mark" v-loading="loading"></div>
 
-    <el-backtop target=".el-scrollbar__wrap">
+    <el-backtop target=".el-scrollbar__wrap" :bottom="80">
 
       <div class="backtop"> UP </div>
 
@@ -116,6 +116,10 @@ export default {
       this.$refs.mark.removeChild(this.component.$el)
       this.component.$destroy()
       this.component = null
+    },
+    // 重载文档
+    reloadMarkdown () {
+      this.parseMarkdownFile(this.markdownFilePath)
     }
   },
   filters: {},
@@ -131,7 +135,11 @@ export default {
 @import '../styles/index.styl';
   // 解析器
 .wrapper-markdown-loader {
-  padding: 0 4rem;
+  padding: 2rem;
+  padding-right: 4rem;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 2px 8px hsla(0,0%,45.1%,.08);
   // markdown解析内容
   .markdown-content {
     // position: relative;

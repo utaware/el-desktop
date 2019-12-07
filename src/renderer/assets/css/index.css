@@ -4,6 +4,13 @@ body {
   padding: 0;
   /* cursor: url('/static/cursor/default.cur'), auto; */
 }
+/* 分割线 */
+hr {
+  margin: 1rem 0;
+  background-color: #dcdfe6;
+  height: 1px;
+  border: none;
+}
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
 ::-webkit-scrollbar  

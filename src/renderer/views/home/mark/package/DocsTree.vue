@@ -163,6 +163,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrapperdocs-tree {
+  padding: 0 1rem;
   // 搜索筛选框
   .search-filter {
     margin-bottom: 0.5rem;
