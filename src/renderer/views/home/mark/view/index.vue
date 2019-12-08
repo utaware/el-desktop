@@ -10,17 +10,19 @@
   <div class="wrapper-view-mark">
     <!-- 头部按钮 -->
     <header class="header">
-
+      <!-- 左侧按钮组 -->
       <el-button-group>
         
         <el-button icon="el-icon-arrow-left" @click="handleReturnHomePage">返回</el-button>
         
         <el-button icon="el-icon-refresh-right" @click="handleReloadMarkContent">重载</el-button>
 
-        <el-button icon="el-icon-folder-opened" @click="handleOpenDrawerShow">目录</el-button>
+        <el-button icon="el-icon-s-fold" @click="handleOpenDrawerShow">列表</el-button>
 
       </el-button-group>
-      
+      <!-- 右侧目录选择 -->
+      <SelectFolder></SelectFolder>
+          
     </header>
     <!-- 选择的文本内容 -->
     <div class="mark-content">
@@ -30,20 +32,12 @@
     </div>
     <!-- 文档树 -->
     <el-drawer
-      title="我是标题"
+      title="相关列表"
       :visible.sync="drawer.show"
       size="25rem"
       :direction="drawer.direction">
-
+  
       <el-tabs class="drawer-tabs" v-model="drawer.activeName" type="card" :stretch="true">
-        <!-- 选择当前目录 -->
-        <el-tab-pane name="folder">
-
-          <span slot="label">选择目录</span>
-
-          <SelectFolder></SelectFolder>
-
-        </el-tab-pane>
         <!-- 当前目录的结构 -->
         <el-tab-pane name="dir">
 
@@ -57,10 +51,11 @@
 
           <span slot="label">锚点列表</span>
 
+          <AnchorList></AnchorList>
+
         </el-tab-pane>
       
       </el-tabs>
-
     
     </el-drawer>
 
@@ -73,6 +68,7 @@
 import MarkdownLoader from '../package/MarkdownLoader.vue'
 import DocsTree from '../package/DocsTree.vue'
 import SelectFolder from '../package/SelectFolder.vue'
+import AnchorList from '../package/AnchorList.vue'
 // ipc
 import { ipcEventsHandler } from '@/message/ipcRendererHandle'
 // vuex
@@ -83,7 +79,8 @@ export default {
   components: {
     MarkdownLoader,
     DocsTree,
-    SelectFolder
+    SelectFolder,
+    AnchorList
   },
   mixins: [],
   inject: ['successCode'],
@@ -96,7 +93,7 @@ export default {
         show: false,
         layout: 'tree',
         direction: 'rtl',
-        activeName: ''
+        activeName: 'dir'
       }
     }
   },

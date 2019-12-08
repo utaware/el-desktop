@@ -4,8 +4,6 @@ const path = require('path')
 const markdownIt = require('../../module/mark')
 // fs
 const { readFileContent } = require('../fs')
-// handle
-const { successHandler, errorHandler } = require('../handler')
 
 module.exports = {
 
@@ -20,13 +18,11 @@ module.exports = {
 
       const htmlContent = markdownIt.render(mdContent, { filePath })
 
-      successHandler(event, on, { data: htmlContent })
+      this.emit('successHandler', event, on, { data: htmlContent })
 
     }).catch(error => {
 
-      console.log('errror', error)
-
-      errorHandler(event, on, error)
+      this.emit('errorHandler', event, on, error)
 
     })
 
@@ -56,7 +52,7 @@ module.exports = {
 
       const htmlContent = markdownIt.render(mdContent, { filePath })
 
-      successHandler(event, on, {
+      this.emit('successHandler', event, on, {
         data: {
           text: fileContent,
           html: htmlContent
@@ -65,9 +61,77 @@ module.exports = {
 
     }).catch(error => {
 
-      errorHandler(event, on, error)
+      this.emit('errorHandler', event, on, { error })
 
     })
+
+  },
+  // 解析标题
+  markdownParseWithTile (event, args) {
+
+    const { content, on, include = [] } = args
+
+    const titleTag = 'heading_open'
+
+    const tokens = markdownIt.parse(content, {})
+
+    const titleList = tokens.filter(v => v.type === titleTag && include.includes(v.tag)).map((v, i) => {
+      
+      const { attrs, tag } = v
+      
+      return {
+        id: attrs.find(([name]) => name === 'id')[1],
+        level: Number(tag.slice(1)),
+        index: i,
+        children: [],
+        tag
+      }
+
+    }).reduce((total, current) => {
+
+      const level = current.level - 1
+
+      total[level] = total[level] || []
+
+      total[level].push(current)
+
+      return total
+
+    }, []).filter(v => v)
+
+    titleList.forEach((current, order, arr) => {
+
+      const nextGourp = arr[order + 1]
+
+      if (!nextGourp) {
+        return false
+      }
+
+      current.forEach((v, i, a) => {
+
+        const { index } = v
+
+        const nextItem = a[i + 1]
+
+        const list = nextGourp.filter(m => {
+
+          const pre = m.index > index
+          
+          const next = !nextItem || nextItem.index > m.index
+
+          return pre && next
+        
+        })
+
+        v.children.push(...list)
+        
+      })
+
+    })
+
+    const [ parentNodes = [] ] = titleList
+
+    this.emit('successHandler', event, on, { data: parentNodes })
 
   }
 

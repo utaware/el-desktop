@@ -8,28 +8,22 @@
 <template>
   <!-- 选择文件夹目录 -->
   <div class="wrapper-select-folder">
-    <!-- 当前目录 -->
-    <div>
-      
-      <h3>当前目录 :</h3>
 
-      {{ folderPath }}
+    <el-input placeholder="请选择目录" v-model="folderPath" readonly>
+      
+      <template slot="prepend">
+
+        <el-button icon="el-icon-folder-opened" @click="hanldeSelectFolderPath"></el-button>
+
+      </template>
+
+      <template slot="append">
+
+        <el-button class="folder-path" icon="el-icon-document-copy" :data-clipboard-text="folderPath"></el-button>
+
+      </template>
     
-    </div>
-    <!-- 分割线 -->
-    <hr>
-    <!-- 选择目录 -->
-    <div class="enter-container">
-
-      <el-button-group>
-      
-        <el-button icon="el-icon-folder-opened" @click="hanldeSelectFolderPath">选择目录</el-button>
-
-        <el-button class="folder-path" icon="el-icon-document-copy" @click="handleCopyCurrentPath" :data-clipboard-text="folderPath">复制路径</el-button>
-      
-      </el-button-group>
-
-    </div>
+    </el-input>
 
   </div>
 
@@ -51,9 +45,7 @@ export default {
   watch: {},
   props: {},
   data () {
-    return {
-      currentFolder: ''
-    }
+    return {}
   },
   computed: {
     // vuex
@@ -62,10 +54,6 @@ export default {
   methods: {
     // vuex
     ...mapMutations('Markview', ['commitFolderPath']),
-    // 复制路径
-    handleCopyCurrentPath () {
-
-    },
     // 选择目录
     hanldeSelectFolderPath () {
       // 打开选择目录弹窗
@@ -77,7 +65,6 @@ export default {
         },
         callback: (res) => {
           const { data, code, message } = res
-          console.log('menuHead', res)
           if (code === successCode) {
             if (data) {
               this.commitFolderPath(data)
@@ -101,11 +88,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+// 选择目录
 .wrapper-select-folder {
-  padding: 0 1rem;
-  .enter-container {
-    margin-top: 1rem;
-    text-align: center;
-  }
+  margin-right: 2rem;
+  width: 30rem;
 }
 </style>

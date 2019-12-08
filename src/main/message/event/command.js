@@ -23,9 +23,11 @@ module.exports = {
 
       event.sender.send(on, outPutText)
 
-    }).catch(stderr => {
+      this.emit('successHandler', event, on, { data: outPutText })
 
-      event.sender.send(on, stderr)
+    }).catch(error => {
+
+      this.emit('errorHandler', event, on, { error })
 
     })
 

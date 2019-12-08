@@ -2,8 +2,6 @@
 
 const { dialog } = require('electron')
 
-const { successHandler, errorHandler } = require('../handler')
-
 module.exports = {
   // 显示用于打开和保存文件、警报等的本机系统对话框。
   showOpenDialog (event, args) {
@@ -20,11 +18,11 @@ module.exports = {
 
       const selected = canceled ? null : multiSelections ? copyPaths : copyPaths.shift()
 
-      successHandler(event, on, { data: selected })
+      this.emit('successHandler', event, on, { data: selected })
 
     }).catch(error => {
 
-      errorHandler(event, on, { error })
+      this.emit('errorHandler', event, on, { error })
 
     })
 
