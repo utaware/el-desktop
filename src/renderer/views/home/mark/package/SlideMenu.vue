@@ -70,11 +70,8 @@ export default {
   flex: 0 0 4rem;  
   // element菜单
   .el-menu {
-    position: fixed;
-    left: 0;
-    top: 0;
     width: 4rem;
-    height: 100vh;
+    height: 100%;
     text-align: center;
   }
 }

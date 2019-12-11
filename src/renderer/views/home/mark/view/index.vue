@@ -11,12 +11,10 @@
     <!-- 头部按钮 -->
     <header class="header">
       <!-- 左侧按钮组 -->
-      <el-button-group>
+      <el-button-group class="left-button-group">
         
         <el-button icon="el-icon-arrow-left" @click="handleReturnHomePage">返回</el-button>
-        
         <el-button icon="el-icon-refresh-right" @click="handleReloadMarkContent">重载</el-button>
-
         <el-button icon="el-icon-s-fold" @click="handleOpenDrawerShow">列表</el-button>
 
       </el-button-group>
@@ -25,15 +23,21 @@
           
     </header>
     <!-- 选择的文本内容 -->
-    <div class="mark-content">
+    <el-scrollbar 
+      style="height: calc(100% - 56px);"
+      :native="false"
+      :noresize="false"
+      :wrapClass="wrapClass"
+      :wrapStyle="wrapStyles">
 
       <MarkdownLoader ref="loader"></MarkdownLoader>
 
-    </div>
+    </el-scrollbar>
     <!-- 文档树 -->
     <el-drawer
       title="相关列表"
       :visible.sync="drawer.show"
+      :modal="false"
       size="25rem"
       :direction="drawer.direction">
   
@@ -84,7 +88,14 @@ export default {
   },
   mixins: [],
   inject: ['successCode'],
-  watch: {},
+  watch: {
+    $route: {
+      handler (nv) {
+        console.log('$route:', nv)
+      },
+      deep: true
+    }
+  },
   props: {},
   data () {
     return {
@@ -94,7 +105,19 @@ export default {
         layout: 'tree',
         direction: 'rtl',
         activeName: 'dir'
-      }
+      },
+      // 包裹class
+      wrapClass: {
+        overLimit: true
+      },
+      // 默认为{}, 实际只有数组和字符串进行处理
+      wrapStyles: [
+        { overflowX: 'hidden' }
+      ],
+      viewClass: {},
+      viewStyle: {},
+      // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
+      noresize: false
     }
   },
   computed: {},
@@ -136,7 +159,9 @@ export default {
     }
   },
   filters: {},
-  created () {},
+  created () {
+    console.log(this.$route)
+  },
   mounted () {}
 }
 </script>
@@ -147,17 +172,16 @@ export default {
   background: #f9f9f9;
   // 头部设置
   .header {
-    padding: 0.5rem 1rem;
     display: flex;
+    padding: 0.5rem 1rem;
     justify-content: space-between;
-    width: 100%;
     background: #fff;
-    box-shadow: 0 3px 20px rgba(67,67,67,.05);
+    border-bottom: 1px solid #f9f9f9;
+    box-sizing: border-box;
     // 左侧按钮组
-  }
-  // mark文本内容
-  .mark-content {
-    padding: 4rem 2rem;
+    .left-button-group {
+      width: 270px;
+    }
   }
 }
 </style>

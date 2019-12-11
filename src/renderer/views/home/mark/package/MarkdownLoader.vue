@@ -8,7 +8,6 @@
 <template>
 
   <div class="wrapper-markdown-loader">
-
     <!-- 容器 -->
     <div class="markdown-content custom" ref="mark" v-loading="loading"></div>
 
@@ -51,7 +50,9 @@ export default {
   props: {},
   data () {
     return {
+      // 当前引入的append vue实例
       component: null,
+      // 加载
       loading: false
     }
   },
@@ -136,13 +137,12 @@ export default {
   // 解析器
 .wrapper-markdown-loader {
   padding: 2rem;
-  padding-right: 4rem;
-  background: #fff;
-  border: 1px solid #e8e8e8;
-  box-shadow: 0 2px 8px hsla(0,0%,45.1%,.08);
+  background: #f9f9f9;
   // markdown解析内容
   .markdown-content {
-    // position: relative;
+    padding: 2rem;
+    padding-right: 4rem;
+    background: #fff;
   }
   // 返回顶部
   .backtop {

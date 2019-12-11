@@ -17,7 +17,9 @@ const linkifyIt = require('linkify-it')()
 const methodName = '@click'
 const methodHanlder = 'handlerLinkClick'
 
-module.exports = (md, externalAttrs) => {
+module.exports = (md) => {
+
+  let isExternal = false
 
   md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
     
@@ -33,7 +35,7 @@ module.exports = (md, externalAttrs) => {
 
     const linkFile = path.resolve(folderPath, href)
     // 外部链接类似于网页域名和email邮箱会被认为true, 相对链接必然是false
-    const isExternal = linkifyIt.test(href)
+    isExternal = linkifyIt.test(href)
     
     const dataSet = { filePath, linkFile, isExternal }
     
@@ -50,6 +52,7 @@ module.exports = (md, externalAttrs) => {
 
   md.renderer.rules.link_close = (tokens, idx, options, env, self) => {
     // add OutBoundLink to the beforeend of this link if it opens in _blank.
-    return '<OutboundLink/>' + self.renderToken(tokens, idx, options)
+    const tag = isExternal ? '<OutboundLink/>' : ''
+    return tag + self.renderToken(tokens, idx, options)
   }
 }

@@ -2,18 +2,9 @@
   <!-- 入口 -->
   <div id="app">
     <!-- https://github.com/ElemeFE/element/blob/dev/packages/scrollbar/src/main.js -->
-    <el-scrollbar 
-      :style="styles"
-      :native="false"
-      :noresize="noresize"
-      :wrapClass="wrapClass"
-      :wrapStyle="wrapStyles">
-      <!-- 视图 -->
-      <div class="drag-app"></div>
-
-      <router-view class="application-view"></router-view>
-
-    </el-scrollbar>
+    <div class="drag-app"></div>
+    <!-- 视图 -->
+    <router-view class="application-view"></router-view>
 
   </div>
 
@@ -27,25 +18,7 @@ export default {
     errorCode: 0
   },
   data () {
-    return {
-      // 绑定样式
-      styles: {
-        height: '100vh'
-      },
-      // 包裹class
-      wrapClass: {
-        overLimit: true
-      },
-      // 默认为{}, 实际只有数组和字符串进行处理
-      wrapStyles: [
-        { overflowX: 'hidden' }
-      ],
-      viewClass: {},
-      viewStyle: {},
-      // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
-      noresize: false,
-      tag: 'div'
-    }
+    return {}
   },
   methods: {},
   created () {

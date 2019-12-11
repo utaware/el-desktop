@@ -51,9 +51,12 @@ export default {
   display: flex;
   position: relative;
   align-items: stretch;
+  height: 100vh;
   // 右侧视图宽度
   .menu-detail {
     flex: 1;
+    height: 100vh;
+    overflow: hidden;
   }
 }
 </style>

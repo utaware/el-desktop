@@ -16,7 +16,7 @@
         <!-- 节点图标 -->
         <!-- <i :class="getIconClassName(node, data)"></i> -->
         <!-- 节点名称 -->
-        <a :href="`#${node.label}`">{{ node.label }}</a>
+        <a @click.prevent="handleAnchorClick(node.label)">{{ node.label }}</a>
 
       </span>
 
@@ -45,11 +45,15 @@ export default {
   props: {},
   data () {
     return {
+      // tree data
       titleList: [],
+      // tree options
       defaultProps: {
         children: 'children',
         label: 'id'
-      }
+      },
+      // 锚点标记
+      anchorMark: ''
     }
   },
   computed: {
@@ -83,7 +87,6 @@ export default {
         callback: (res) => {
           const { code, data, message } = res
           if (code === successCode) {
-            // this.renderMarkdownAnchorList(data)
             this.titleList = data
           } else {
             this.$message.error(message)
@@ -91,18 +94,10 @@ export default {
         }
       })
     },
-    // 渲染当前路径md文件对应的锚点标题结构
-    renderMarkdownAnchorList (list) {
-      const content = list.map(v => {
-        const { tag, level, id } = v
-        return `
-        <li style="text-indent: ${level * 2}em;" data-tag="${tag}">
-          <a href="#${id}">${id}</a>
-        </li>`
-      }).join('\n')
-      const renderHtml = `<ul>\n${content}\n</ul>`
-      console.log(renderHtml)
-      this.renderHtml = renderHtml
+    // 锚点跳转
+    handleAnchorClick (id) {
+      this.anchorMark = '#' + id
+      document.querySelector(this.anchorMark).scrollIntoView(true)
     }
   },
   filters: {},
