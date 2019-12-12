@@ -4,31 +4,33 @@
  * @Author: utaware
  * @Date: 2019-08-14 18:46:22
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-04 18:26:37
+ * @LastEditTime: 2019-12-12 18:05:44
  -->
 
 <template>
   <!-- 桌面 -->
-  <div class="desktop-page" :style="styles">
-    <!-- 菜单列表 -->
-    <ul class="icon-list">
-      
-      <li class="icon-item"
-        v-for="(item, index) of iconList"
-        :key="index"
-        @click="handlerClick(item.to)">
+  <WallPaper>
 
-        <img class="icon-image" :src="item.src" :alt="item.name">
+    <div class="desktop-page" :style="styles">
+      <!-- 菜单列表 -->
+      <ul class="icon-list">
+        
+        <li class="icon-item"
+          v-for="(item, index) of iconList"
+          :key="index"
+          @click="handlerClick(item.to)">
 
-        <p class="icon-text">{{ item.text }}</p>
-      
-      </li>
+          <img class="icon-image" :src="item.src" :alt="item.name">
 
-    </ul>
-    <!-- 外框测试 -->
-    <DragOuterContainer></DragOuterContainer>
+          <p class="icon-text">{{ item.text }}</p>
+        
+        </li>
 
-  </div>
+      </ul>
+
+    </div>
+
+  </WallPaper>
 
 </template>
 
@@ -37,10 +39,12 @@
 import iconList from './data/icon'
 // components
 import DragOuterContainer from '@/components/common/drag-outer-container/main.vue'
+import WallPaper from '@/components/common/theme/WallPaper.vue'
 
 export default {
   name: 'ns-desktop-page',
   components: {
+    WallPaper,
     DragOuterContainer
   },
   mixins: [],
@@ -69,9 +73,7 @@ export default {
 <style lang="scss" scoped>
 // 桌面页
 .desktop-page {
-  position: relative;
-  height: 100vh;
-  background: url('/static/images/default-bg.jpg') no-repeat center center;
+  padding: 2rem;
   // 图标列表
   .icon-list {
     margin-top: 0;

@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-06 10:58:03
+ * @LastEditTime: 2019-12-12 18:44:00
  */
 'use strict'
 
@@ -41,14 +41,18 @@ function createWindow () {
   /**
    * Initial window options https://electronjs.org/docs/tutorial/security
    */
+  // https://electronjs.org/docs/api/frameless-window
   mainWindow = new BrowserWindow({
+    width: 1000,
     height: 800,
     useContentSize: true,
-    width: 1000,
     // 无边框
     // titleBarStyle: 'customButtonsOnHover',
     // transparent: true,
+    // 创建无边框窗口
     frame: false,
+    // 隐藏顶部菜单栏
+    // autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true
     }
@@ -65,6 +69,13 @@ function createWindow () {
 // 创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。
 app.on('ready', createWindow)
+
+// const menuOptions = require('./menuOptions')
+
+// app.on('ready', () => {
+//   const appMenu = Menu.buildFromTemplate(menuOptions)
+//   Menu.setApplicationMenu(appMenu)
+// })
 
 // 当全部窗口关闭时退出。
 app.on('window-all-closed', () => {

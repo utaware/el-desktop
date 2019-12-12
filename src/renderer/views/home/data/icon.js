@@ -9,8 +9,8 @@ const iconList = [
   },
   {
     src: 'Customize.png',
-    text: '设置',
-    to: '/tool'
+    text: '工具',
+    to: '/tools'
   },
   {
     src: 'Music.png',
