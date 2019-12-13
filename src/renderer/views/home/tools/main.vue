@@ -17,14 +17,25 @@
 
     </header>
 
+    <div class="form">
+
+      <Annie></Annie>
+    
+    </div>
+
   </div>
 
 </template>
 
 <script>
+// components
+import Annie from './package/annie-go/main'
+
 export default {
   name: 'ns-tool-page',
-  components: {},
+  components: {
+    Annie
+  },
   mixins: [],
   watch: {},
   props: {},
@@ -38,7 +49,9 @@ export default {
     }
   },
   filters: {},
-  created () {},
+  created () {
+    console.log('annie')
+  },
   mounted () {}
 }
 </script>
@@ -49,6 +62,12 @@ export default {
   .header {
     display: flex;
     justify-content: space-between;
+  }
+  .form {
+    margin: 0 auto;
+    padding: 2rem;
+    width: 540px;
+    background: #fff;
   }
 }
 </style>

@@ -74,7 +74,7 @@ import DocsTree from '../package/DocsTree.vue'
 import SelectFolder from '../package/SelectFolder.vue'
 import AnchorList from '../package/AnchorList.vue'
 // ipc
-import { ipcEventsHandler } from '@/message/ipcRendererHandle'
+import { ipcEventsHandlerOnce } from '@/message/ipcRendererHandle'
 // vuex
 import { mapMutations } from 'vuex'
 
@@ -136,7 +136,7 @@ export default {
     handleOpenSelectFolder () {
       // 打开选择目录弹窗
       const { successCode } = this
-      ipcEventsHandler({
+      ipcEventsHandlerOnce({
         send: 'showOpenDialog',
         options: {
           properties: ['openDirectory']

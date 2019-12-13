@@ -28,7 +28,7 @@
 
 <script>
 // ipc
-import { ipcEventsHandler } from '@/message/ipcRendererHandle'
+import { ipcEventsHandlerOnce } from '@/message/ipcRendererHandle'
 // vuex
 import { mapState } from 'vuex'
 
@@ -64,7 +64,7 @@ export default {
     // 读取文件内容
     getAnchorTitleList () {
       const { markdownFilePath, successCode } = this
-      ipcEventsHandler({
+      ipcEventsHandlerOnce({
         filePath: markdownFilePath,
         send: 'readFileContent',
         callback: (res) => {
@@ -80,7 +80,7 @@ export default {
     // 解析md格式文本到tokens处理
     parseMarkdownContentWithTitle (content) {
       const { successCode } = this
-      ipcEventsHandler({
+      ipcEventsHandlerOnce({
         content,
         send: 'markdownParseWithTile',
         include: [ 'h1', 'h2', 'h3', 'h4' ],

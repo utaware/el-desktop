@@ -43,7 +43,7 @@
 
 <script>
 // ipc
-import { ipcEventsHandler } from '@/message/ipcRendererHandle'
+import { ipcEventsHandlerOnce } from '@/message/ipcRendererHandle'
 // vuex
 import { mapState, mapMutations } from 'vuex'
 
@@ -56,7 +56,7 @@ export default {
     // 当选择文件的路径发生变化 -> 重载数据
     folderPath (dirPath) {
       const { successCode, filterMarkFile } = this
-      ipcEventsHandler({
+      ipcEventsHandlerOnce({
         dirPath,
         send: 'readFileFolderPath',
         callback: (res) => {
@@ -106,7 +106,7 @@ export default {
       if (!path) {
         resolve([])
       } else {
-        ipcEventsHandler({
+        ipcEventsHandlerOnce({
           dirPath: path,
           send: 'readFileFolderPath',
           callback: (res) => {

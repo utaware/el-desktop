@@ -31,7 +31,7 @@
 
 <script>
 // ipc
-import { ipcEventsHandler } from '@/message/ipcRendererHandle'
+import { ipcEventsHandlerOnce } from '@/message/ipcRendererHandle'
 // vuex
 import { mapState, mapMutations } from 'vuex'
 // clipboard
@@ -58,7 +58,7 @@ export default {
     hanldeSelectFolderPath () {
       // 打开选择目录弹窗
       const { successCode } = this
-      ipcEventsHandler({
+      ipcEventsHandlerOnce({
         send: 'showOpenDialog',
         options: {
           properties: ['openDirectory']

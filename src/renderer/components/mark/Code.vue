@@ -17,7 +17,7 @@
 
 <script>
 // utils
-import { ipcEventsHandler } from '@/message/ipcRendererHandle'
+import { ipcEventsHandlerOnce } from '@/message/ipcRendererHandle'
 // vuex
 import Vue from 'vue'
 
@@ -56,7 +56,7 @@ export default {
     // 解析动态的md文件路径转化为页面
     parseMarkdownCode () {
       const { currentFilePath, content, params } = this
-      ipcEventsHandler({
+      ipcEventsHandlerOnce({
         send: 'markdownRenderWithCode',
         currentFilePath,
         codeRelativePath: content,
