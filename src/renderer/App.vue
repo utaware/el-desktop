@@ -1,18 +1,34 @@
 <template>
   <!-- 入口 -->
   <div id="app">
-    <!-- https://github.com/ElemeFE/element/blob/dev/packages/scrollbar/src/main.js -->
-    <div class="drag-app"></div>
+    <!-- 顶部拖动栏 -->
+    <TopDragMenu></TopDragMenu>
+    <!-- 右键菜单 -->
+    <RightClickMenu></RightClickMenu>
+    <!-- 壁纸 -->
+    <WallPaper>
     <!-- 视图 -->
-    <router-view class="application-view"></router-view>
+      <router-view class="application-view"></router-view>
+
+    </WallPaper>
 
   </div>
 
 </template>
 
 <script>
+// components
+import TopDragMenu from '@common/system/TopDragMenu.vue'
+import RightClickMenu from '@common/system/RightClickMenu.vue'
+import WallPaper from '@common/theme/WallPaper.vue'
+
 export default {
   name: 'el-desktop',
+  components: {
+    WallPaper,
+    TopDragMenu,
+    RightClickMenu
+  },
   provide: {
     successCode: 1,
     errorCode: 0
@@ -21,31 +37,10 @@ export default {
     return {}
   },
   methods: {},
-  created () {
-    const log = window.console.log
-    window.console.$log = function (params) {
-      for (const key in params) {
-        log(`${key}:`, params[key])
-      }
-    }
-    window._vue = this
-  }
+  created () {}
 }
 </script>
 
-<style lang="scss" scoped>
-#app {
-  // 隐藏任务栏和外框 -- 拖拽支持
-  .drag-app {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 1rem;
-    cursor: pointer;
-    background: transparent;
-    z-index: 999;
-    -webkit-app-region: drag;
-  }
-}
+<style lang="stylus" scoped>
+
 </style>

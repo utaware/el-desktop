@@ -159,9 +159,7 @@ export default {
     }
   },
   filters: {},
-  created () {
-    console.log(this.$route)
-  },
+  created () {},
   mounted () {}
 }
 </script>

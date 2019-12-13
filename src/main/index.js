@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-12 18:44:00
+ * @LastEditTime: 2019-12-13 17:33:49
  */
 'use strict'
 
@@ -42,9 +42,13 @@ function createWindow () {
    * Initial window options https://electronjs.org/docs/tutorial/security
    */
   // https://electronjs.org/docs/api/frameless-window
+  const { screen } = require('electron')
+  
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize
+
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
+    width,
+    height,
     useContentSize: true,
     // 无边框
     // titleBarStyle: 'customButtonsOnHover',

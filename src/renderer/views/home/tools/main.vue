@@ -9,7 +9,13 @@
   <!-- 主页面 -->
   <div class="tool-page">
 
-    tool
+    <header class="header">
+
+      <span>工具</span>
+
+      <el-button @click="handlerReturnHomePage">返回</el-button>
+
+    </header>
 
   </div>
 
@@ -26,14 +32,23 @@ export default {
     return {}
   },
   computed: {},
-  methods: {},
+  methods: {
+    handlerReturnHomePage () {
+      this.$router.push('/home')
+    }
+  },
   filters: {},
   created () {},
   mounted () {}
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
+// 相关工具选择
 .tool-page {
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 </style>

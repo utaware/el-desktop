@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-12 17:40:26
+ * @LastEditTime: 2019-12-13 18:05:09
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -20,7 +20,7 @@ export default new Router({
     },
     {
       path: '/docs',
-      name: 'docs-page',
+      name: 'docs',
       component: require('@/views/home/mark/main.vue').default,
       children: [
         {
@@ -38,7 +38,7 @@ export default new Router({
     // 工具
     {
       path: '/tools',
-      name: 'tools-page',
+      name: 'tools',
       component: require('@/views/home/tools/main.vue').default
     },
     // 404页面
@@ -46,6 +46,11 @@ export default new Router({
       path: '/404',
       name: 'notfound-page',
       component: require('@/views/not-found/404.vue').default
+    },
+    // 默认主页
+    {
+      path: '/',
+      redirect: '/home'
     },
     {
       path: '*',
