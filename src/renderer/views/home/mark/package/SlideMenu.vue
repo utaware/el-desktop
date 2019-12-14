@@ -14,10 +14,14 @@
       default-active="1"
       :background-color="backgroundColor"
       :text-color="textColor"
-      :router="true"
       :active-text-color="activeTextColor">
       <!-- 设定菜单 -->
-      <el-menu-item class="menu-item" v-for="(item, index) of menuPannel" :key="index" :index="'/docs/' + item.name">
+      <el-menu-item 
+        class="single-item"
+        v-for="(item, index) of menuPannel"
+        :key="index"
+        :index="item.name"
+        @click="handlerTabMenuClick(item.name)">
         <!-- 显示文字 -->
         <el-tooltip :content="item.text" placement="right">
           <!-- 图标 -->
@@ -44,11 +48,10 @@ export default {
     return {
       // 菜单栏配置
       menuPannel: [
-        { iconClass: 'star-off', text: '主题', name: 'theme' },
-        { iconClass: 'menu', text: '菜单', name: 'menu' },
-        { iconClass: 'price-tag', text: '标签', name: 'tag' },
-        { iconClass: 'document', text: '文档', name: 'view' },
-        { iconClass: 'setting', text: '配置', name: 'config' }
+        { iconClass: 'back', text: '回到桌面', name: 'desktop' },
+        { iconClass: 's-fold', text: '显示列表', name: 'drawer' },
+        { iconClass: 'refresh-right', text: '刷新文档', name: 'reload' },
+        { iconClass: 'folder-opened', text: '选择目录', name: 'folder' }
       ],
       // 菜单栏背景色 hex
       backgroundColor: '#f9f7f3',
@@ -57,7 +60,12 @@ export default {
     }
   },
   computed: {},
-  methods: {},
+  methods: {
+    // 单个菜单被点击
+    handlerTabMenuClick (name) {
+      this.$emit('leftMenuClick', name)
+    }
+  },
   filters: {},
   created () {},
   mounted () {}
@@ -67,12 +75,24 @@ export default {
 <style lang="stylus" scoped>
 // 左侧菜单栏样式
 .wrapper-slide-menu {
-  flex: 0 0 4rem;  
+  flex: 0 0 4rem;
   // element菜单
   .el-menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     width: 4rem;
     height: 100%;
     text-align: center;
+    box-sizing: border-box;
+    .single-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      flex: 1;
+    }
   }
 }
 </style>

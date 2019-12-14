@@ -80,7 +80,7 @@ export default {
         send: 'spawnCommand',
         command: 'annie',
         args: this.composeCommand,
-        options: { encoding: 'utf8' },
+        options: { encoding: 'utf8', windowsHide: true },
         events: {
           success: (event, res) => {
             console.log('success:', res)

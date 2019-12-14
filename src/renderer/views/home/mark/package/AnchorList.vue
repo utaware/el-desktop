@@ -9,7 +9,9 @@
   <!-- 锚点列表 -->
   <div class="wrapper-anchor-list">
 
-    <el-tree :data="titleList" :props="defaultProps">
+    <el-tree :data="titleList"
+    :props="defaultProps"
+    :default-expand-all="true">
 
       <!-- 自定义渲染节点 -->
       <span class="custom-tree-node" slot-scope="{ node }">

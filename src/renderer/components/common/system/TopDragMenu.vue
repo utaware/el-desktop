@@ -39,11 +39,12 @@ export default {
 
 // 隐藏任务栏和外框 -- 拖拽支持
 .drag-app {
+  // display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 2rem;
+  height: 1rem;
   cursor: pointer;
   background: transparentify;
   z-index: 999;

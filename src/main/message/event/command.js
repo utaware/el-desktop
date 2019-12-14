@@ -47,8 +47,6 @@ module.exports = {
 
     const terminal = spawn(command, args, options)
 
-    console.log('terminal', terminal)
-
     const { encoding } = options
 
     terminal.stdout.on('data', (data) => {

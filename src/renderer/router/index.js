@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-13 18:05:09
+ * @LastEditTime: 2019-12-14 15:59:24
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -21,19 +21,7 @@ export default new Router({
     {
       path: '/docs',
       name: 'docs',
-      component: require('@/views/home/mark/main.vue').default,
-      children: [
-        {
-          path: 'tag',
-          name: 'manage-tags',
-          component: require('@/views/home/mark/tag/manage.vue').default
-        },
-        {
-          path: 'view',
-          name: 'mark-view',
-          component: require('@/views/home/mark/view/index.vue').default
-        }
-      ]
+      component: require('@/views/home/mark/main.vue').default
     },
     // 工具
     {
