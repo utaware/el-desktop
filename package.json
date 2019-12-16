@@ -53,6 +53,7 @@
     }
   },
   "dependencies": {
+    "@hscmap/vue-menu": "^2.10.0",
     "axios": "^0.18.0",
     "clipboard": "^2.0.4",
     "color": "^3.1.2",
@@ -79,10 +80,12 @@
     "semver": "^6.3.0",
     "toml": "^3.0.0",
     "upath": "^1.1.2",
+    "v-contextmenu": "^2.9.0",
     "vue": "^2.5.16",
     "vue-draggable-resizable": "^2.1.0",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
+    "vue-runtime-helpers": "^1.1.2",
     "vuex": "^3.0.1",
     "vuex-electron": "^1.0.0",
     "vuex-persistedstate": "^2.7.0",

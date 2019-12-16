@@ -1,5 +1,5 @@
 Arguments: 
-  D:\software\node\node.exe D:\software\node\node_modules\yarn\bin\yarn.js add lodash.merge @4.6.2:
+  D:\software\node\node.exe D:\software\node\node_modules\yarn\bin\yarn.js add @hscmap/vue-menu
 
 PATH: 
   D:\software\python\Scripts\\python\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\\Git\cmd;D:\software\node\;C:\Program Files\TortoiseSVN\bin;D:\mysql-8.0.13-winx64\bin\node\;D:\software\ffmpeg\bin;C:\Program Files\WinRAR;;D:\go\bin;D:\software\Microsoft VS Code\bin;D:\software\node\;D:\software\Git\bin;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\GitHubDesktop\bin;C:\Users\Administrator\go\bin
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: http://registry.npm.taobao.org/@4.6.2:: Request "http://registry.npm.taobao.org/@4.6.2:" returned a 405
-      at Request.params.callback [as _callback] (D:\software\node\node_modules\yarn\lib\cli.js:66067:18)
-      at Request.self.callback (D:\software\node\node_modules\yarn\lib\cli.js:129541:22)
-      at Request.emit (events.js:189:13)
-      at Request.<anonymous> (D:\software\node\node_modules\yarn\lib\cli.js:130513:10)
-      at Request.emit (events.js:189:13)
-      at IncomingMessage.<anonymous> (D:\software\node\node_modules\yarn\lib\cli.js:130435:12)
-      at Object.onceWrapper (events.js:277:13)
-      at IncomingMessage.emit (events.js:194:15)
-      at endReadableNT (_stream_readable.js:1125:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: EPERM: operation not permitted, scandir 'E:\project\el-desktop\node_modules\@types'
 
 npm manifest: 
   {
@@ -32,7 +22,7 @@ npm manifest:
     "version": "0.0.1",
     "author": "",
     "description": "An electron-vue project",
-    "license": null,
+    "license": "",
     "main": "./dist/electron/main.js",
     "scripts": {
       "build": "node .electron-vue/build.js && electron-builder",
@@ -83,9 +73,11 @@ npm manifest:
     },
     "dependencies": {
       "axios": "^0.18.0",
+      "clipboard": "^2.0.4",
       "color": "^3.1.2",
       "diacritics": "^1.3.0",
-      "element-ui": "^2.11.1",
+      "electron-store": "^5.1.0",
+      "element-ui": "^2.13.0",
       "escape-html": "^1.0.3",
       "fs-extra": "^8.1.0",
       "globby": "^10.0.1",
@@ -93,6 +85,7 @@ npm manifest:
       "hash-sum": "^2.0.0",
       "iconv-lite": "^0.5.0",
       "lodash": "^4.17.15",
+      "lodash.merge": "4.6.2",
       "lru-cache": "^5.1.1",
       "markdown-it": "^9.1.0",
       "markdown-it-anchor": "^5.2.4",
@@ -105,9 +98,12 @@ npm manifest:
       "semver": "^6.3.0",
       "toml": "^3.0.0",
       "upath": "^1.1.2",
+      "v-contextmenu": "^2.9.0",
       "vue": "^2.5.16",
+      "vue-draggable-resizable": "^2.1.0",
       "vue-electron": "^1.0.6",
       "vue-router": "^3.0.1",
+      "vue-runtime-helpers": "^1.1.2",
       "vuex": "^3.0.1",
       "vuex-electron": "^1.0.0",
       "vuex-persistedstate": "^2.7.0",
@@ -159,9 +155,9 @@ npm manifest:
       "vue-loader": "^15.2.4",
       "vue-markdown-loader": "^2.4.1",
       "vue-style-loader": "^4.1.0",
-      "vue-template-compiler": "^2.5.16",
-      "webpack": "^4.39.3",
-      "webpack-cli": "^3.0.8",
+      "vue-template-compiler": "^2.6.10",
+      "webpack": "^4.41.2",
+      "webpack-cli": "^3.3.10",
       "webpack-dev-server": "^3.1.4",
       "webpack-hot-middleware": "^2.22.2",
       "webpack-merge": "^4.1.3"
@@ -2539,7 +2535,7 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/cli-width/download/cli-width-2.2.0.tgz#ff19ede8a9a5e579324147b0c11f0fbcbabed639"
     integrity sha1-/xnt6Kml5XkyQUewwR8PvLq+1jk=
   
-  clipboard@^2.0.0:
+  clipboard@^2.0.0, clipboard@^2.0.4:
     version "2.0.4"
     resolved "https://registry.npm.taobao.org/clipboard/download/clipboard-2.0.4.tgz#836dafd66cf0fea5d71ce5d5b0bf6e958009112d"
     integrity sha1-g22v1mzw/qXXHOXVsL9ulYAJES0=
@@ -2811,6 +2807,22 @@ Lockfile:
       make-dir "^1.0.0"
       pkg-up "^2.0.0"
       write-file-atomic "^2.3.0"
+  
+  conf@^6.2.0:
+    version "6.2.0"
+    resolved "https://registry.npm.taobao.org/conf/download/conf-6.2.0.tgz#274d37a0a2e50757ffb89336e954d08718eb359a"
+    integrity sha1-J003oKLlB1f/uJM26VTQhxjrNZo=
+    dependencies:
+      ajv "^6.10.2"
+      debounce-fn "^3.0.1"
+      dot-prop "^5.0.0"
+      env-paths "^2.2.0"
+      json-schema-typed "^7.0.1"
+      make-dir "^3.0.0"
+      onetime "^5.1.0"
+      pkg-up "^3.0.1"
+      semver "^6.2.0"
+      write-file-atomic "^3.0.0"
   
   configstore@^4.0.0:
     version "4.0.0"
@@ -3486,6 +3498,13 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/de-indent/download/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
     integrity sha1-sgOOhG3DO6pXlhKNCAS0VbjB4h0=
   
+  debounce-fn@^3.0.1:
+    version "3.0.1"
+    resolved "https://registry.npm.taobao.org/debounce-fn/download/debounce-fn-3.0.1.tgz#034afe8b904d985d1ec1aa589cd15f388741d680"
+    integrity sha1-A0r+i5BNmF0ewapYnNFfOIdB1oA=
+    dependencies:
+      mimic-fn "^2.1.0"
+  
   debug@2.6.9, debug@^2.1.3, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
     version "2.6.9"
     resolved "https://registry.npm.taobao.org/debug/download/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -3856,6 +3875,13 @@ Lockfile:
     dependencies:
       is-obj "^1.0.0"
   
+  dot-prop@^5.0.0:
+    version "5.2.0"
+    resolved "https://registry.npm.taobao.org/dot-prop/download/dot-prop-5.2.0.tgz#c34ecc29556dc45f1f4c22697b6f4904e0cc4fcb"
+    integrity sha1-w07MKVVtxF8fTCJpe29JBODMT8s=
+    dependencies:
+      is-obj "^2.0.0"
+  
   dotenv-expand@^4.2.0:
     version "4.2.0"
     resolved "https://registry.npm.taobao.org/dotenv-expand/download/dotenv-expand-4.2.0.tgz#def1f1ca5d6059d24a766e587942c21106ce1275"
@@ -4016,6 +4042,14 @@ Lockfile:
     dependencies:
       conf "^2.0.0"
   
+  electron-store@^5.1.0:
+    version "5.1.0"
+    resolved "https://registry.npm.taobao.org/electron-store/download/electron-store-5.1.0.tgz#0b3cb66b15d0002678fc5c13e8b0c38a8678d670"
+    integrity sha1-Czy2axXQACZ4/FwT6LDDioZ41nA=
+    dependencies:
+      conf "^6.2.0"
+      type-fest "^0.7.1"
+  
   electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.47:
     version "1.3.225"
     resolved "https://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.225.tgz#c6786475b5eb5f491ade01a78b82ba2c5bfdf72b"
@@ -4030,10 +4064,10 @@ Lockfile:
       electron-download "^4.1.0"
       extract-zip "^1.0.3"
   
-  element-ui@^2.11.1:
-    version "2.12.0"
-    resolved "https://registry.npm.taobao.org/element-ui/download/element-ui-2.12.0.tgz#a893bc11ae4f7dbb7e9d541606f23e643f131ee4"
-    integrity sha1-qJO8Ea5Pfbt+nVQWBvI+ZD8THuQ=
+  element-ui@^2.13.0:
+    version "2.13.0"
+    resolved "https://registry.npm.taobao.org/element-ui/download/element-ui-2.13.0.tgz#f6bb04e5b0a76ea5f62466044b774407ba4ebd2d"
+    integrity sha1-9rsE5bCnbqX2JGYES3dEB7pOvS0=
     dependencies:
       async-validator "~1.8.1"
       babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -4105,6 +4139,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.npm.taobao.org/env-paths/download/env-paths-1.0.0.tgz#4168133b42bb05c38a35b1ae4397c8298ab369e0"
     integrity sha1-QWgTO0K7BcOKNbGuQ5fIKYqzaeA=
+  
+  env-paths@^2.2.0:
+    version "2.2.0"
+    resolved "https://registry.npm.taobao.org/env-paths/download/env-paths-2.2.0.tgz#cdca557dc009152917d6166e2febe1f039685e43"
+    integrity sha1-zcpVfcAJFSkX1hZuL+vh8DloXkM=
   
   errno@^0.1.3, errno@~0.1.7:
     version "0.1.7"
@@ -4370,6 +4409,11 @@ Lockfile:
     dependencies:
       acorn "^5.5.0"
       acorn-jsx "^3.0.0"
+  
+  esprima@^2.6.0:
+    version "2.7.3"
+    resolved "https://registry.npm.taobao.org/esprima/download/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
+    integrity sha1-luO3DVd59q1JzQMmc9HDEnZ7pYE=
   
   esprima@^3.1.3, esprima@~3.1.0:
     version "3.1.3"
@@ -5956,6 +6000,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/is-obj/download/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
     integrity sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
   
+  is-obj@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.npm.taobao.org/is-obj/download/is-obj-2.0.0.tgz#473fb05d973705e3fd9620545018ca8e22ef4982"
+    integrity sha1-Rz+wXZc3BeP9liBUUBjKjiLvSYI=
+  
   is-path-cwd@^1.0.0:
     version "1.0.0"
     resolved "https://registry.npm.taobao.org/is-path-cwd/download/is-path-cwd-1.0.0.tgz?cache=0&sync_timestamp=1562347283002&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-path-cwd%2Fdownload%2Fis-path-cwd-1.0.0.tgz#d225ec23132e89edd38fda767472e62e65f1106d"
@@ -6047,7 +6096,7 @@ Lockfile:
     dependencies:
       has-symbols "^1.0.0"
   
-  is-typedarray@~1.0.0:
+  is-typedarray@^1.0.0, is-typedarray@~1.0.0:
     version "1.0.0"
     resolved "https://registry.npm.taobao.org/is-typedarray/download/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
     integrity sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=
@@ -6143,13 +6192,21 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
     integrity sha1-GSA/tZmR35jjoocFDUZHzerzJJk=
   
-  js-yaml@^3.13.1, js-yaml@~3.13.1:
+  js-yaml@^3.11.0, js-yaml@^3.12.1, js-yaml@^3.13.1, js-yaml@^3.9.1:
     version "3.13.1"
     resolved "https://registry.npm.taobao.org/js-yaml/download/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
     integrity sha1-r/FRswv9+o5J4F2iLnQV6d+jeEc=
     dependencies:
       argparse "^1.0.7"
       esprima "^4.0.0"
+  
+  js-yaml@~3.7.0:
+    version "3.7.0"
+    resolved "https://registry.npm.taobao.org/js-yaml/download/js-yaml-3.7.0.tgz#5c967ddd837a9bfdca5f2de84253abe8a1c03b80"
+    integrity sha1-XJZ93YN6m/3KXy3oQlOr6KHAO4A=
+    dependencies:
+      argparse "^1.0.7"
+      esprima "^2.6.0"
   
   jsbn@~0.1.0:
     version "0.1.1"
@@ -6211,6 +6268,11 @@ Lockfile:
     version "0.4.1"
     resolved "https://registry.npm.taobao.org/json-schema-traverse/download/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
     integrity sha1-afaofZUTq4u4/mO9sJecRI5oRmA=
+  
+  json-schema-typed@^7.0.1:
+    version "7.0.3"
+    resolved "https://registry.npm.taobao.org/json-schema-typed/download/json-schema-typed-7.0.3.tgz#23ff481b8b4eebcd2ca123b4fa0409e66469a2d9"
+    integrity sha1-I/9IG4tO680soSO0+gQJ5mRpotk=
   
   json-schema@0.2.3:
     version "0.2.3"
@@ -6569,6 +6631,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/lodash.memoize/download/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
     integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
   
+  lodash.merge@4.6.2:
+    version "4.6.2"
+    resolved "https://registry.npm.taobao.org/lodash.merge/download/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
+    integrity sha1-VYqlO0O2YeGSWgr9+japoQhf5Xo=
+  
   lodash.merge@^3.3.2:
     version "3.3.2"
     resolved "https://registry.npm.taobao.org/lodash.merge/download/lodash.merge-3.3.2.tgz#0d90d93ed637b1878437bb3e21601260d7afe994"
@@ -6698,6 +6765,13 @@ Lockfile:
     dependencies:
       pify "^4.0.1"
       semver "^5.6.0"
+  
+  make-dir@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.npm.taobao.org/make-dir/download/make-dir-3.0.0.tgz#1b5f39f6b9270ed33f9f054c5c0f84304989f801"
+    integrity sha1-G1859rknDtM/nwVMXA+EMEmJ+AE=
+    dependencies:
+      semver "^6.0.0"
   
   mamacro@^0.0.3:
     version "0.0.3"
@@ -6935,7 +7009,7 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/mimic-fn/download/mimic-fn-1.2.0.tgz#820c86a39334640e99516928bd03fca88057d022"
     integrity sha1-ggyGo5M0ZA6ZUWkovQP8qIBX0CI=
   
-  mimic-fn@^2.0.0:
+  mimic-fn@^2.0.0, mimic-fn@^2.1.0:
     version "2.1.0"
     resolved "https://registry.npm.taobao.org/mimic-fn/download/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
     integrity sha1-ftLCzMyvhNP/y3pptXcR/CCDQBs=
@@ -7512,6 +7586,13 @@ Lockfile:
     dependencies:
       mimic-fn "^1.0.0"
   
+  onetime@^5.1.0:
+    version "5.1.0"
+    resolved "https://registry.npm.taobao.org/onetime/download/onetime-5.1.0.tgz#fff0f3c91617fe62bb50189636e99ac8a6df7be5"
+    integrity sha1-//DzyRYX/mK7UBiWNumayKbfe+U=
+    dependencies:
+      mimic-fn "^2.1.0"
+  
   opn@^5.5.0:
     version "5.5.0"
     resolved "https://registry.npm.taobao.org/opn/download/opn-5.5.0.tgz#fc7164fab56d235904c51c3b27da6758ca3b9bfc"
@@ -7904,6 +7985,13 @@ Lockfile:
     integrity sha1-yBmscoBZpGHKscOImivjxJoATX8=
     dependencies:
       find-up "^2.1.0"
+  
+  pkg-up@^3.0.1:
+    version "3.1.0"
+    resolved "https://registry.npm.taobao.org/pkg-up/download/pkg-up-3.1.0.tgz#100ec235cc150e4fd42519412596a28512a0def5"
+    integrity sha1-EA7CNcwVDk/UJRlBJZaihRKg3vU=
+    dependencies:
+      find-up "^3.0.0"
   
   plist@^3.0.1:
     version "3.0.1"
@@ -9998,6 +10086,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-0.5.2.tgz#d6ef42a0356c6cd45f49485c3b6281fc148e48a2"
     integrity sha1-1u9CoDVsbNRfSUhcO2KB/BSOSKI=
   
+  type-fest@^0.7.1:
+    version "0.7.1"
+    resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-0.7.1.tgz#8dda65feaf03ed78f0a3f9678f1869147f7c5c48"
+    integrity sha1-jdpl/q8D7Xjwo/lnjxhpFH98XEg=
+  
   type-is@~1.6.17, type-is@~1.6.18:
     version "1.6.18"
     resolved "https://registry.npm.taobao.org/type-is/download/type-is-1.6.18.tgz#4e552cd05df09467dcbc4ef739de89f2cf37c131"
@@ -10015,6 +10108,13 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.npm.taobao.org/type/download/type-2.0.0.tgz#5f16ff6ef2eb44f260494dae271033b29c09a9c3"
     integrity sha1-Xxb/bvLrRPJgSU2uJxAzspwJqcM=
+  
+  typedarray-to-buffer@^3.1.5:
+    version "3.1.5"
+    resolved "https://registry.npm.taobao.org/typedarray-to-buffer/download/typedarray-to-buffer-3.1.5.tgz#a97ee7a9ff42691b9f783ff1bc5112fe3fca9080"
+    integrity sha1-qX7nqf9CaRufeD/xvFES/j/KkIA=
+    dependencies:
+      is-typedarray "^1.0.0"
   
   typedarray@^0.0.6:
     version "0.0.6"
@@ -10261,6 +10361,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/uuid/download/uuid-3.3.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuuid%2Fdownload%2Fuuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
     integrity sha1-G0r0lV6zB3xQHCOHL8ZROBFYcTE=
   
+  v-contextmenu@^2.9.0:
+    version "2.9.0"
+    resolved "https://registry.npm.taobao.org/v-contextmenu/download/v-contextmenu-2.9.0.tgz#1753a7afc42051f1ed5cb75c20498a16fd7ec332"
+    integrity sha1-F1Onr8QgUfHtXLdcIEmKFv1+wzI=
+  
   v8-compile-cache@2.0.3:
     version "2.0.3"
     resolved "https://registry.npm.taobao.org/v8-compile-cache/download/v8-compile-cache-2.0.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fv8-compile-cache%2Fdownload%2Fv8-compile-cache-2.0.3.tgz#00f7494d2ae2b688cfe2899df6ed2c54bef91dbe"
@@ -10297,6 +10402,11 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.0.tgz#bd76d6a23323e2ca8ffa12028dc04559c75f9019"
     integrity sha1-vXbWojMj4sqP+hICjcBFWcdfkBk=
+  
+  vue-draggable-resizable@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.npm.taobao.org/vue-draggable-resizable/download/vue-draggable-resizable-2.1.0.tgz#b590212aef3c07d040aeceda784438068170fb08"
+    integrity sha1-tZAhKu88B9BArs7aeEQ4BoFw+wg=
   
   vue-electron@^1.0.6:
     version "1.0.6"
@@ -10345,6 +10455,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-3.1.2.tgz#2e0904703545dabdd42b2b7a2e617f02f99a1969"
     integrity sha1-LgkEcDVF2r3UKyt6LmF/AvmaGWk=
   
+  vue-runtime-helpers@^1.1.2:
+    version "1.1.2"
+    resolved "https://registry.npm.taobao.org/vue-runtime-helpers/download/vue-runtime-helpers-1.1.2.tgz#446b7b820888ab0c5264d2c3a32468e72e4100f3"
+    integrity sha1-RGt7ggiIqwxSZNLDoyRo5y5BAPM=
+  
   vue-style-loader@^4.1.0:
     version "4.1.2"
     resolved "https://registry.npm.taobao.org/vue-style-loader/download/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
@@ -10353,7 +10468,7 @@ Lockfile:
       hash-sum "^1.0.2"
       loader-utils "^1.0.2"
   
-  vue-template-compiler@^2.5.16:
+  vue-template-compiler@^2.6.10:
     version "2.6.10"
     resolved "https://registry.npm.taobao.org/vue-template-compiler/download/vue-template-compiler-2.6.10.tgz#323b4f3495f04faa3503337a82f5d6507799c9cc"
     integrity sha1-MjtPNJXwT6o1AzN6gvXWUHeZycw=
@@ -10421,10 +10536,10 @@ Lockfile:
       deepmerge "^1.5.2"
       javascript-stringify "^1.6.0"
   
-  webpack-cli@^3.0.8:
-    version "3.3.6"
-    resolved "https://registry.npm.taobao.org/webpack-cli/download/webpack-cli-3.3.6.tgz#2c8c399a2642133f8d736a359007a052e060032c"
-    integrity sha1-LIw5miZCEz+Nc2o1kAegUuBgAyw=
+  webpack-cli@^3.3.10:
+    version "3.3.10"
+    resolved "https://registry.npm.taobao.org/webpack-cli/download/webpack-cli-3.3.10.tgz#17b279267e9b4fb549023fae170da8e6e766da13"
+    integrity sha1-F7J5Jn6bT7VJAj+uFw2o5udm2hM=
     dependencies:
       chalk "2.4.2"
       cross-spawn "6.0.5"
@@ -10520,9 +10635,9 @@ Lockfile:
       source-list-map "^2.0.0"
       source-map "~0.6.1"
   
-  webpack@^4.39.3:
+  webpack@^4.41.2:
     version "4.41.2"
-    resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.41.2.tgz#c34ec76daa3a8468c9b61a50336d8e3303dce74e"
+    resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.41.2.tgz?cache=0&sync_timestamp=1575841976067&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack%2Fdownload%2Fwebpack-4.41.2.tgz#c34ec76daa3a8468c9b61a50336d8e3303dce74e"
     integrity sha1-w07Hbao6hGjJthpQM22OMwPc504=
     dependencies:
       "@webassemblyjs/ast" "1.8.5"
@@ -10671,6 +10786,16 @@ Lockfile:
       graceful-fs "^4.1.11"
       imurmurhash "^0.1.4"
       signal-exit "^3.0.2"
+  
+  write-file-atomic@^3.0.0:
+    version "3.0.1"
+    resolved "https://registry.npm.taobao.org/write-file-atomic/download/write-file-atomic-3.0.1.tgz#558328352e673b5bb192cf86500d60b230667d4b"
+    integrity sha1-VYMoNS5nO1uxks+GUA1gsjBmfUs=
+    dependencies:
+      imurmurhash "^0.1.4"
+      is-typedarray "^1.0.0"
+      signal-exit "^3.0.2"
+      typedarray-to-buffer "^3.1.5"
   
   write@^0.2.1:
     version "0.2.1"

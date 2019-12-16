@@ -7,13 +7,34 @@
 
 <template>
 
-  <div class="wrapper-right-click-menu">
+  <v-contextmenu ref="target">
 
-  </div>
+    <v-contextmenu-submenu title="window">
+
+      <v-contextmenu-item @click="handlerWindow">max</v-contextmenu-item>
+      <v-contextmenu-item>min</v-contextmenu-item>
+      <v-contextmenu-item>close</v-contextmenu-item>
+
+    </v-contextmenu-submenu>
+    
+    <v-contextmenu-submenu title="docs" icon="el-icon-delete">
+
+      <v-contextmenu-item>Vue</v-contextmenu-item>
+      <v-contextmenu-item>Electron</v-contextmenu-item>
+      <v-contextmenu-item>Element-UI</v-contextmenu-item>
+
+    </v-contextmenu-submenu>
+    
+    <v-contextmenu-item>test</v-contextmenu-item>
+  
+  </v-contextmenu>
 
 </template>
 
 <script>
+// electron
+import { remote } from 'electron'
+
 export default {
   name: 'ns-right-click-menu',
   components: {},
@@ -23,14 +44,21 @@ export default {
   data () {
     return {}
   },
-  computed: {},
+  computed: {
+    // 当前窗口对象
+    currentWindow () {
+      return remote.getCurrentWindow()
+    }
+  },
   methods: {
-    handlerInit () {}
+    // 指令绑定中会主动调用ref下的addRef方法, 否则会造成报错
+    addRef (data) {
+      this.$refs.target.addRef(data)
+    },
+    handlerWindow () {}
   },
   filters: {},
-  created () {
-    this.handlerInit()
-  },
+  created () {},
   mounted () {}
 }
 </script>

@@ -35,7 +35,7 @@
 
 <script>
 // components
-import WallPaper from '@/components/common/theme/WallPaper.vue'
+import WallPaper from '@/components/common/system/WallPaper.vue'
 
 export default {
   name: 'ns-not-found-page',

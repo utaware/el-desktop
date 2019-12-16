@@ -6,8 +6,6 @@ import createPersistedState from 'vuex-persistedstate'
 
 import modules from './modules'
 
-// console.log(electron.remote.app.getPath('userData'))
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({

@@ -20,7 +20,7 @@
 // components
 import TopDragMenu from '@common/system/TopDragMenu.vue'
 import RightClickMenu from '@common/system/RightClickMenu.vue'
-import WallPaper from '@common/theme/WallPaper.vue'
+import WallPaper from '@common/system/WallPaper.vue'
 
 export default {
   name: 'el-desktop',
