@@ -4,13 +4,13 @@
     <!-- 顶部拖动栏 -->
     <TopDragMenu></TopDragMenu>
     <!-- 右键菜单 -->
-    <RightClickMenu></RightClickMenu>
-    <!-- 壁纸 -->
-    <WallPaper>
+    <RightClickMenu>
     <!-- 视图 -->
       <router-view class="application-view"></router-view>
 
-    </WallPaper>
+    </RightClickMenu>
+    <!-- 壁纸 -->
+    <WallPaper></WallPaper>
 
   </div>
 
@@ -37,10 +37,26 @@ export default {
     return {}
   },
   methods: {},
+  mounted () {
+    // const $el = document.querySelector('.application-view')
+    // $el.addEventListener('contextmenu', (e) => {
+    //   const { target } = e
+    //   const isLastWrapper = target === $el
+    //   console.log(target, $el, target === $el)
+    //   if (!isLastWrapper) {
+    //     e.stopPropagation()
+    //   }
+    // }, true)
+  },
   created () {}
 }
 </script>
 
 <style lang="stylus" scoped>
-
+// body背景色
+.application-view {
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+}
 </style>

@@ -7,33 +7,54 @@
 
 <template>
 
-  <v-contextmenu ref="target">
+  <hsc-menu-style-white>
 
-    <v-contextmenu-submenu title="window">
+    <hsc-menu-context-menu>
+      <!-- 背景图 -->
+      <slot></slot>
+      <!-- 桌面右键菜单 -->
+      <template slot="contextmenu">
+        <!-- 窗口操作 -->
+        <hsc-menu-item label="window">
 
-      <v-contextmenu-item @click="handlerWindow">max</v-contextmenu-item>
-      <v-contextmenu-item>min</v-contextmenu-item>
-      <v-contextmenu-item>close</v-contextmenu-item>
+          <hsc-menu-item 
+            v-for="(item, index) of menu.window"
+            :label="item.name"
+            :key="index"
+            @click="handleBrowserWindowClick(item.method)"/>
+        
+        </hsc-menu-item>
+        <!-- 文档帮助 -->
+        <hsc-menu-item label="docs">
 
-    </v-contextmenu-submenu>
-    
-    <v-contextmenu-submenu title="docs" icon="el-icon-delete">
+          <hsc-menu-item 
+            v-for="(item, index) of menu.docs"
+            :label="item.name"
+            :key="index"
+            @click="handleOpenDocsLink(item.link)"/>
 
-      <v-contextmenu-item>Vue</v-contextmenu-item>
-      <v-contextmenu-item>Electron</v-contextmenu-item>
-      <v-contextmenu-item>Element-UI</v-contextmenu-item>
+        </hsc-menu-item>
 
-    </v-contextmenu-submenu>
-    
-    <v-contextmenu-item>test</v-contextmenu-item>
-  
-  </v-contextmenu>
+        <hsc-menu-item label="MenuItem 2">
+          
+          <hsc-menu-item label="MenuItem 4" />
+          <hsc-menu-item label="MenuItem 5" />
+
+        </hsc-menu-item>
+
+      </template>
+      
+    </hsc-menu-context-menu>
+
+  </hsc-menu-style-white>
 
 </template>
 
 <script>
-// electron
-import { remote } from 'electron'
+// message
+import app from '@/message/application'
+
+const { browserWindow } = app
 
 export default {
   name: 'ns-right-click-menu',
@@ -42,20 +63,36 @@ export default {
   watch: {},
   props: {},
   data () {
-    return {}
-  },
-  computed: {
-    // 当前窗口对象
-    currentWindow () {
-      return remote.getCurrentWindow()
+    return {
+      // 窗口功能列表
+      menu: {
+        window: [
+          { name: 'max', method: 'maximize' },
+          { name: 'min', method: 'minimize' },
+          { name: 'reload', method: 'reload' },
+          { name: 'close', method: 'close' }
+        ],
+        docs: [
+          { name: 'Vue', link: 'https://cn.vuejs.org/' },
+          { name: 'Npm', link: 'http://npm.taobao.org/' },
+          { name: 'Node', link: 'http://nodejs.cn/api/' },
+          { name: 'Github', link: 'https://github.com/' },
+          { name: 'Electron', link: 'https://electronjs.org/docs' },
+          { name: 'Element', link: 'https://element.eleme.cn/#/zh-CN' }
+        ]
+      }
     }
   },
+  computed: {},
   methods: {
-    // 指令绑定中会主动调用ref下的addRef方法, 否则会造成报错
-    addRef (data) {
-      this.$refs.target.addRef(data)
+    // 窗口相关事件
+    handleBrowserWindowClick (methodName) {
+      browserWindow[methodName] && browserWindow[methodName]()
     },
-    handlerWindow () {}
+    // 外部打开网址
+    handleOpenDocsLink (docsAddress) {
+      this.$electron.shell.openExternal(docsAddress)
+    }
   },
   filters: {},
   created () {},

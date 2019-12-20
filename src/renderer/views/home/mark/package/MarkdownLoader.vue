@@ -9,7 +9,7 @@
 
   <div class="wrapper-markdown-loader">
     <!-- 容器 -->
-    <div class="markdown-content custom" ref="mark" v-loading="loading"></div>
+    <div class="markdown-content custom" ref="mark" v-loading="loading" v-show="component"></div>
 
     <el-backtop target=".el-scrollbar__wrap" :bottom="80">
 
@@ -75,7 +75,7 @@ export default {
           if (code === this.successCode) {
             this.createContentNodes(data)
           } else {
-            this.$error({ message })
+            this.$message.error({ message })
           }
         }
       })

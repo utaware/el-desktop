@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 18:46:22
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-13 18:00:10
+ * @LastEditTime: 2019-12-20 10:52:57
  -->
 
 <template>
@@ -65,6 +65,7 @@ export default {
 // 桌面页
 .desktop-page {
   padding: 2rem;
+  background: transparent;
   // 图标列表
   .icon-list {
     margin-top: 0;
@@ -86,7 +87,6 @@ export default {
       }
       &:hover {
         box-shadow: 0px 5px 6px rgb(160,160,160);
-        background: linear-gradient(60deg,rgba(250,250,250,1) 25%,rgba(210,210,210,1));
       }
     }
   }

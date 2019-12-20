@@ -29,7 +29,7 @@ module.exports = {
 
     if (error) {
       // 向外输出日志
-      console.log(error)
+      console.log(on, error)
 
     }
 

@@ -187,5 +187,8 @@ export default {
   display: flex;
   height: 100vh;
   background: #f9f9f9;
+  .right-contain {
+    flex: 1;
+  }
 }
 </style>

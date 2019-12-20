@@ -66,6 +66,9 @@ export default {
     // 读取文件内容
     getAnchorTitleList () {
       const { markdownFilePath, successCode } = this
+      if (!markdownFilePath) {
+        return false
+      }
       ipcEventsHandlerOnce({
         filePath: markdownFilePath,
         send: 'readFileContent',

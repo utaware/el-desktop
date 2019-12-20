@@ -7,7 +7,7 @@
 
 <template>
   <!-- 主页面 -->
-  <div class="tool-page">
+  <div class="tool-page" @contextmenu="handleContextmenu">
 
     <header class="header">
 
@@ -46,12 +46,13 @@ export default {
   methods: {
     handlerReturnHomePage () {
       this.$router.push('/home')
+    },
+    handleContextmenu () {
+      console.log('handleContextmenu')
     }
   },
   filters: {},
-  created () {
-    console.log('annie')
-  },
+  created () {},
   mounted () {}
 }
 </script>

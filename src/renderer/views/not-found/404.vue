@@ -7,41 +7,33 @@
 
 <template>
 
-  <WallPaper>
+  <div class="flex-container">
 
-    <div class="flex-container">
+    <div class="header">
+      
+      <h1 class="title">404 - Not found</h1>
 
-      <div class="header">
-        
-        <h1 class="title">404 - Not found</h1>
-
-        <p class="text">对不起，你要找的这个页面突然不见了。不过，放心，一切都在我的掌控之中，不会跑多远！</p>
-
-      </div>
-
-      <div class="group">
-
-        <span class="item" @click="handleReturnLast">返回</span>
-
-        <span class="item" @click="handleReturnHome">主页</span>
-
-      </div>
+      <p class="text">对不起，你要找的这个页面突然不见了。不过，放心，一切都在我的掌控之中，不会跑多远！</p>
 
     </div>
 
-  </WallPaper>
+    <div class="group">
+
+      <span class="item" @click="handleReturnLast">返回</span>
+
+      <span class="item" @click="handleReturnHome">主页</span>
+
+    </div>
+
+  </div>
 
 </template>
 
 <script>
-// components
-import WallPaper from '@/components/common/system/WallPaper.vue'
 
 export default {
   name: 'ns-not-found-page',
-  components: {
-    WallPaper
-  },
+  components: {},
   mixins: [],
   watch: {},
   props: {},

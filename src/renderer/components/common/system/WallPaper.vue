@@ -7,40 +7,16 @@
 
 <template>
 
-  <hsc-menu-style-white>
-  <!-- v-contextmenu:contextmenu -->
-    <hsc-menu-context-menu>
-
-      <div class="wrapper-wall-paper">
-
-        <slot></slot>
-
-      </div>
-      <!-- <RightClickMenu ref="contextmenu" class="context-menu"></RightClickMenu> -->
-      <template slot="contextmenu">
-        <hsc-menu-item label="MenuItem 1" />
-        <hsc-menu-item label="MenuItem 2" />
-        <hsc-menu-item label="MenuItem 2">
-          <hsc-menu-item label="MenuItem 4" />
-          <hsc-menu-item label="MenuItem 5" />
-        </hsc-menu-item>
-      </template>
-      
-    </hsc-menu-context-menu>
-
-  </hsc-menu-style-white>
+  <!-- 背景图 -->
+  <div class="wrapper-wall-paper"></div>
 
 </template>
 
 <script>
-// components
-import RightClickMenu from './RightClickMenu.vue'
 
 export default {
   name: 'ns-wall-paper',
-  components: {
-    RightClickMenu
-  },
+  components: {},
   mixins: [],
   watch: {},
   props: {},
@@ -57,9 +33,14 @@ export default {
 
 <style lang="stylus" scoped>
 .wrapper-wall-paper {
-  position: relative;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   width: 100vw;
   height: 100vh;
+  z-index: -1;
   background: url('/static/images/default-bg.jpg') no-repeat center center;
 }
 </style>

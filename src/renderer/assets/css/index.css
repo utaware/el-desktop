@@ -2,6 +2,7 @@
 body {
   margin: 0;
   padding: 0;
+  background: transparent;
   /* cursor: url('/static/cursor/default.cur'), auto; */
 }
 /* 分割线 */
