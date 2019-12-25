@@ -9,7 +9,7 @@
 
   <hsc-menu-style-white>
 
-    <hsc-menu-context-menu>
+    <hsc-menu-context-menu style="display: block;">
       <!-- 背景图 -->
       <slot></slot>
       <!-- 桌面右键菜单 -->

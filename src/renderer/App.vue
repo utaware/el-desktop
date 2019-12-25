@@ -2,7 +2,7 @@
   <!-- 入口 -->
   <div id="app">
     <!-- 顶部拖动栏 -->
-    <TopDragMenu></TopDragMenu>
+    <!-- <TopDragMenu v-if="topDragBarShow"></TopDragMenu> -->
     <!-- 右键菜单 -->
     <RightClickMenu>
     <!-- 视图 -->
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+// vuex
+import { mapState } from 'vuex'
 // components
 import TopDragMenu from '@common/system/TopDragMenu.vue'
 import RightClickMenu from '@common/system/RightClickMenu.vue'
@@ -37,6 +39,10 @@ export default {
     return {}
   },
   methods: {},
+  computed: {
+    // vuex
+    ...mapState('System', ['topDragBarShow', 'bottomMenuShow'])
+  },
   mounted () {
     // const $el = document.querySelector('.application-view')
     // $el.addEventListener('contextmenu', (e) => {

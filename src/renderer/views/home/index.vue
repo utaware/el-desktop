@@ -66,6 +66,7 @@ export default {
 .desktop-page {
   padding: 2rem;
   background: transparent;
+  box-sizing: border-box;
   // 图标列表
   .icon-list {
     margin-top: 0;
