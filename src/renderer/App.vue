@@ -43,17 +43,7 @@ export default {
     // vuex
     ...mapState('System', ['topDragBarShow', 'bottomMenuShow'])
   },
-  mounted () {
-    // const $el = document.querySelector('.application-view')
-    // $el.addEventListener('contextmenu', (e) => {
-    //   const { target } = e
-    //   const isLastWrapper = target === $el
-    //   console.log(target, $el, target === $el)
-    //   if (!isLastWrapper) {
-    //     e.stopPropagation()
-    //   }
-    // }, true)
-  },
+  mounted () {},
   created () {}
 }
 </script>
@@ -61,8 +51,6 @@ export default {
 <style lang="stylus" scoped>
 // body背景色
 .application-view {
-  width: 100vw;
-  height: 100vh;
   background: transparent;
 }
 </style>

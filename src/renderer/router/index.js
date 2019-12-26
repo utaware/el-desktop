@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
- * @LastEditors: utaware
- * @LastEditTime: 2019-12-14 15:59:24
+ * @LastEditors  : utaware
+ * @LastEditTime : 2019-12-26 11:20:48
  */
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -27,7 +27,7 @@ export default new Router({
     {
       path: '/tools',
       name: 'tools',
-      component: require('@/views/home/tools/main.vue').default
+      component: require('@/views/home/tools/index.vue').default
     },
     // 404页面
     {

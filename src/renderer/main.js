@@ -12,16 +12,13 @@ import directives from '@/directives/install'
 // 组件注册
 import globalComponents from '@/components/install'
 // 菜单组件
-import contentmenu from 'v-contextmenu'
 import VueMenu from '@hscmap/vue-menu'
 // 附加的css
 import './assets/css/index.css'
-import 'v-contextmenu/dist/index.css'
  
 // 指令
 Vue.use(directives)
 // 组件
-Vue.use(contentmenu)
 Vue.use(VueMenu)
 Vue.use(globalComponents)
 
@@ -31,11 +28,6 @@ Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
-
-Vue.prototype.$error = function (options = {}) {
-  const { message = '出错了x_x', type = 'error', showClose = true } = options
-  this.$message({ message, type, showClose })
-}
 
 /* eslint-disable no-new */
 new Vue({

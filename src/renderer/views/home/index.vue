@@ -3,8 +3,8 @@
  * @version: 1.0.0
  * @Author: utaware
  * @Date: 2019-08-14 18:46:22
- * @LastEditors: utaware
- * @LastEditTime: 2019-12-20 10:52:57
+ * @LastEditors  : utaware
+ * @LastEditTime : 2019-12-26 10:57:53
  -->
 
 <template>
@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 // 桌面页
 .desktop-page {
   padding: 2rem;
@@ -85,9 +85,6 @@ export default {
       .icon-text {
         margin-top: 1rem;
         font-size: 1.2rem;
-      }
-      &:hover {
-        box-shadow: 0px 5px 6px rgb(160,160,160);
       }
     }
   }

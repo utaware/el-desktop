@@ -154,7 +154,7 @@ export default {
               this.commitFolderPath(data)
             }
           } else {
-            this.$error({ message })
+            this.$message.error({ message })
           }
         }
       })

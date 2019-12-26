@@ -6,24 +6,30 @@
  */
 
 <template>
+  <!-- annie -->
+  <div class="annie-container">
 
-  <div class="annie-go">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      
+      <el-tab-pane label="controls" name="controls">
 
-    <ul class="form-list">
+        <AnnieControls></AnnieControls>
 
-      <li class="item-contain">
+      </el-tab-pane>
+      
+      <el-tab-pane label="options" name="options">
 
-        <el-checkbox class="left-label" v-model="checked" label="媒体地址"></el-checkbox>
+        <AnnieOptions></AnnieOptions>
 
-        <el-input class="right-input" placeholder="请输入内容" v-model="mediaAddress">
+      </el-tab-pane>
+      
+      <el-tab-pane label="params" name="params">
 
-          <el-button slot="append" icon="el-icon-search" @click="handlerSearchMediaInfo"></el-button>
+        <AnnieParams></AnnieParams>
 
-        </el-input>
-
-      </li>
-
-    </ul>
+      </el-tab-pane>
+      
+    </el-tabs>
 
   </div>
 
@@ -32,17 +38,23 @@
 <script>
 // utils
 import { ipcEventsHandlerProcessive } from '@/message/ipcRendererHandle'
+// components
+import AnnieControls from './controls'
+import AnnieOptions from './options'
+import AnnieParams from './params'
 
 export default {
   name: 'ns-annie-go',
-  components: {},
+  components: {
+    AnnieControls,
+    AnnieOptions,
+    AnnieParams
+  },
   mixins: [],
   watch: {},
   props: {},
   data () {
     return {
-      // 媒体地址
-      mediaAddress: 'av79103230',
       // 多选框
       checked: true,
       checkOptions: {
@@ -50,7 +62,8 @@ export default {
         p: false,
         o: false,
         f: false
-      }
+      },
+      activeName: 'controls'
     }
   },
   computed: {
@@ -96,7 +109,9 @@ export default {
           }
         }
       })
-    }
+    },
+    // 页签点击切换
+    handleClick () {}
   },
   filters: {},
   created () {},
@@ -104,9 +119,14 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 // annie
-.annie-go {
+.annie-container {
+  margin: 2rem auto;
+  width: 50vw;
+  padding: 2rem;
+  min-width: 35rem;
+  background: #fff;
   .form-list {
     list-style: none;
     .item-contain {

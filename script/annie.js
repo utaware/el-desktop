@@ -1,11 +1,10 @@
 
 const { exec } = require('child_process')
 
-console.log(process.env.ComSpec)
+// const shelljs = require('shelljs')
 
-exec('annie av79103230', {
-  detached: true
-}, (err, stdout, stderr) => {
+exec('./console.bat', (err, stdout, stderr) => {
+
   if (err) {
     return console.log(err)
   }

@@ -64,7 +64,7 @@ export default {
           if (code === successCode) {
             this.treeData = filterMarkFile(data)
           } else {
-            this.$error({ message })
+            this.$message.error({ message })
           }
         }
       })
@@ -161,7 +161,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 .wrapperdocs-tree {
   padding: 0 1rem;
   // 搜索筛选框

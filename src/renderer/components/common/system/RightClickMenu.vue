@@ -35,12 +35,7 @@
 
         </hsc-menu-item>
 
-        <hsc-menu-item label="MenuItem 2">
-          
-          <hsc-menu-item label="MenuItem 4" />
-          <hsc-menu-item label="MenuItem 5" />
-
-        </hsc-menu-item>
+        <hsc-menu-item label="desktop" @click="handleReturnHomePage"></hsc-menu-item>
 
       </template>
       
@@ -92,6 +87,10 @@ export default {
     // 外部打开网址
     handleOpenDocsLink (docsAddress) {
       this.$electron.shell.openExternal(docsAddress)
+    },
+    // 回到桌面
+    handleReturnHomePage () {
+      this.$router.push('/home')
     }
   },
   filters: {},

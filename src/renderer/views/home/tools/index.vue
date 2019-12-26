@@ -2,27 +2,27 @@
  * @filename: index.vue
  * @desc: vue components file
  * @author: utaware
- * @createTime: 2019/12/03 20:26:35 星期二
+ * @createTime: 2019/12/04 16:23:09 星期三
  */
 
 <template>
+  <!-- 主页面 -->
+  <div class="tool-page">
 
-  <div class="video-page">
-
-    <xg-player></xg-player>
-
+    <Annie></Annie>
+  
   </div>
 
 </template>
 
 <script>
 // components
-import XgPlayer from './package/player.vue'
+import Annie from './annie/main'
 
 export default {
-  name: 'ns-video-page',
+  name: 'ns-tool-page',
   components: {
-    XgPlayer
+    Annie
   },
   mixins: [],
   watch: {},
@@ -39,11 +39,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-// 视频相关
-.video-page {
-  height: 100vh;
-  .xg-player {
-    // height: 400px;
-  }
+// 包裹容器
+.tool-page {
+
 }
 </style>

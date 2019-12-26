@@ -81,7 +81,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 .wrapper-comander {
   // 额外设置
   margin: 1rem 0;
