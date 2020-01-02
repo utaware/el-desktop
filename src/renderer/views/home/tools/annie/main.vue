@@ -57,26 +57,10 @@ export default {
     return {
       // 多选框
       checked: true,
-      checkOptions: {
-        i: false,
-        p: false,
-        o: false,
-        f: false
-      },
       activeName: 'controls'
     }
   },
-  computed: {
-    composeCommand () {
-      const { checkOptions, mediaAddress } = this
-      const { i } = checkOptions
-      const command = [
-        i ? '-i' : '',
-        mediaAddress
-      ].filter(v => v)
-      return command
-    }
-  },
+  computed: {},
   methods: {
     // 执行Annie下载
     handlerAnnieExecute () {
@@ -88,7 +72,6 @@ export default {
       if (!mediaAddress) {
         return this.$message.error('媒体地址不存在')
       }
-      console.log('executeCommand:', this.composeCommand)
       ipcEventsHandlerProcessive({
         send: 'spawnCommand',
         command: 'annie',

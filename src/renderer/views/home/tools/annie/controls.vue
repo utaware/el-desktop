@@ -8,14 +8,20 @@
 <template>
 
   <div class="wrapper-annie-controls">
-
+    <!-- 查询媒体信息 -->
     <div class="media-address">
 
-      <el-input placeholder="请输入内容" v-model="mediaAddress" :disabled="disabled">
+      <el-input placeholder="请输入媒体地址" v-model="mediaAddress">
         
         <el-button slot="append" icon="el-icon-search" @click="handleGetMediaInfo"></el-button>
       
       </el-input>
+
+    </div>
+    <!-- 可下载列表 -->
+    <div class="media-list">
+
+      <MediaList :mediaList="mediaList"></MediaList>
 
     </div>
 
@@ -24,42 +30,44 @@
 </template>
 
 <script>
-
-const { remote } = require('electron')
-
-const { shelljs } = remote.app
+// vuex
+import { mapGetters } from 'vuex'
+// message
+import { ipcEventsHandlerOnce } from '@/message/ipcRendererHandle'
+// components
+import MediaList from './list.vue'
 
 export default {
   name: 'ns-annie-controls',
-  components: {},
+  components: {
+    MediaList
+  },
+  inject: ['successCode'],
   mixins: [],
   watch: {},
   props: {},
   data () {
     return {
       // 媒体地址
-      mediaAddress: 'av79103230'
+      mediaAddress: 'ep307056',
+      // 媒体列表
+      mediaList: []
     }
   },
   computed: {
+    // vuex
+    ...mapGetters('Annie', ['getAnnieCommand']),
     // 命令名称
     baseCommand () {
       return 'annie'
     },
-    // annie命令是否存在
-    annieIsExist () {
-      return shelljs.which(this.baseCommand)
-    },
-    // 是否禁用功能
-    disabled () {
-      return !this.annieIsExist
-    },
     // annie 参数拼接
     commandCompose () {
-      const { mediaAddress, baseCommand } = this
+      const { mediaAddress, baseCommand, getAnnieCommand } = this
       const commandList = [
         baseCommand,
-        '-i',
+        '-j',
+        getAnnieCommand,
         mediaAddress
       ]
       return commandList.join(' ')
@@ -68,32 +76,29 @@ export default {
   methods: {
     // 查询媒体信息
     handleGetMediaInfo () {
-      
-      const { mediaAddress, commandCompose } = this
-      
-      if (!mediaAddress) {
-        shelljs.echo('Media address not found')
-        return false
-      }
-
-      console.log(commandCompose)
-
-      const process = shelljs.exec(commandCompose)
-
-      console.log(process)
-      
-      if (!process || process.code !== 0) {
-        shelljs.echo('Annie command Execute failed')
-        shelljs.exit(1)
-        return false
-      }
-      
+      const { commandCompose, successCode } = this
+      ipcEventsHandlerOnce({
+        send: 'executeCommand',
+        command: commandCompose,
+        callback: (res) => {
+          const { code, data, message } = res
+          if (code === successCode) {
+            const list = this.parseJsonString(data)
+            const isArray = Array.isArray(list)
+            this.mediaList = isArray ? list : [ list ]
+          } else {
+            this.$message.error(message)
+          }
+        }
+      })
+    },
+    // 转换json信息
+    parseJsonString (content) {
+      return JSON.parse(content)
     }
   },
   filters: {},
-  created () {
-    console.log(remote)
-  },
+  created () {},
   mounted () {}
 }
 </script>

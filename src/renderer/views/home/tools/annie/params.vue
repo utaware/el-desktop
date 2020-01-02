@@ -11,9 +11,9 @@
 
     <el-form ref="form" :model="form" :label-position="labelPosition" label-width="80px">
 
-      <el-form-item label="活动名称">
+      <el-form-item label="Debug">
 
-        <el-input v-model="form.name"></el-input>
+        <el-switch v-model="form.debug"></el-switch>
 
       </el-form-item>
 
@@ -102,6 +102,9 @@
 </template>
 
 <script>
+// vuex
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'ns-annie-params',
   components: {},
@@ -112,7 +115,7 @@ export default {
     return {
       // 表单信息
       form: {
-        name: '',
+        debug: '',
         region: '',
         date1: '',
         date2: '',
@@ -125,7 +128,10 @@ export default {
       labelPosition: 'left'
     }
   },
-  computed: {},
+  computed: {
+    // vuex
+    ...mapGetters('Annie', ['getAnnieOptions'])
+  },
   methods: {
     onSubmit () {
       console.log('submit!')
