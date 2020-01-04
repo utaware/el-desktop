@@ -30,6 +30,7 @@ module.exports = {
     if (error) {
       // 向外输出日志
       console.log(on, error)
+      params.message = error.stack
 
     }
 

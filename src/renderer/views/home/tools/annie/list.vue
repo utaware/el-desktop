@@ -9,30 +9,35 @@
 
   <div class="wrapper-annie-list">
 
-    <el-card class="media-card" v-for="(item, index) of mediaList" :key="index">
+    <el-card class="media-card" v-for="(item, index) of list" :key="index">
 
       <div slot="header" class="header">
 
-        <span class="title" :title="item.site">{{ item.title }}</span>
-
-        <el-button icon="el-icon-more-outline" size="medium" @click="handleOpenMediaAddress(item.url)"></el-button>
+        <span 
+          class="title"
+          :title="item.site"
+          @click="handleOpenMediaAddress(item.url)">
+          
+          {{ item.title }}
+      
+        </span>
 
       </div>
 
       <div class="body">
 
-        <el-select v-model="selectMedia" placeholder="请选择">
+        <el-select v-model="item.value" placeholder="请选择">
 
           <el-option
-            v-for="(item, index) in mapMediaStreamsInfo(item)"
+            v-for="(option, index) in item.options"
             :key="index"
-            :label="item.quality"
-            :value="item.key">
+            :label="option.quality"
+            :value="option.key">
           </el-option>
         
         </el-select>
 
-        <el-button @click="handleDownloadMedia">下载</el-button>
+        <el-button @click="handleDownloadMedia(item)" :disabled="!item.value">下载</el-button>
 
       </div>
 
@@ -50,7 +55,16 @@ export default {
   name: 'ns-annie-list',
   components: {},
   mixins: [],
-  watch: {},
+  watch: {
+    // 同步list
+    mediaList: {
+      handler () {
+        this.mapMediaListInfo()
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   props: {
     // 查询的媒体列表
     mediaList: {
@@ -60,7 +74,8 @@ export default {
   },
   data () {
     return {
-      selectMedia: ''
+      // 列表数据
+      list: []
     }
   },
   computed: {},
@@ -74,11 +89,18 @@ export default {
       this.$emit('download', item)
     },
     // 映射下载流信息
-    mapMediaStreamsInfo (item) {
-      const { streams } = item
+    mapMediaStreamsInfo (streams) {
       return Object.entries(streams).map(v => {
         const [ key, value ] = v
         return { key, ...value }
+      })
+    },
+    // 映射媒体信息
+    mapMediaListInfo () {
+      this.list = this.mediaList.map(v => {
+        const { streams, site, url, title, type } = v
+        const options = this.mapMediaStreamsInfo(streams)
+        return { site, url, title, type, options, streams, value: '' }
       })
     }
   },
@@ -95,6 +117,12 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .title {
+      cursor: pointer;
+      &:hover {
+        color: #0366d6;
+      }
+    }
   }
   .body {
     display: flex;

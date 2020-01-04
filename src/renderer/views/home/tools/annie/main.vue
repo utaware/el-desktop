@@ -8,7 +8,7 @@
 <template>
   <!-- annie -->
   <div class="annie-container">
-
+    <!-- 控制界面 -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
       
       <el-tab-pane label="controls" name="controls">
@@ -16,16 +16,22 @@
         <AnnieControls></AnnieControls>
 
       </el-tab-pane>
-      
+      <!-- 参数设置 -->
       <el-tab-pane label="options" name="options">
 
         <AnnieOptions></AnnieOptions>
 
       </el-tab-pane>
-      
+      <!-- 参数设置 -->
       <el-tab-pane label="params" name="params">
 
         <AnnieParams></AnnieParams>
+
+      </el-tab-pane>
+      <!-- 下载列表 -->
+      <el-tab-pane label="download" name="download">
+
+        <AnnieDownload></AnnieDownload>
 
       </el-tab-pane>
       
@@ -36,19 +42,19 @@
 </template>
 
 <script>
-// utils
-import { ipcEventsHandlerProcessive } from '@/message/ipcRendererHandle'
 // components
 import AnnieControls from './controls'
 import AnnieOptions from './options'
 import AnnieParams from './params'
+import AnnieDownload from './download'
 
 export default {
   name: 'ns-annie-go',
   components: {
     AnnieControls,
     AnnieOptions,
-    AnnieParams
+    AnnieParams,
+    AnnieDownload
   },
   mixins: [],
   watch: {},
@@ -72,26 +78,6 @@ export default {
       if (!mediaAddress) {
         return this.$message.error('媒体地址不存在')
       }
-      ipcEventsHandlerProcessive({
-        send: 'spawnCommand',
-        command: 'annie',
-        args: this.composeCommand,
-        options: { encoding: 'utf8', windowsHide: true },
-        events: {
-          success: (event, res) => {
-            console.log('success:', res)
-          },
-          error: (event, res) => {
-            console.log('error:', res)
-          },
-          close: (event, res) => {
-            const { sender } = event
-            sender.eventNames().forEach(v => {
-              sender.removeAllListeners(v)
-            })
-          }
-        }
-      })
     },
     // 页签点击切换
     handleClick () {}
