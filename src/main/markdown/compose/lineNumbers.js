@@ -1,7 +1,16 @@
+/*
+ * @Description: fileheader
+ * @version: 1.0.0
+ * @Author: utaware
+ * @Date: 2020-03-18 16:57:22
+ * @LastEditors: utaware
+ * @LastEditTime: 2020-03-18 16:59:11
+ */
+
 // markdown-it plugin for generating line numbers.
 // It depends on preWrapper plugin.
 
-module.exports = md => {
+const lineNumbersMethod = (md) => {
   const fence = md.renderer.rules.fence
   md.renderer.rules.fence = (...args) => {
     const rawCode = fence(...args)
@@ -23,4 +32,13 @@ module.exports = md => {
 
     return finalCode
   }
+}
+
+const { PLUGINS: { LINE_NUMBERS } } = require('../lib/constant')
+
+module.exports = (config) => {
+  return config
+    .plugin(LINE_NUMBERS)
+    .use(lineNumbersMethod)
+    .end()
 }

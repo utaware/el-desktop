@@ -1,7 +1,16 @@
+/*
+ * @Description: fileheader
+ * @version: 1.0.0
+ * @Author: utaware
+ * @Date: 2020-03-18 17:00:02
+ * @LastEditors: utaware
+ * @LastEditTime: 2020-03-18 17:11:18
+ */
+
 const fs = require('fs')
 const path = require('path')
 
-module.exports = function snippet (md, options = {}) {
+const snippetMethod = function snippet (md, options = {}) {
   const fence = md.renderer.rules.fence
   const root = options.root || process.cwd()
 
@@ -61,4 +70,13 @@ module.exports = function snippet (md, options = {}) {
   }
 
   md.block.ruler.before('fence', 'snippet', parser)
+}
+
+const { PLUGINS: { SNIPPET } } = require('../lib/constant')
+
+module.exports = (config) => {
+  return config
+    .plugin(SNIPPET)
+    .use(snippetMethod)
+    .end()
 }

@@ -1,3 +1,12 @@
+/*
+ * @Description: fileheader
+ * @version: 1.0.0
+ * @Author: utaware
+ * @Date: 2020-03-18 17:12:05
+ * @LastEditors: utaware
+ * @LastEditTime: 2020-03-18 17:15:06
+ */
+
 // markdown-it plugin for:
 // -- vuepress
 // 1. adding target="_blank" to external links
@@ -17,7 +26,7 @@ const linkifyIt = require('linkify-it')()
 const methodName = '@click'
 const methodHanlder = 'handlerLinkClick'
 
-module.exports = (md) => {
+const linkMethod = (md) => {
 
   let isExternal = false
 
@@ -55,4 +64,16 @@ module.exports = (md) => {
     const tag = isExternal ? '<OutboundLink/>' : ''
     return tag + self.renderToken(tokens, idx, options)
   }
+}
+
+const { PLUGINS: { CONVERT_ROUTER_LINK } } = require('../lib/constant')
+
+module.exports = (config) => {
+  return config
+    .plugin(CONVERT_ROUTER_LINK)
+    .use(linkMethod, [{
+      target: '_blank',
+      rel: 'noopener noreferrer'
+    }])
+    .end()
 }

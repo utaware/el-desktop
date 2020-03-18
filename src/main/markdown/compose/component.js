@@ -1,3 +1,12 @@
+/*
+ * @Description: fileheader
+ * @version: 1.0.0
+ * @Author: utaware
+ * @Date: 2020-03-18 14:44:16
+ * @LastEditors: utaware
+ * @LastEditTime: 2020-03-18 14:53:23
+ */
+
 // Replacing the default htmlBlock rule to allow using custom components at
 // root level
 
@@ -30,11 +39,6 @@ const HTML_SEQUENCES = [
   // 闭合标签
   [new RegExp(HTML_OPEN_CLOSE_TAG_RE.source + '\\s*$'), /^$/, false]
 ]
-
-module.exports = md => {
-  // 为多行标签的解析提供规则
-  md.block.ruler.at('html_block', htmlBlock)
-}
 
 // 处理多行html标签
 function htmlBlock (state, startLine, endLine, silent) {
@@ -90,4 +94,17 @@ function htmlBlock (state, startLine, endLine, silent) {
   token.content = state.getLines(startLine, nextLine, state.blkIndent, true)
 
   return true
+}
+
+const componentsMethod = (md) => {
+  md.block.ruler.at('html_block', htmlBlock)
+}
+
+const { PLUGINS: { COMPONENT } } = require('../lib/constant')
+
+module.exports = config => {
+  return config
+    .plugin(COMPONENT)
+    .use(componentsMethod)
+    .end()
 }

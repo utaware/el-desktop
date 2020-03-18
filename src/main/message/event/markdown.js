@@ -1,7 +1,7 @@
 // node
 const path = require('path')
 // markdown-it 加载配置后的实例
-const markdownIt = require('../../module/mark')
+const markdownIt = require('../../markdown')
 // fs
 const { readFileContent } = require('../fs')
 

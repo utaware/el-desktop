@@ -1,3 +1,12 @@
+/*
+ * @Description: fileheader
+ * @version: 1.0.0
+ * @Author: utaware
+ * @Date: 2020-03-18 14:38:06
+ * @LastEditors: utaware
+ * @LastEditTime: 2020-03-18 17:28:48
+ */
+
 // prismjs 是一种轻量级的、可扩展的语法高亮器，它是用现代Web标准构建的。
 // 它在成千上万的网站中使用，包括你每天访问的一些网站。
 // 相比于highlightjs，prismjs高亮的代码更准确、更加的细粒度。
@@ -30,7 +39,7 @@ const abbreviateMap = {
   styl: 'stylus'
 }
 
-module.exports = (str, lang) => {
+const highlightMethod = (str, lang) => {
   if (!lang) {
     return wrap(str, 'text')
   }
@@ -60,4 +69,11 @@ module.exports = (str, lang) => {
     return wrap(code, rawLang)
   }
   return wrap(str, 'text')
+}
+
+module.exports = (config) => {
+  return config
+    .options
+    .highlight(highlightMethod)
+    .end()
 }
