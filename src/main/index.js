@@ -4,7 +4,7 @@
  * @Author: utaware
  * @Date: 2019-08-14 17:52:38
  * @LastEditors: utaware
- * @LastEditTime: 2019-12-13 17:33:49
+ * @LastEditTime: 2020-03-19 10:33:28
  */
 'use strict'
 
@@ -16,6 +16,8 @@ require('./module')(app)
 require('./message')(ipcMain)
 // store相关内容存储
 require('./store')(app)
+// 服务脚本
+require('./server/app')
 
 // 忽略安全警告
 if (process.env.NODE_ENV === 'development') {

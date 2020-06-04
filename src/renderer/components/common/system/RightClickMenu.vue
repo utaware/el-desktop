@@ -34,8 +34,18 @@
             @click="handleOpenDocsLink(item.link)"/>
 
         </hsc-menu-item>
-
+        <!-- 返回桌面 -->
         <hsc-menu-item label="desktop" @click="handleReturnHomePage"></hsc-menu-item>
+        <!-- shell命令 -->
+        <hsc-menu-item label="command">
+
+          <hsc-menu-item 
+            v-for="(item, index) of menu.command"
+            :label="item.name"
+            :key="index"
+            @click="handleExcuteCommand(item.name)"/>
+
+        </hsc-menu-item>
 
       </template>
       
@@ -48,6 +58,8 @@
 <script>
 // message
 import app from '@/message/application'
+
+import { exec } from 'child_process'
 
 const { browserWindow } = app
 
@@ -74,6 +86,14 @@ export default {
           { name: 'Github', link: 'https://github.com/' },
           { name: 'Electron', link: 'https://electronjs.org/docs' },
           { name: 'Element', link: 'https://element.eleme.cn/#/zh-CN' }
+        ],
+        command: [
+          { name: 'calc', describe: '计算器' },
+          { name: 'cmd', describe: '命令提示符' },
+          { name: 'mspaint', describe: '画图' },
+          { name: 'notepad', describe: '记事本' },
+          { name: 'explorer', describe: '资源管理器' },
+          { name: 'taskmgr', describe: '任务管理器' }
         ]
       }
     }
@@ -91,6 +111,14 @@ export default {
     // 回到桌面
     handleReturnHomePage () {
       this.$router.push('/home')
+    },
+    // 执行命令
+    handleExcuteCommand (command) {
+      exec(`start ${command}`, (err, stdout, stderr) => {
+        if (err) {
+          return this.$message.error(err)
+        }
+      })
     }
   },
   filters: {},

@@ -9,7 +9,7 @@ const promisifyExec = promisify(exec)
 // https://blog.csdn.net/liuyaqi1993/article/details/78723797
 // https://www.jianshu.com/p/e69a6af02f57
 
-function decodeConsoleText (data, encoding) {
+function decodeConsoleText (data, encoding = 'utf8') {
 
   return encoding === 'utf8' ? data.toString() : iconv.decode(data, 'cp936')
 

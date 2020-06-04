@@ -3,10 +3,11 @@ const { exec } = require('child_process')
 
 // const shelljs = require('shelljs')
 
-exec('./console.bat', (err, stdout, stderr) => {
-
+exec('test.bat', {
+  windowsHide: false
+}, (err, data) => {
   if (err) {
     return console.log(err)
   }
-  console.log(stdout.toString())
+  console.log(data)
 })

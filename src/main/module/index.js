@@ -1,6 +1,5 @@
 const register = {
-  markdownIt: require('./mark'),
-  shelljs: require('./shelljs')
+  markdownIt: require('../markdown')
 }
 
 module.exports = (app) => {

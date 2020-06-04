@@ -1,6 +1,14 @@
+/*
+ * @Description: fileheader
+ * @version: 1.0.0
+ * @Author: utaware
+ * @Date: 2020-03-18 17:15:28
+ * @LastEditors: utaware
+ * @LastEditTime: 2020-03-18 17:33:01
+ */
+
 // Process block-level custom containers
-//
-module.exports = function containerPlugin (md, options = {}) {
+function containerPlugin (md, options = {}) {
 
   const {
     minMarkers = 3,
@@ -165,4 +173,19 @@ module.exports = function containerPlugin (md, options = {}) {
   if (staticRender) {
     md.renderer.rules['container_' + name + '_inline'] = render
   }
+}
+
+const { PLUGINS: { CONTAINER_CARD, CONTAINER_MERMAID, CONTAINER_CODE } } = require('../lib/constant')
+
+module.exports = (config) => {
+  return config
+    .plugin(CONTAINER_CARD)
+    .use(containerPlugin, [{name: 'card'}])
+    .end()
+    .plugin(CONTAINER_MERMAID)
+    .use(containerPlugin, [{name: 'mermaid', staticRender: true}])
+    .end()
+    .plugin(CONTAINER_CODE)
+    .use(containerPlugin, [{name: 'code', staticRender: true}])
+    .end()
 }

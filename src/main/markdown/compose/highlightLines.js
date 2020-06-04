@@ -1,9 +1,16 @@
-// Modified from https://github.com/egoist/markdown-it-highlight-lines
+/*
+ * @Description: fileheader
+ * @version: 1.0.0
+ * @Author: utaware
+ * @Date: 2020-03-18 16:54:17
+ * @LastEditors: utaware
+ * @LastEditTime: 2020-03-18 16:56:59
+ */
 
 const RE = /{([\d,-]+)}/
 const wrapperRE = /^<pre .*?><code>/
 
-module.exports = md => {
+const highlightLinesMethod = (md) => {
   const fence = md.renderer.rules.fence
   md.renderer.rules.fence = (...args) => {
     const [tokens, idx, options] = args
@@ -48,4 +55,13 @@ module.exports = md => {
 
     return highlightLinesWrapperCode + code
   }
+}
+
+const { PLUGINS: { HIGHLIGHT_LINES } } = require('../lib/constant')
+
+module.exports = (config) => {
+  return config
+    .plugin(HIGHLIGHT_LINES)
+    .use(highlightLinesMethod)
+    .end()
 }
